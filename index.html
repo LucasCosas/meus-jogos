@@ -534,6 +534,7 @@ function renderCatalog() {
         ${g.year ? `<span>📅 ${g.year}</span>` : ''}
         ${g.playtime ? `<span>${playtimeMap[g.playtime]}</span>` : ''}
         ${g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
+        ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
         ${g.rawg_id ? `<span style="color:var(--border)">RAWG #${g.rawg_id}</span>` : ''}
       </div>
       ${replay ? `<div><span class="replay-badge ${replay.cls}">${replay.label}</span></div>` : ''}
@@ -1138,7 +1139,7 @@ function renderBacklog() {
       </div>
       <div class="card-meta">
         ${year ? `<span>📅 ${year}</span>` : ''}
-        ${g.rating ? `<span>⭐ ${g.rating} RAWG</span>` : ''}
+        ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
       </div>
       <div class="card-actions">
         <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.rawg_id})">✅ Já joguei</button>
