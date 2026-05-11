@@ -270,10 +270,7 @@
 <div class="rate-overlay" id="discover-overlay">
   <div class="rate-progress-bar" id="discover-progress"></div>
   <div class="rate-header">
-    <div style="display:flex;align-items:center;gap:16px">
-      <span class="rate-counter" id="discover-counter"></span>
-      <span style="font-size:12px;color:var(--muted)" id="discover-sub"></span>
-    </div>
+    <span class="rate-counter" id="discover-counter"></span>
     <button class="rate-close" onclick="closeDiscovery()">Fechar</button>
   </div>
   <div class="rate-body" style="gap:24px">
@@ -284,10 +281,9 @@
       </div>
       <div class="rate-title" id="discover-title"></div>
       <div class="discover-genres" id="discover-genres"></div>
-      <div class="discover-actions">
-        <button class="disc-btn played" onclick="discoverAction('played')">✅ Já joguei</button>
-        <button class="disc-btn skip"   onclick="discoverAction('skip')">⏭ Nunca joguei</button>
-        <button class="disc-btn wishlist" onclick="discoverAction('wishlist')">🔖 Quero jogar</button>
+      <div class="discover-actions" style="grid-template-columns:1fr 1fr">
+        <button class="disc-btn played"  onclick="discoverAction('played')">✅ Já joguei</button>
+        <button class="disc-btn skip"    onclick="discoverAction('skip')">❌ Não joguei</button>
       </div>
     </div>
     <div class="rate-done-msg" id="discover-done" style="display:none"></div>
@@ -1230,18 +1226,18 @@ function saveDiscovery(d) {
   }).catch(() => {});
 }
 
-let _discQueue = [];
-let _discIdx   = 0;
+let _catalog = [];   // games from catalog.json, shrinks as user reviews
+let _discIdx  = 0;
+
+function saveCatalog() {
+  fetch('catalog.json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(_catalog)
+  }).catch(() => {});
+}
 
 function openDiscovery() {
-  const games   = loadGames();
-  const disc    = loadDiscovery();
-  const known   = new Set([
-    ...games.map(g => g.title.toLowerCase()),
-    ...disc.skip,
-    ...disc.wishlist.map(w => w.toLowerCase()),
-  ]);
-  _discQueue = GAME_CATALOG.filter(([title]) => !known.has(title.toLowerCase()));
   _discIdx = 0;
   document.getElementById('discover-overlay').classList.add('open');
   showDiscoverCurrent();
@@ -1253,6 +1249,7 @@ function closeDiscovery() {
 }
 
 function scoreColor(s) {
+  if (!s) return '';
   if (s >= 90) return 'green';
   if (s >= 75) return 'yellow';
   return '';
@@ -1261,67 +1258,63 @@ function scoreColor(s) {
 function showDiscoverCurrent() {
   const card    = document.getElementById('discover-card');
   const doneMsg = document.getElementById('discover-done');
-  const total   = _discQueue.length;
+  const total   = _catalog.length;
+  const remaining = total - _discIdx;
 
   document.getElementById('discover-progress').style.width =
     total ? Math.round((_discIdx / total) * 100) + '%' : '100%';
   document.getElementById('discover-counter').textContent =
-    total ? `${_discIdx + 1} / ${total}` : '';
-  document.getElementById('discover-sub').textContent =
-    loadDiscovery().wishlist.length ? `🔖 ${loadDiscovery().wishlist.length} na lista` : '';
+    remaining > 0 ? `${_discIdx + 1} / ${total}` : '';
 
   if (_discIdx >= total) {
     card.style.display = 'none';
     doneMsg.style.display = '';
-    doneMsg.textContent = '✓ Catálogo todo revisado!';
-    document.getElementById('discover-counter').textContent = `${total} jogos avaliados`;
+    doneMsg.textContent = '✓ Tudo revisado!';
+    document.getElementById('discover-counter').textContent = `${total} jogos revisados`;
     return;
   }
 
   card.style.display = '';
   doneMsg.style.display = 'none';
 
-  const [title, platforms, score, genres] = _discQueue[_discIdx];
-  document.getElementById('discover-title').textContent = title;
+  const g = _catalog[_discIdx];
+  document.getElementById('discover-title').textContent = g.title;
 
   const sc = document.getElementById('discover-score');
-  sc.textContent = `⭐ ${score}`;
-  sc.className = `discover-score ${scoreColor(score)}`;
+  sc.textContent = g.metacritic ? `⭐ ${g.metacritic}` : '—';
+  sc.className = `discover-score ${scoreColor(g.metacritic)}`;
 
   document.getElementById('discover-platforms').innerHTML =
-    platforms.map(p => `<span class="tag platform">${esc(p)}</span>`).join('');
+    (g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('');
   document.getElementById('discover-genres').innerHTML =
-    genres.map(g => `<span class="tag genre">${esc(g)}</span>`).join('');
+    (g.genres || []).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('');
 }
 
 function discoverAction(action) {
-  if (_discIdx >= _discQueue.length) return;
-  const [title, platforms, score, genres] = _discQueue[_discIdx];
-  const disc = loadDiscovery();
+  if (_discIdx >= _catalog.length) return;
+  const g = _catalog[_discIdx];
 
   if (action === 'played') {
     const games = loadGames();
     games.push({
-      id: Date.now() + _discIdx,
-      title,
-      rating: null,
-      year: null,
-      genres: [...genres],
+      id: Date.now(),
+      title:        g.title,
+      rating:       null,
+      year:         null,
+      genres:       g.genres || [],
       platformPlayed: null,
-      availableOn: [...platforms],
-      notes: '',
-      _fromCatalog: true,
+      availableOn:  g.platforms || [],
+      notes:        '',
+      rawg_id:      g.rawg_id || null,
+      metacritic:   g.metacritic || null,
     });
     saveGames(games);
-  } else if (action === 'skip') {
-    disc.skip.push(title.toLowerCase());
-    saveDiscovery(disc);
-  } else if (action === 'wishlist') {
-    disc.wishlist.push(title);
-    saveDiscovery(disc);
   }
-
-  _discIdx++;
+  // both 'played' and 'skip' remove from catalog
+  _catalog.splice(_discIdx, 1);
+  saveCatalog();
+  // don't advance index — next item shifts into current position
+  if (_discIdx >= _catalog.length) _discIdx = _catalog.length;
   showDiscoverCurrent();
 }
 
@@ -1330,20 +1323,18 @@ document.addEventListener('keydown', e => {
   if (!document.getElementById('discover-overlay').classList.contains('open')) return;
   if (e.key === '1') discoverAction('played');
   if (e.key === '2') discoverAction('skip');
-  if (e.key === '3') discoverAction('wishlist');
   if (e.key === 'Escape') closeDiscovery();
 });
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
-  const [catRes, gamesRes, discRes] = await Promise.allSettled([
+  const [catRes, gamesRes] = await Promise.allSettled([
     fetch('catalog.json').then(r => r.json()),
     fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()),
-    fetch('discovery.json').then(r => r.ok ? r.json() : Promise.reject()),
   ]);
 
-  if (catRes.status === 'fulfilled')
-    GAME_CATALOG = catRes.value.map(g => [g.title, g.platforms, g.metacritic ?? g.score, g.genres]);
+  if (catRes.status === 'fulfilled' && Array.isArray(catRes.value))
+    _catalog = catRes.value;
 
   if (gamesRes.status === 'fulfilled' && Array.isArray(gamesRes.value.games)) {
     _games   = gamesRes.value.games;
@@ -1360,10 +1351,9 @@ async function init() {
     if (_games.length) showToast(`${_games.length} jogos migrados para games.json`, 'success');
   }
 
-  if (discRes.status === 'fulfilled')
-    _discovery = discRes.value;
-
   renderCatalog();
+
+  if (_catalog.length > 0) openDiscovery();
 }
 init();
 </script>

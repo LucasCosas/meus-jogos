@@ -3,7 +3,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 import json, os, shutil
 from datetime import datetime
 
-SAVEABLE = {'/games.json', '/discovery.json'}
+SAVEABLE = {'/games.json', '/discovery.json', '/catalog.json'}
 BACKUP_DIR = 'backups'
 MAX_BACKUPS = 20  # keep last 20 saves per file
 
