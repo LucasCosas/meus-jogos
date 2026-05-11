@@ -1,0 +1,3164 @@
+[
+  {
+    "title": "Elden Ring",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 96,
+    "genres": [
+      "Action RPG",
+      "Soulslike",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Bloodborne",
+    "platforms": [
+      "PS4"
+    ],
+    "score": 92,
+    "genres": [
+      "Action RPG",
+      "Soulslike",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Sekiro: Shadows Die Twice",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 91,
+    "genres": [
+      "Action RPG",
+      "Soulslike",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Dark Souls III",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 89,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Dark Souls Remastered",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 84,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Demon's Souls",
+    "platforms": [
+      "PS5"
+    ],
+    "score": 92,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Lies of P",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 80,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Lords of the Fallen",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 75,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Nioh 2",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Wo Long: Fallen Dynasty",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 79,
+    "genres": [
+      "Action RPG",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Sifu",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 81,
+    "genres": [
+      "Action-Aventura",
+      "Soulslike"
+    ]
+  },
+  {
+    "title": "Baldur's Gate 3",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 96,
+    "genres": [
+      "RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Divinity: Original Sin 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 93,
+    "genres": [
+      "RPG",
+      "Estratégia",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Persona 5 Royal",
+    "platforms": [
+      "PS4",
+      "Switch",
+      "PC"
+    ],
+    "score": 95,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Persona 4 Golden",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 93,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Persona 3 Reload",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 91,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "The Witcher 3: Wild Hunt",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Mass Effect Legendary Edition",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 93,
+    "genres": [
+      "RPG",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Dragon Age: Origins",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 91,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Dragon Age: The Veilguard",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 83,
+    "genres": [
+      "RPG",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Like a Dragon: Infinite Wealth",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 91,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Yakuza: Like a Dragon",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 85,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Yakuza 0",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 85,
+    "genres": [
+      "Action-Aventura",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Dragon Quest XI S",
+    "platforms": [
+      "Switch",
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Tales of Arise",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 84,
+    "genres": [
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Final Fantasy VII Remake",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Final Fantasy XVI",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Final Fantasy XIV: A Realm Reborn",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 90,
+    "genres": [
+      "RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Xenoblade Chronicles 3",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 89,
+    "genres": [
+      "RPG",
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Xenoblade Chronicles: Definitive Edition",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 89,
+    "genres": [
+      "RPG",
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Fire Emblem: Three Houses",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 89,
+    "genres": [
+      "RPG",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Divinity: Original Sin",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "RPG",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Pillars of Eternity II: Deadfire",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Tyranny",
+    "platforms": [
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Pathfinder: Wrath of the Righteous",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 84,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Disco Elysium",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 97,
+    "genres": [
+      "RPG",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Planescape: Torment Enhanced Edition",
+    "platforms": [
+      "PC"
+    ],
+    "score": 86,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Wasteland 3",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 85,
+    "genres": [
+      "RPG",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Cyberpunk 2077",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 86,
+    "genres": [
+      "RPG",
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Star Wars: Knights of the Old Republic",
+    "platforms": [
+      "PC"
+    ],
+    "score": 93,
+    "genres": [
+      "RPG",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Octopath Traveler II",
+    "platforms": [
+      "Switch",
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "RPG"
+    ]
+  },
+  {
+    "title": "Red Dead Redemption 2",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 97,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "GTA V",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 97,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "God of War",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 94,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "God of War Ragnarök",
+    "platforms": [
+      "PS4",
+      "PS5"
+    ],
+    "score": 94,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Uncharted 4: A Thief's End",
+    "platforms": [
+      "PS4"
+    ],
+    "score": 93,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "The Last of Us Remastered",
+    "platforms": [
+      "PS4"
+    ],
+    "score": 95,
+    "genres": [
+      "Action-Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "The Last of Us Part II",
+    "platforms": [
+      "PS4",
+      "PS5"
+    ],
+    "score": 93,
+    "genres": [
+      "Action-Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Ghost of Tsushima",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 83,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Horizon Zero Dawn",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 89,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Horizon Forbidden West",
+    "platforms": [
+      "PS4",
+      "PS5"
+    ],
+    "score": 88,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Spider-Man",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Marvel's Spider-Man 2",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 90,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Spider-Man: Miles Morales",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Hogwarts Legacy",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC",
+      "Switch"
+    ],
+    "score": 84,
+    "genres": [
+      "Action RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Assassin's Creed Odyssey",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "Action-Aventura",
+      "RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Assassin's Creed Origins",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 81,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Assassin's Creed Valhalla",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 83,
+    "genres": [
+      "Action-Aventura",
+      "RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Watch Dogs 2",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 78,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Batman: Arkham Knight",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Batman: Arkham City",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 96,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Control",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "Action-Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Death Stranding",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Death Stranding: Director's Cut",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Returnal",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 86,
+    "genres": [
+      "Action RPG",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Prey",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 84,
+    "genres": [
+      "FPS",
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Deus Ex: Human Revolution",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 89,
+    "genres": [
+      "RPG",
+      "FPS",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Dishonored",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 91,
+    "genres": [
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Dishonored 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 86,
+    "genres": [
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Hi-Fi Rush",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Alan Wake 2",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 89,
+    "genres": [
+      "Action-Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Dragon's Dogma 2",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Action RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Monster Hunter World",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 90,
+    "genres": [
+      "Action RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Monster Hunter Rise",
+    "platforms": [
+      "Switch",
+      "PC",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Action RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Monster Hunter Wilds",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "Action RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Devil May Cry 5",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Bayonetta 3",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Astral Chain",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "NieR: Automata",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "Action RPG",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "NieR Replicant",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Action RPG",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Ghostrunner",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC",
+      "Switch"
+    ],
+    "score": 80,
+    "genres": [
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Prince of Persia: The Lost Crown",
+    "platforms": [
+      "Switch",
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "Metroidvania",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Astro Bot",
+    "platforms": [
+      "PS5"
+    ],
+    "score": 94,
+    "genres": [
+      "Plataforma",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Ratchet & Clank: Rift Apart",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "Plataforma",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "inFamous: Second Son",
+    "platforms": [
+      "PS4"
+    ],
+    "score": 80,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Days Gone",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 71,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Deathloop",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "FPS",
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Gotham Knights",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 70,
+    "genres": [
+      "Action-Aventura",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Portal 2",
+    "platforms": [
+      "PC"
+    ],
+    "score": 95,
+    "genres": [
+      "Puzzle",
+      "Co-op",
+      "FPS"
+    ]
+  },
+  {
+    "title": "Portal",
+    "platforms": [
+      "PC"
+    ],
+    "score": 90,
+    "genres": [
+      "Puzzle",
+      "FPS"
+    ]
+  },
+  {
+    "title": "Half-Life 2",
+    "platforms": [
+      "PC"
+    ],
+    "score": 96,
+    "genres": [
+      "FPS",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Half-Life: Alyx",
+    "platforms": [
+      "PC"
+    ],
+    "score": 93,
+    "genres": [
+      "FPS",
+      "Horror",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "DOOM Eternal",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC",
+      "Switch"
+    ],
+    "score": 88,
+    "genres": [
+      "FPS"
+    ]
+  },
+  {
+    "title": "DOOM (2016)",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "FPS"
+    ]
+  },
+  {
+    "title": "Titanfall 2",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 89,
+    "genres": [
+      "FPS",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Halo Infinite",
+    "platforms": [
+      "PC"
+    ],
+    "score": 87,
+    "genres": [
+      "FPS",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Bioshock",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 96,
+    "genres": [
+      "FPS",
+      "RPG",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Bioshock Infinite",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 94,
+    "genres": [
+      "FPS",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Bioshock 2",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "FPS",
+      "RPG",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Metro Exodus",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "FPS",
+      "Action-Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Far Cry 6",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 73,
+    "genres": [
+      "FPS",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Far Cry 5",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 81,
+    "genres": [
+      "FPS",
+      "Mundo Aberto",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Far Cry: New Dawn",
+    "platforms": [
+      "PS4",
+      "PC"
+    ],
+    "score": 73,
+    "genres": [
+      "FPS",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Borderlands 3",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 81,
+    "genres": [
+      "FPS",
+      "RPG",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Outer Worlds",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "FPS",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Wolfenstein II: The New Colossus",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "FPS",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Apex Legends",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "FPS",
+      "Battle Royale"
+    ]
+  },
+  {
+    "title": "Valorant",
+    "platforms": [
+      "PC"
+    ],
+    "score": 80,
+    "genres": [
+      "FPS"
+    ]
+  },
+  {
+    "title": "Deep Rock Galactic",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "FPS",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Super Mario Odyssey",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 97,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Super Mario Bros. Wonder",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "Plataforma",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "The Legend of Zelda: Breath of the Wild",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 97,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "The Legend of Zelda: Tears of the Kingdom",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 96,
+    "genres": [
+      "Action-Aventura",
+      "Mundo Aberto",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "The Legend of Zelda: Echoes of Wisdom",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 89,
+    "genres": [
+      "Action-Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "New Super Mario Bros. U Deluxe",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 81,
+    "genres": [
+      "Plataforma",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Donkey Kong Country: Tropical Freeze",
+    "platforms": [
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Kirby and the Forgotten Land",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 84,
+    "genres": [
+      "Plataforma",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Celeste",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 94,
+    "genres": [
+      "Plataforma",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Hollow Knight",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 90,
+    "genres": [
+      "Metroidvania",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Ori and the Will of the Wisps",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 90,
+    "genres": [
+      "Metroidvania",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Ori and the Blind Forest",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Metroidvania",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Cuphead",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Plataforma",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Shovel Knight",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 90,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "A Hat in Time",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Crash Bandicoot N. Sane Trilogy",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 80,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Rayman Legends",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "Plataforma",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Psychonauts 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 90,
+    "genres": [
+      "Plataforma",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Astro's Playroom",
+    "platforms": [
+      "PS5"
+    ],
+    "score": 90,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Metroid Dread",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 88,
+    "genres": [
+      "Metroidvania",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Metroid Prime Remastered",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 94,
+    "genres": [
+      "FPS",
+      "Metroidvania",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Spyro Reignited Trilogy",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 78,
+    "genres": [
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Dead Cells",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 88,
+    "genres": [
+      "Metroidvania",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Axiom Verge 2",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 79,
+    "genres": [
+      "Metroidvania"
+    ]
+  },
+  {
+    "title": "Bloodstained: Ritual of the Night",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 84,
+    "genres": [
+      "Metroidvania",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Blasphemous",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 76,
+    "genres": [
+      "Metroidvania",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Blasphemous 2",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 81,
+    "genres": [
+      "Metroidvania",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Haiku, the Robot",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 83,
+    "genres": [
+      "Metroidvania"
+    ]
+  },
+  {
+    "title": "Neon White",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Plataforma",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Hades",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 93,
+    "genres": [
+      "Roguelike",
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Hades II",
+    "platforms": [
+      "PC"
+    ],
+    "score": 93,
+    "genres": [
+      "Roguelike",
+      "Action RPG"
+    ]
+  },
+  {
+    "title": "Slay the Spire",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 89,
+    "genres": [
+      "Roguelike",
+      "Card Game"
+    ]
+  },
+  {
+    "title": "Into the Breach",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 90,
+    "genres": [
+      "Roguelike",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Binding of Isaac: Afterbirth+",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Enter the Gungeon",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 83,
+    "genres": [
+      "Roguelike",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Risk of Rain 2",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Roguelike",
+      "Action-Aventura",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Spelunky 2",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 90,
+    "genres": [
+      "Roguelike",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Balatro",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 90,
+    "genres": [
+      "Roguelike",
+      "Card Game"
+    ]
+  },
+  {
+    "title": "Vampire Survivors",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 86,
+    "genres": [
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "FTL: Faster Than Light",
+    "platforms": [
+      "PC"
+    ],
+    "score": 84,
+    "genres": [
+      "Roguelike",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Darkest Dungeon",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Roguelike",
+      "RPG",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Noita",
+    "platforms": [
+      "PC"
+    ],
+    "score": 83,
+    "genres": [
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Inscryption",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 85,
+    "genres": [
+      "Roguelike",
+      "Card Game",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Resident Evil 2",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 91,
+    "genres": [
+      "Horror",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Resident Evil 4",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC",
+      "Switch"
+    ],
+    "score": 93,
+    "genres": [
+      "Horror",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Resident Evil Village",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 84,
+    "genres": [
+      "Horror",
+      "FPS"
+    ]
+  },
+  {
+    "title": "Resident Evil 3",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 73,
+    "genres": [
+      "Horror",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Resident Evil 7",
+    "platforms": [
+      "PS4",
+      "PC",
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Horror",
+      "FPS"
+    ]
+  },
+  {
+    "title": "Dead Space",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 89,
+    "genres": [
+      "Horror",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Silent Hill 2",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 84,
+    "genres": [
+      "Horror",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Little Nightmares II",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 80,
+    "genres": [
+      "Horror",
+      "Plataforma",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Alien: Isolation",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 79,
+    "genres": [
+      "Horror",
+      "Action-Aventura",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Amnesia: The Dark Descent",
+    "platforms": [
+      "PC"
+    ],
+    "score": 85,
+    "genres": [
+      "Horror",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "SOMA",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 84,
+    "genres": [
+      "Horror",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Until Dawn",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 79,
+    "genres": [
+      "Horror",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Inside",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 91,
+    "genres": [
+      "Horror",
+      "Plataforma",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Limbo",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 90,
+    "genres": [
+      "Horror",
+      "Plataforma",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Outlast",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 80,
+    "genres": [
+      "Horror"
+    ]
+  },
+  {
+    "title": "Phasmophobia",
+    "platforms": [
+      "PC"
+    ],
+    "score": 80,
+    "genres": [
+      "Horror",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Visage",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 82,
+    "genres": [
+      "Horror"
+    ]
+  },
+  {
+    "title": "The Witness",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Outer Wilds",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Return of the Obra Dinn",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 86,
+    "genres": [
+      "Puzzle",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Baba Is You",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "The Talos Principle",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "The Talos Principle 2",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 86,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Cocoon",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Puzzle",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Tunic",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Puzzle",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Superliminal",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 77,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Viewfinder",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 80,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Patrick's Parabox",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "The Stanley Parable: Ultra Deluxe",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 88,
+    "genres": [
+      "Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "What Remains of Edith Finch",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 88,
+    "genres": [
+      "Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "XCOM 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Estratégia",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Civilization VI",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Frostpunk",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Estratégia",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "This War of Mine",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Estratégia",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Invisible, Inc.",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Estratégia",
+      "Stealth",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Total War: Warhammer III",
+    "platforms": [
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "RimWorld",
+    "platforms": [
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "Estratégia",
+      "Simulação"
+    ]
+  },
+  {
+    "title": "Factorio",
+    "platforms": [
+      "PC"
+    ],
+    "score": 90,
+    "genres": [
+      "Estratégia",
+      "Simulação"
+    ]
+  },
+  {
+    "title": "Age of Empires IV",
+    "platforms": [
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "StarCraft II",
+    "platforms": [
+      "PC"
+    ],
+    "score": 93,
+    "genres": [
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Desperados III",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 84,
+    "genres": [
+      "Estratégia",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Valkyria Chronicles 4",
+    "platforms": [
+      "Switch",
+      "PC",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Estratégia",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Hitman 3",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Stealth",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Hitman 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 82,
+    "genres": [
+      "Stealth",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Hitman",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 83,
+    "genres": [
+      "Stealth",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Mark of the Ninja: Remastered",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Stealth",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Monster Train",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS5"
+    ],
+    "score": 86,
+    "genres": [
+      "Card Game",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Hearthstone",
+    "platforms": [
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Card Game"
+    ]
+  },
+  {
+    "title": "Marvel Snap",
+    "platforms": [
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Card Game"
+    ]
+  },
+  {
+    "title": "Life is Strange",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Life is Strange 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 78,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Detroit: Become Human",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 78,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Heavy Rain",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Omori",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "RPG",
+      "Horror",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Pentiment",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Aventura",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Norco",
+    "platforms": [
+      "PC",
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Night in the Woods",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Aventura",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Unpacking",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 82,
+    "genres": [
+      "Puzzle",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "The Forgotten City",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 82,
+    "genres": [
+      "Aventura",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Spiritfarer",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Aventura",
+      "Simulação"
+    ]
+  },
+  {
+    "title": "Oxenfree II",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS5"
+    ],
+    "score": 79,
+    "genres": [
+      "Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "The Walking Dead: Season 1",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "Aventura",
+      "Horror"
+    ]
+  },
+  {
+    "title": "Batman: The Telltale Series",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 76,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Firewatch",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 82,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Gone Home",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Overcooked! All You Can Eat",
+    "platforms": [
+      "Switch",
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 84,
+    "genres": [
+      "Co-op",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Overcooked 2",
+    "platforms": [
+      "Switch",
+      "PS4",
+      "PC"
+    ],
+    "score": 82,
+    "genres": [
+      "Co-op",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "It Takes Two",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 89,
+    "genres": [
+      "Co-op",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "A Way Out",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 78,
+    "genres": [
+      "Co-op",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Split Fiction",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 85,
+    "genres": [
+      "Co-op",
+      "Action-Aventura",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Moving Out",
+    "platforms": [
+      "Switch",
+      "PS4",
+      "PC"
+    ],
+    "score": 74,
+    "genres": [
+      "Co-op",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Brothers: A Tale of Two Sons",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 88,
+    "genres": [
+      "Aventura",
+      "Puzzle",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Gran Turismo 7",
+    "platforms": [
+      "PS4",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Esportes",
+      "Simulação"
+    ]
+  },
+  {
+    "title": "Forza Horizon 5",
+    "platforms": [
+      "PC"
+    ],
+    "score": 92,
+    "genres": [
+      "Esportes",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Forza Horizon 4",
+    "platforms": [
+      "PC"
+    ],
+    "score": 92,
+    "genres": [
+      "Esportes",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Mario Kart 8 Deluxe",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 92,
+    "genres": [
+      "Esportes",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Rocket League",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 85,
+    "genres": [
+      "Esportes",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Riders Republic",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 73,
+    "genres": [
+      "Esportes",
+      "Mundo Aberto",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Street Fighter 6",
+    "platforms": [
+      "PS4",
+      "PS5",
+      "PC"
+    ],
+    "score": 92,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Tekken 8",
+    "platforms": [
+      "PS5",
+      "PC"
+    ],
+    "score": 88,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Guilty Gear: Strive",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Dragon Ball FighterZ",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Mortal Kombat 11",
+    "platforms": [
+      "PC",
+      "PS4",
+      "Switch"
+    ],
+    "score": 82,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Injustice 2",
+    "platforms": [
+      "PC",
+      "PS4"
+    ],
+    "score": 87,
+    "genres": [
+      "Luta"
+    ]
+  },
+  {
+    "title": "Super Smash Bros. Ultimate",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 93,
+    "genres": [
+      "Luta",
+      "Plataforma",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Stardew Valley",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 89,
+    "genres": [
+      "Simulação",
+      "RPG"
+    ]
+  },
+  {
+    "title": "Minecraft",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 93,
+    "genres": [
+      "Sandbox",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Terraria",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Sandbox",
+      "Action-Aventura",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Valheim",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 80,
+    "genres": [
+      "Sandbox",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Subnautica",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 87,
+    "genres": [
+      "Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "No Man's Sky",
+    "platforms": [
+      "PC",
+      "PS4",
+      "PS5",
+      "Switch"
+    ],
+    "score": 79,
+    "genres": [
+      "Aventura",
+      "Sandbox",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Animal Crossing: New Horizons",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 90,
+    "genres": [
+      "Simulação",
+      "Sandbox"
+    ]
+  },
+  {
+    "title": "Satisfactory",
+    "platforms": [
+      "PC"
+    ],
+    "score": 80,
+    "genres": [
+      "Simulação",
+      "Sandbox",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Dave the Diver",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 90,
+    "genres": [
+      "Aventura",
+      "RPG",
+      "Simulação"
+    ]
+  },
+  {
+    "title": "Cult of the Lamb",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4",
+      "PS5"
+    ],
+    "score": 83,
+    "genres": [
+      "Roguelike",
+      "Estratégia"
+    ]
+  },
+  {
+    "title": "Undertale",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 92,
+    "genres": [
+      "RPG",
+      "Aventura"
+    ]
+  },
+  {
+    "title": "Blue Prince",
+    "platforms": [
+      "PC",
+      "PS5"
+    ],
+    "score": 86,
+    "genres": [
+      "Puzzle",
+      "Roguelike"
+    ]
+  },
+  {
+    "title": "Katana ZERO",
+    "platforms": [
+      "PC",
+      "Switch",
+      "PS4"
+    ],
+    "score": 83,
+    "genres": [
+      "Action-Aventura",
+      "Plataforma",
+      "Stealth"
+    ]
+  },
+  {
+    "title": "Pikmin 4",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Estratégia",
+      "Action-Aventura"
+    ]
+  },
+  {
+    "title": "Luigi's Mansion 3",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 86,
+    "genres": [
+      "Aventura",
+      "Puzzle",
+      "Co-op"
+    ]
+  },
+  {
+    "title": "Super Mario RPG",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 88,
+    "genres": [
+      "RPG",
+      "Plataforma"
+    ]
+  },
+  {
+    "title": "Pokémon Legends: Arceus",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 83,
+    "genres": [
+      "RPG",
+      "Action RPG",
+      "Mundo Aberto"
+    ]
+  },
+  {
+    "title": "Splatoon 3",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 83,
+    "genres": [
+      "FPS",
+      "Co-op",
+      "Esportes"
+    ]
+  },
+  {
+    "title": "The Legend of Zelda: Link's Awakening",
+    "platforms": [
+      "Switch"
+    ],
+    "score": 87,
+    "genres": [
+      "Action-Aventura",
+      "Puzzle"
+    ]
+  },
+  {
+    "title": "Toem",
+    "platforms": [
+      "Switch",
+      "PC",
+      "PS4",
+      "PS5"
+    ],
+    "score": 82,
+    "genres": [
+      "Aventura",
+      "Puzzle"
+    ]
+  }
+]
