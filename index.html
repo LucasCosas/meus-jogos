@@ -1343,7 +1343,7 @@ async function init() {
   ]);
 
   if (catRes.status === 'fulfilled')
-    GAME_CATALOG = catRes.value.map(g => [g.title, g.platforms, g.score, g.genres]);
+    GAME_CATALOG = catRes.value.map(g => [g.title, g.platforms, g.metacritic ?? g.score, g.genres]);
 
   if (gamesRes.status === 'fulfilled' && Array.isArray(gamesRes.value.games)) {
     _games   = gamesRes.value.games;
