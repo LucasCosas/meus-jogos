@@ -228,22 +228,6 @@
     ]
   },
   {
-    "title": "Red Dead Redemption 2",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4"
-    ],
-    "metacritic": 96,
-    "rawg_id": 28,
-    "released": "2018-10-26",
-    "genres": [
-      "Action",
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "Half-Life 2",
     "platforms": [
       "PC",
@@ -442,21 +426,6 @@
     ]
   },
   {
-    "title": "The Last Of Us Remastered",
-    "platforms": [
-      "PS4"
-    ],
-    "metacritic": 95,
-    "rawg_id": 3636,
-    "released": "2014-07-29",
-    "genres": [
-      "Adventure",
-      "Action",
-      "Action-Aventura",
-      "Horror"
-    ]
-  },
-  {
     "title": "The Legend of Zelda: A Link to the Past",
     "platforms": [
       "Switch",
@@ -536,26 +505,6 @@
     "released": "2017-08-29",
     "genres": [
       "Strategy"
-    ]
-  },
-  {
-    "title": "Elden Ring",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series"
-    ],
-    "metacritic": 95,
-    "rawg_id": 326243,
-    "released": "2022-02-25",
-    "genres": [
-      "Action",
-      "RPG",
-      "Action RPG",
-      "Soulslike",
-      "Mundo Aberto"
     ]
   },
   {
@@ -826,26 +775,6 @@
     ]
   },
   {
-    "title": "The Elder Scrolls V: Skyrim",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series",
-      "Switch",
-      "Xbox 360",
-      "PS3"
-    ],
-    "metacritic": 94,
-    "rawg_id": 5679,
-    "released": "2011-11-11",
-    "genres": [
-      "Action",
-      "RPG"
-    ]
-  },
-  {
     "title": "Grim Fandango",
     "platforms": [
       "PC"
@@ -1045,32 +974,6 @@
     ]
   },
   {
-    "title": "God of War",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 94,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "God of War Ragnarök",
-    "platforms": [
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 94,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura"
-    ]
-  },
-  {
     "title": "Astro Bot",
     "platforms": [
       "PS5"
@@ -1251,45 +1154,6 @@
     "genres": [
       "Massively Multiplayer",
       "RPG"
-    ]
-  },
-  {
-    "title": "Hades",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series",
-      "Switch"
-    ],
-    "metacritic": 93,
-    "rawg_id": 274755,
-    "released": "2020-09-17",
-    "genres": [
-      "Indie",
-      "Adventure",
-      "Action",
-      "RPG",
-      "Roguelike",
-      "Action RPG"
-    ]
-  },
-  {
-    "title": "The Last of Us Part II",
-    "platforms": [
-      "PS5",
-      "PS4"
-    ],
-    "metacritic": 93,
-    "rawg_id": 51325,
-    "released": "2020-06-19",
-    "genres": [
-      "Shooter",
-      "Adventure",
-      "Action",
-      "Action-Aventura",
-      "Horror"
     ]
   },
   {
@@ -1548,21 +1412,6 @@
     ]
   },
   {
-    "title": "Persona 5",
-    "platforms": [
-      "PS4",
-      "PS3"
-    ],
-    "metacritic": 93,
-    "rawg_id": 49,
-    "released": "2016-09-15",
-    "genres": [
-      "Adventure",
-      "Action",
-      "RPG"
-    ]
-  },
-  {
     "title": "Mass Effect Legendary Edition",
     "platforms": [
       "PC",
@@ -1574,18 +1423,6 @@
     "released": null,
     "genres": [
       "RPG",
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Uncharted 4: A Thief's End",
-    "platforms": [
-      "PS4"
-    ],
-    "metacritic": 93,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
       "Action-Aventura"
     ]
   },
@@ -2065,22 +1902,6 @@
     ]
   },
   {
-    "title": "Bloodborne",
-    "platforms": [
-      "PS4"
-    ],
-    "metacritic": 92,
-    "rawg_id": 3387,
-    "released": "2015-03-24",
-    "genres": [
-      "Action",
-      "RPG",
-      "Action RPG",
-      "Soulslike",
-      "Horror"
-    ]
-  },
-  {
     "title": "Undertale",
     "platforms": [
       "PC",
@@ -2283,24 +2104,6 @@
     ]
   },
   {
-    "title": "Grand Theft Auto V",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series",
-      "Xbox 360",
-      "PS3"
-    ],
-    "metacritic": 92,
-    "rawg_id": 3498,
-    "released": "2013-09-17",
-    "genres": [
-      "Action"
-    ]
-  },
-  {
     "title": "The Witcher 3: Wild Hunt – Blood and Wine",
     "platforms": [
       "PC",
@@ -2431,43 +2234,6 @@
     "genres": [
       "Action",
       "Sports"
-    ]
-  },
-  {
-    "title": "Journey",
-    "platforms": [
-      "PC",
-      "PS4",
-      "iOS",
-      "PS3"
-    ],
-    "metacritic": 92,
-    "rawg_id": 3254,
-    "released": "2012-03-13",
-    "genres": [
-      "Family",
-      "Indie",
-      "Adventure"
-    ]
-  },
-  {
-    "title": "The Witcher 3: Wild Hunt",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series",
-      "Switch",
-      "Mac"
-    ],
-    "metacritic": 92,
-    "rawg_id": 3328,
-    "released": "2015-05-18",
-    "genres": [
-      "Action",
-      "RPG",
-      "Mundo Aberto"
     ]
   },
   {
@@ -2637,20 +2403,6 @@
     "genres": [
       "Shooter",
       "Action"
-    ]
-  },
-  {
-    "title": "Shadow of the Colossus",
-    "platforms": [
-      "PS2"
-    ],
-    "metacritic": 91,
-    "rawg_id": 59248,
-    "released": "2005-10-18",
-    "genres": [
-      "Adventure",
-      "Action",
-      "RPG"
     ]
   },
   {
@@ -3312,43 +3064,6 @@
     ]
   },
   {
-    "title": "Celeste",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch",
-      "Mac",
-      "Linux"
-    ],
-    "metacritic": 91,
-    "rawg_id": 22121,
-    "released": "2018-01-25",
-    "genres": [
-      "Platformer",
-      "Indie",
-      "Plataforma",
-      "Puzzle"
-    ]
-  },
-  {
-    "title": "Metal Gear Solid V: The Phantom Pain",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Xbox 360",
-      "PS3"
-    ],
-    "metacritic": 91,
-    "rawg_id": 3192,
-    "released": "2015-09-01",
-    "genres": [
-      "Shooter",
-      "Action"
-    ]
-  },
-  {
     "title": "Dragon Age: Origins",
     "platforms": [
       "PC",
@@ -3602,24 +3317,6 @@
     "rawg_id": 4123,
     "released": "2009-08-25",
     "genres": [
-      "Action"
-    ]
-  },
-  {
-    "title": "Overwatch",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch"
-    ],
-    "metacritic": 91,
-    "rawg_id": 22508,
-    "released": "2016-05-24",
-    "genres": [
-      "Casual",
-      "Shooter",
-      "Massively Multiplayer",
       "Action"
     ]
   },
@@ -4086,24 +3783,6 @@
     ]
   },
   {
-    "title": "Sekiro: Shadows Die Twice",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4"
-    ],
-    "metacritic": 90,
-    "rawg_id": 50734,
-    "released": "2019-03-22",
-    "genres": [
-      "Action",
-      "RPG",
-      "Action RPG",
-      "Soulslike",
-      "Stealth"
-    ]
-  },
-  {
     "title": "Halo: Combat Evolved",
     "platforms": [
       "PC",
@@ -4411,23 +4090,6 @@
       "Action",
       "Roguelike",
       "Plataforma"
-    ]
-  },
-  {
-    "title": "Diablo IV",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series"
-    ],
-    "metacritic": 90,
-    "rawg_id": 388309,
-    "released": "2023-06-06",
-    "genres": [
-      "Action",
-      "RPG"
     ]
   },
   {
@@ -4875,20 +4537,6 @@
     ]
   },
   {
-    "title": "Marvel's Spider-Man 2",
-    "platforms": [
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 90,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "Monster Hunter World",
     "platforms": [
       "PS4",
@@ -4917,34 +4565,6 @@
     ]
   },
   {
-    "title": "Astro's Playroom",
-    "platforms": [
-      "PS5"
-    ],
-    "metacritic": 90,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Plataforma"
-    ]
-  },
-  {
-    "title": "Balatro",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 90,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Roguelike",
-      "Card Game"
-    ]
-  },
-  {
     "title": "Factorio",
     "platforms": [
       "PC"
@@ -4954,23 +4574,6 @@
     "released": null,
     "genres": [
       "Estratégia",
-      "Simulação"
-    ]
-  },
-  {
-    "title": "Dave the Diver",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 90,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura",
-      "RPG",
       "Simulação"
     ]
   },
@@ -5328,21 +4931,6 @@
     "genres": [
       "Strategy",
       "Simulation"
-    ]
-  },
-  {
-    "title": "Demon's Souls",
-    "platforms": [
-      "PS3"
-    ],
-    "metacritic": 89,
-    "rawg_id": 4108,
-    "released": "2009-02-05",
-    "genres": [
-      "Action",
-      "RPG",
-      "Action RPG",
-      "Soulslike"
     ]
   },
   {
@@ -6069,22 +5657,6 @@
     ]
   },
   {
-    "title": "Horizon Zero Dawn",
-    "platforms": [
-      "PC",
-      "PS4"
-    ],
-    "metacritic": 89,
-    "rawg_id": 278,
-    "released": "2017-02-28",
-    "genres": [
-      "Action",
-      "RPG",
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "ESPN NBA Basketball",
     "platforms": [
       "PS2"
@@ -6166,25 +5738,6 @@
       "Adventure",
       "Action",
       "RPG"
-    ]
-  },
-  {
-    "title": "What Remains of Edith Finch",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch",
-      "iOS"
-    ],
-    "metacritic": 89,
-    "rawg_id": 42,
-    "released": "2017-04-23",
-    "genres": [
-      "Indie",
-      "Adventure",
-      "Aventura",
-      "Puzzle"
     ]
   },
   {
@@ -6312,21 +5865,6 @@
     "genres": [
       "Action-Aventura",
       "Puzzle"
-    ]
-  },
-  {
-    "title": "Slay the Spire",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS4"
-    ],
-    "metacritic": 89,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Roguelike",
-      "Card Game"
     ]
   },
   {
@@ -6645,45 +6183,6 @@
     ]
   },
   {
-    "title": "Hollow Knight",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch",
-      "Mac",
-      "Linux"
-    ],
-    "metacritic": 88,
-    "rawg_id": 9767,
-    "released": "2017-02-23",
-    "genres": [
-      "Platformer",
-      "Indie",
-      "Action",
-      "Metroidvania",
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Deathloop",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox Series"
-    ],
-    "metacritic": 88,
-    "rawg_id": 326251,
-    "released": "2021-09-14",
-    "genres": [
-      "Action",
-      "RPG",
-      "FPS",
-      "Action-Aventura",
-      "Stealth"
-    ]
-  },
-  {
     "title": "NHL 10",
     "platforms": [
       "Xbox 360",
@@ -6857,23 +6356,6 @@
     ]
   },
   {
-    "title": "Injustice 2",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "iOS",
-      "Android"
-    ],
-    "metacritic": 88,
-    "rawg_id": 38,
-    "released": "2017-05-09",
-    "genres": [
-      "Fighting",
-      "Luta"
-    ]
-  },
-  {
     "title": "Alto's Odyssey",
     "platforms": [
       "PC",
@@ -6935,22 +6417,6 @@
     "released": "2010-11-16",
     "genres": [
       "Action"
-    ]
-  },
-  {
-    "title": "Ratchet & Clank: Rift Apart",
-    "platforms": [
-      "PC",
-      "PS5"
-    ],
-    "metacritic": 88,
-    "rawg_id": 727315,
-    "released": "2021-06-11",
-    "genres": [
-      "Adventure",
-      "Action",
-      "Plataforma",
-      "Action-Aventura"
     ]
   },
   {
@@ -7163,24 +6629,6 @@
       "Adventure",
       "Simulation",
       "Puzzle"
-    ]
-  },
-  {
-    "title": "Tony Hawk's Pro Skater 1 + 2",
-    "platforms": [
-      "PC",
-      "PS5",
-      "Xbox One",
-      "PS4",
-      "Xbox Series",
-      "Switch"
-    ],
-    "metacritic": 88,
-    "rawg_id": 442847,
-    "released": "2020-09-04",
-    "genres": [
-      "Arcade",
-      "Sports"
     ]
   },
   {
@@ -7651,29 +7099,6 @@
     ]
   },
   {
-    "title": "Dead Cells",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch",
-      "iOS",
-      "Mac",
-      "Linux"
-    ],
-    "metacritic": 88,
-    "rawg_id": 11726,
-    "released": "2018-08-07",
-    "genres": [
-      "Platformer",
-      "Indie",
-      "Action",
-      "RPG",
-      "Metroidvania",
-      "Roguelike"
-    ]
-  },
-  {
     "title": "NHL 11",
     "platforms": [
       "Xbox 360",
@@ -8025,34 +7450,6 @@
     ]
   },
   {
-    "title": "Limbo",
-    "platforms": [
-      "PC",
-      "Xbox One",
-      "PS4",
-      "Switch",
-      "iOS",
-      "Android",
-      "Mac",
-      "Linux",
-      "Xbox 360",
-      "PS3",
-      "PS Vita"
-    ],
-    "metacritic": 88,
-    "rawg_id": 1030,
-    "released": "2010-07-21",
-    "genres": [
-      "Adventure",
-      "Action",
-      "Puzzle",
-      "Indie",
-      "Platformer",
-      "Horror",
-      "Plataforma"
-    ]
-  },
-  {
     "title": "Nioh",
     "platforms": [
       "PC",
@@ -8166,39 +7563,11 @@
     ]
   },
   {
-    "title": "Horizon Forbidden West",
-    "platforms": [
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 88,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "Monster Hunter Rise",
     "platforms": [
       "Switch",
       "PC",
       "PS4"
-    ],
-    "metacritic": 88,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Co-op"
-    ]
-  },
-  {
-    "title": "Monster Hunter Wilds",
-    "platforms": [
-      "PS5",
-      "PC"
     ],
     "metacritic": 88,
     "rawg_id": null,
@@ -8541,19 +7910,6 @@
     ]
   },
   {
-    "title": "Batman: Arkham Knight",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura"
-    ]
-  },
-  {
     "title": "Death Stranding: Director's Cut",
     "platforms": [
       "PS5",
@@ -8581,20 +7937,6 @@
     ]
   },
   {
-    "title": "Dragon's Dogma 2",
-    "platforms": [
-      "PC",
-      "PS5"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "Bayonetta 3",
     "platforms": [
       "Switch"
@@ -8616,22 +7958,6 @@
     "released": null,
     "genres": [
       "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Prince of Persia: The Lost Crown",
-    "platforms": [
-      "Switch",
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Metroidvania",
-      "Plataforma"
     ]
   },
   {
@@ -8692,19 +8018,6 @@
     ]
   },
   {
-    "title": "The Witness",
-    "platforms": [
-      "PC",
-      "PS4"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Puzzle"
-    ]
-  },
-  {
     "title": "Baba Is You",
     "platforms": [
       "PC",
@@ -8715,22 +8028,6 @@
     "released": null,
     "genres": [
       "Puzzle"
-    ]
-  },
-  {
-    "title": "Cocoon",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Puzzle",
-      "Aventura"
     ]
   },
   {
@@ -8746,34 +8043,6 @@
       "Estratégia",
       "Stealth",
       "Roguelike"
-    ]
-  },
-  {
-    "title": "Hitman 3",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Stealth",
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Heavy Rain",
-    "platforms": [
-      "PC",
-      "PS4"
-    ],
-    "metacritic": 87,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura"
     ]
   },
   {
@@ -8890,50 +8159,6 @@
     ]
   },
   {
-    "title": "Cyberpunk 2077",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "RPG",
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
-    "title": "Returnal",
-    "platforms": [
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Roguelike"
-    ]
-  },
-  {
-    "title": "Dishonored 2",
-    "platforms": [
-      "PC",
-      "PS4"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Stealth"
-    ]
-  },
-  {
     "title": "Vampire Survivors",
     "platforms": [
       "PC",
@@ -8977,37 +8202,6 @@
     ]
   },
   {
-    "title": "Tunic",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5",
-      "Switch"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Puzzle",
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Monster Train",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS5"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Card Game",
-      "Roguelike"
-    ]
-  },
-  {
     "title": "Norco",
     "platforms": [
       "PC",
@@ -9018,34 +8212,6 @@
     "released": null,
     "genres": [
       "Aventura"
-    ]
-  },
-  {
-    "title": "Gone Home",
-    "platforms": [
-      "PC",
-      "PS4",
-      "Switch"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura"
-    ]
-  },
-  {
-    "title": "Blue Prince",
-    "platforms": [
-      "PC",
-      "PS5"
-    ],
-    "metacritic": 86,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Puzzle",
-      "Roguelike"
     ]
   },
   {
@@ -9135,36 +8301,6 @@
     ]
   },
   {
-    "title": "Assassin's Creed Odyssey",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "RPG",
-      "Mundo Aberto"
-    ]
-  },
-  {
-    "title": "Control",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Horror"
-    ]
-  },
-  {
     "title": "DOOM (2016)",
     "platforms": [
       "PS4",
@@ -9242,22 +8378,6 @@
     ]
   },
   {
-    "title": "Inscryption",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Roguelike",
-      "Card Game",
-      "Horror"
-    ]
-  },
-  {
     "title": "Amnesia: The Dark Descent",
     "platforms": [
       "PC"
@@ -9267,22 +8387,6 @@
     "released": null,
     "genres": [
       "Horror",
-      "Puzzle"
-    ]
-  },
-  {
-    "title": "Outer Wilds",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5",
-      "Switch"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura",
       "Puzzle"
     ]
   },
@@ -9311,37 +8415,6 @@
     "released": null,
     "genres": [
       "Aventura"
-    ]
-  },
-  {
-    "title": "Split Fiction",
-    "platforms": [
-      "PC",
-      "PS5"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Co-op",
-      "Action-Aventura",
-      "Plataforma"
-    ]
-  },
-  {
-    "title": "Rocket League",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5",
-      "Switch"
-    ],
-    "metacritic": 85,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Esportes",
-      "Co-op"
     ]
   },
   {
@@ -9384,22 +8457,6 @@
     "released": null,
     "genres": [
       "RPG"
-    ]
-  },
-  {
-    "title": "Hogwarts Legacy",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC",
-      "Switch"
-    ],
-    "metacritic": 84,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Mundo Aberto"
     ]
   },
   {
@@ -9474,20 +8531,6 @@
     ]
   },
   {
-    "title": "Silent Hill 2",
-    "platforms": [
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 84,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Horror",
-      "Aventura"
-    ]
-  },
-  {
     "title": "SOMA",
     "platforms": [
       "PC",
@@ -9513,69 +8556,6 @@
     "genres": [
       "Estratégia",
       "Stealth"
-    ]
-  },
-  {
-    "title": "Overcooked! All You Can Eat",
-    "platforms": [
-      "Switch",
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 84,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Co-op",
-      "Puzzle"
-    ]
-  },
-  {
-    "title": "Dragon Age: The Veilguard",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 83,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "RPG",
-      "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Ghost of Tsushima",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 83,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto",
-      "Stealth"
-    ]
-  },
-  {
-    "title": "Assassin's Creed Valhalla",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 83,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "RPG",
-      "Mundo Aberto"
     ]
   },
   {
@@ -9709,22 +8689,6 @@
     ]
   },
   {
-    "title": "Cult of the Lamb",
-    "platforms": [
-      "PC",
-      "Switch",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 83,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Roguelike",
-      "Estratégia"
-    ]
-  },
-  {
     "title": "Katana ZERO",
     "platforms": [
       "PC",
@@ -9778,20 +8742,6 @@
     "released": null,
     "genres": [
       "RPG"
-    ]
-  },
-  {
-    "title": "Death Stranding",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 82,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
     ]
   },
   {
@@ -9936,35 +8886,6 @@
     ]
   },
   {
-    "title": "Overcooked 2",
-    "platforms": [
-      "Switch",
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 82,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Co-op",
-      "Puzzle"
-    ]
-  },
-  {
-    "title": "Mortal Kombat 11",
-    "platforms": [
-      "PC",
-      "PS4",
-      "Switch"
-    ],
-    "metacritic": 82,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Luta"
-    ]
-  },
-  {
     "title": "Toem",
     "platforms": [
       "Switch",
@@ -9996,51 +8917,6 @@
     ]
   },
   {
-    "title": "Assassin's Creed Origins",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 81,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
-    "title": "Far Cry 5",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 81,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "FPS",
-      "Mundo Aberto",
-      "Co-op"
-    ]
-  },
-  {
-    "title": "Borderlands 3",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 81,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "FPS",
-      "RPG",
-      "Co-op"
-    ]
-  },
-  {
     "title": "New Super Mario Bros. U Deluxe",
     "platforms": [
       "Switch"
@@ -10067,50 +8943,6 @@
     "genres": [
       "Metroidvania",
       "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Lies of P",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 80,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Soulslike"
-    ]
-  },
-  {
-    "title": "Ghostrunner",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC",
-      "Switch"
-    ],
-    "metacritic": 80,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Stealth"
-    ]
-  },
-  {
-    "title": "inFamous: Second Son",
-    "platforms": [
-      "PS4"
-    ],
-    "metacritic": 80,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
     ]
   },
   {
@@ -10183,20 +9015,6 @@
     ]
   },
   {
-    "title": "Viewfinder",
-    "platforms": [
-      "PC",
-      "PS4",
-      "PS5"
-    ],
-    "metacritic": 80,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Puzzle"
-    ]
-  },
-  {
     "title": "Valheim",
     "platforms": [
       "PC",
@@ -10223,21 +9041,6 @@
       "Simulação",
       "Sandbox",
       "Co-op"
-    ]
-  },
-  {
-    "title": "Wo Long: Fallen Dynasty",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 79,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action RPG",
-      "Soulslike"
     ]
   },
   {
@@ -10268,21 +9071,6 @@
       "Horror",
       "Action-Aventura",
       "Stealth"
-    ]
-  },
-  {
-    "title": "Until Dawn",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 79,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Horror",
-      "Aventura"
     ]
   },
   {
@@ -10318,20 +9106,6 @@
     ]
   },
   {
-    "title": "Watch Dogs 2",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 78,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto"
-    ]
-  },
-  {
     "title": "Spyro Reignited Trilogy",
     "platforms": [
       "PS4",
@@ -10347,19 +9121,6 @@
   },
   {
     "title": "Life is Strange 2",
-    "platforms": [
-      "PC",
-      "PS4"
-    ],
-    "metacritic": 78,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura"
-    ]
-  },
-  {
-    "title": "Detroit: Become Human",
     "platforms": [
       "PC",
       "PS4"
@@ -10416,20 +9177,6 @@
     ]
   },
   {
-    "title": "Batman: The Telltale Series",
-    "platforms": [
-      "PC",
-      "PS4",
-      "Switch"
-    ],
-    "metacritic": 76,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Aventura"
-    ]
-  },
-  {
     "title": "Lords of the Fallen",
     "platforms": [
       "PS5",
@@ -10441,50 +9188,6 @@
     "genres": [
       "Action RPG",
       "Soulslike"
-    ]
-  },
-  {
-    "title": "Moving Out",
-    "platforms": [
-      "Switch",
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 74,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Co-op",
-      "Puzzle"
-    ]
-  },
-  {
-    "title": "Far Cry 6",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 73,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "FPS",
-      "Mundo Aberto"
-    ]
-  },
-  {
-    "title": "Far Cry: New Dawn",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 73,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "FPS",
-      "Mundo Aberto"
     ]
   },
   {
@@ -10500,51 +9203,6 @@
     "genres": [
       "Horror",
       "Action-Aventura"
-    ]
-  },
-  {
-    "title": "Riders Republic",
-    "platforms": [
-      "PS4",
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 73,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Esportes",
-      "Mundo Aberto",
-      "Co-op"
-    ]
-  },
-  {
-    "title": "Days Gone",
-    "platforms": [
-      "PS4",
-      "PC"
-    ],
-    "metacritic": 71,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "Mundo Aberto",
-      "Horror"
-    ]
-  },
-  {
-    "title": "Gotham Knights",
-    "platforms": [
-      "PS5",
-      "PC"
-    ],
-    "metacritic": 70,
-    "rawg_id": null,
-    "released": null,
-    "genres": [
-      "Action-Aventura",
-      "RPG"
     ]
   }
 ]
