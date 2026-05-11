@@ -1079,19 +1079,8 @@ document.addEventListener('keydown', e => {
 // ─── Backlog ──────────────────────────────────────────────────────────────────
 let _backlog = [];
 
-// Tags relevantes de gameplay expostos no filtro (além dos gêneros RAWG)
-const BACKLOG_TAGS = [
-  'Roguelike','Roguelite','Action Roguelike',
-  'Souls-like','Metroidvania',
-  'Action RPG','Action-Adventure','Hack and Slash',
-  'Open World','Survival','Survival Horror',
-  'Stealth','Turn-Based','Turn-Based Strategy',
-  'Co-op','Online Co-Op','Puzzle-Platformer',
-  'Card Game','Sandbox','Horror','Point & Click',
-];
-
 function backlogCategories(g) {
-  return [...new Set([...(g.genres || []), ...(g.tags || []).filter(t => BACKLOG_TAGS.includes(t))])];
+  return [...new Set([...(g.genres || []), ...(g.subgenres || [])])];
 }
 
 function renderBacklog() {
