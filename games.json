@@ -58,25 +58,6 @@
       }
     },
     {
-      "id": 1778450460947,
-      "title": "EA Sports FC 26",
-      "rating": null,
-      "year": 2026,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS5",
-      "availableOn": [
-        "PS5"
-      ],
-      "completed": "little",
-      "notes": "1/44 troféus (1%)",
-      "_psn": {
-        "pct": 1,
-        "earned": 1,
-        "total": 44
-      }
-    },
-    {
       "id": 1778450460948,
       "title": "Monster Train",
       "rating": null,
@@ -757,25 +738,6 @@
         "total": 34
       },
       "rawg_id": 50734
-    },
-    {
-      "id": 1778450460983,
-      "title": "EA Sports FC 24",
-      "rating": null,
-      "year": 2025,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS5",
-      "availableOn": [
-        "PS5"
-      ],
-      "completed": "little",
-      "notes": "3/41 troféus (5%)",
-      "_psn": {
-        "pct": 5,
-        "earned": 3,
-        "total": 41
-      }
     },
     {
       "id": 1778450460984,
@@ -1676,25 +1638,6 @@
       }
     },
     {
-      "id": 1778450461030,
-      "title": "FIFA 22",
-      "rating": null,
-      "year": 2023,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS5",
-      "availableOn": [
-        "PS5"
-      ],
-      "completed": "little",
-      "notes": "3/38 troféus (4%)",
-      "_psn": {
-        "pct": 4,
-        "earned": 3,
-        "total": 38
-      }
-    },
-    {
       "id": 1778450461031,
       "title": "Watch Dogs: Legion",
       "rating": null,
@@ -2402,25 +2345,6 @@
       "rawg_id": null
     },
     {
-      "id": 1778450461067,
-      "title": "FIFA 20",
-      "rating": null,
-      "year": 2020,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "little",
-      "notes": "16/32 troféus (38%)",
-      "_psn": {
-        "pct": 38,
-        "earned": 16,
-        "total": 32
-      }
-    },
-    {
       "id": 1778450461069,
       "title": "Death Stranding",
       "rating": null,
@@ -2673,25 +2597,6 @@
       }
     },
     {
-      "id": 1778450461082,
-      "title": "FIFA 19",
-      "rating": null,
-      "year": 2019,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "partial",
-      "notes": "29/42 troféus (63%)",
-      "_psn": {
-        "pct": 63,
-        "earned": 29,
-        "total": 42
-      }
-    },
-    {
       "id": 1778450461083,
       "title": "Far Cry: New Dawn",
       "rating": null,
@@ -2787,25 +2692,6 @@
         "pct": 42,
         "earned": 38,
         "total": 74
-      }
-    },
-    {
-      "id": 1778450461088,
-      "title": "FIFA 18",
-      "rating": null,
-      "year": 2018,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "partial",
-      "notes": "22/45 troféus (52%)",
-      "_psn": {
-        "pct": 52,
-        "earned": 22,
-        "total": 45
       }
     },
     {
@@ -2961,25 +2847,6 @@
         "pct": 8,
         "earned": 3,
         "total": 23
-      }
-    },
-    {
-      "id": 1778450461097,
-      "title": "FIFA 17",
-      "rating": null,
-      "year": 2017,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "little",
-      "notes": "20/45 troféus (45%)",
-      "_psn": {
-        "pct": 45,
-        "earned": 20,
-        "total": 45
       }
     },
     {
@@ -3229,25 +3096,6 @@
         "pct": 29,
         "earned": 22,
         "total": 64
-      }
-    },
-    {
-      "id": 1778450461111,
-      "title": "FIFA 16",
-      "rating": null,
-      "year": 2016,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "partial",
-      "notes": "47/49 troféus (98%)",
-      "_psn": {
-        "pct": 98,
-        "earned": 47,
-        "total": 49
       }
     },
     {
@@ -3695,25 +3543,6 @@
       }
     },
     {
-      "id": 1778450461135,
-      "title": "FIFA 15",
-      "rating": null,
-      "year": 2015,
-      "hours": null,
-      "genres": [],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "partial",
-      "notes": "21/46 troféus (57%)",
-      "_psn": {
-        "pct": 57,
-        "earned": 21,
-        "total": 46
-      }
-    },
-    {
       "id": 1778450461136,
       "title": "The Order: 1886",
       "rating": null,
@@ -3788,6 +3617,25 @@
         "pct": 69,
         "earned": 37,
         "total": 58
+      }
+    },
+    {
+      "id": 1778450460947,
+      "title": "FIFA",
+      "rating": null,
+      "year": 2026,
+      "hours": null,
+      "genres": [],
+      "platformPlayed": "PS5",
+      "availableOn": [
+        "PS5"
+      ],
+      "completed": "little",
+      "notes": "1/44 troféus (1%)",
+      "_psn": {
+        "pct": 1,
+        "earned": 1,
+        "total": 44
       }
     }
   ],
