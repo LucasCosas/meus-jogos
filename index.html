@@ -181,27 +181,6 @@
   .rate-only-unrated { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
   .playtime-btn { width: 100%; padding: 18px 24px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font-size: 20px; font-weight: 700; cursor: pointer; transition: all .12s; text-align: left; }
   .playtime-btn:hover { border-color: var(--accent); background: rgba(124,92,252,.12); transform: translateX(6px); }
-  .rate-genre-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-  .genre-chip { padding: 10px 20px; border-radius: 24px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer; transition: all .12s; user-select: none; }
-  .genre-chip:hover { border-color: var(--accent); }
-  .genre-chip.selected { border-color: var(--accent); background: rgba(124,92,252,.2); color: var(--accent2); }
-
-  /* Discovery overlay */
-  .discover-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; max-width: 520px; width: 100%; display: flex; flex-direction: column; gap: 20px; }
-  .discover-score { display: inline-flex; align-items: center; gap: 6px; background: rgba(124,92,252,.2); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--accent2); }
-  .discover-score.green { background: rgba(74,222,128,.15); color: var(--green); }
-  .discover-score.yellow { background: rgba(250,204,21,.12); color: var(--yellow); }
-  .discover-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .disc-btn { padding: 14px 8px; border-radius: 12px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .12s; text-align: center; line-height: 1.3; }
-  .disc-btn:hover { transform: translateY(-2px); }
-  .disc-btn.played { border-color: var(--green); color: var(--green); }
-  .disc-btn.played:hover { background: rgba(74,222,128,.12); }
-  .disc-btn.skip { border-color: var(--border); color: var(--muted); }
-  .disc-btn.skip:hover { border-color: var(--muted); color: var(--text); }
-  .disc-btn.wishlist { border-color: var(--yellow); color: var(--yellow); }
-  .disc-btn.wishlist:hover { background: rgba(250,204,21,.1); }
-  .discover-platforms { display: flex; flex-wrap: wrap; gap: 6px; }
-  .discover-genres { display: flex; flex-wrap: wrap; gap: 6px; }
 </style>
 </head>
 <body>
@@ -217,8 +196,6 @@
     <div class="navbar-right">
       <button class="btn btn-secondary" onclick="openRateMode('stars')">⭐ Avaliar Jogos</button>
       <button class="btn btn-secondary" onclick="openRateMode('playtime')">🕹 Quanto Joguei</button>
-      <button class="btn btn-secondary" onclick="openRateMode('genre')">🎯 Definir Gêneros</button>
-      <button class="btn btn-secondary" onclick="openDiscovery()">🔎 Descobrir Jogos</button>
       <button class="btn btn-primary" onclick="openModal()">+ Adicionar Jogo</button>
     </div>
   </header>
@@ -238,7 +215,6 @@
         <option value="rating">Maior nota</option>
         <option value="title">A-Z</option>
       </select>
-      <button class="btn btn-secondary btn-sm" onclick="fetchAllGenres()">🔍 Buscar gêneros</button>
     </div>
     <div class="catalog-grid" id="catalog-grid"></div>
   </div>
@@ -255,39 +231,6 @@
   <!-- Profile -->
   <div id="page-profile" class="page">
     <div class="profile-body" id="profile-body"></div>
-  </div>
-</div>
-
-<!-- Genre Fetch Progress Overlay -->
-<div class="rate-overlay" id="genre-overlay" style="gap:24px">
-  <div class="rate-progress-bar" id="genre-progress"></div>
-  <div style="font-size:14px;color:var(--muted)" id="genre-counter"></div>
-  <div style="font-size:22px;font-weight:800;text-align:center;max-width:520px" id="genre-current"></div>
-  <div style="font-size:13px;color:var(--accent2)" id="genre-found"></div>
-  <button class="rate-close" onclick="document.getElementById('genre-overlay').classList.remove('open');renderCatalog()">Cancelar</button>
-</div>
-
-<!-- Discovery Overlay -->
-<div class="rate-overlay" id="discover-overlay">
-  <div class="rate-progress-bar" id="discover-progress"></div>
-  <div class="rate-header">
-    <span class="rate-counter" id="discover-counter"></span>
-    <button class="rate-close" onclick="closeDiscovery()">Fechar</button>
-  </div>
-  <div class="rate-body" style="gap:24px">
-    <div class="discover-card" id="discover-card">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span class="discover-score" id="discover-score"></span>
-        <div class="discover-platforms" id="discover-platforms"></div>
-      </div>
-      <div class="rate-title" id="discover-title"></div>
-      <div class="discover-genres" id="discover-genres"></div>
-      <div class="discover-actions" style="grid-template-columns:1fr 1fr">
-        <button class="disc-btn played"  onclick="discoverAction('played')">✅ Já joguei</button>
-        <button class="disc-btn skip"    onclick="discoverAction('skip')">❌ Não joguei</button>
-      </div>
-    </div>
-    <div class="rate-done-msg" id="discover-done" style="display:none"></div>
   </div>
 </div>
 
@@ -316,13 +259,10 @@
       <span class="rate-star" data-v="5">★</span>
     </div>
     <div class="rate-playtime-btns" id="rate-playtime-btns" style="display:none;gap:16px;flex-direction:column;width:100%">
-      <button class="playtime-btn" data-v="little"  onclick="playtimeAndNext('little')">🕹 Joguei pouco</button>
-      <button class="playtime-btn" data-v="medium"  onclick="playtimeAndNext('medium')">🎮 Joguei médio</button>
-      <button class="playtime-btn" data-v="much"    onclick="playtimeAndNext('much')">🏆 Joguei muito</button>
-    </div>
-    <div id="rate-genre-wrap" style="display:none;flex-direction:column;gap:16px;width:100%">
-      <div class="rate-genre-grid" id="rate-genre-grid"></div>
-      <button class="btn btn-primary" style="align-self:flex-end;padding:10px 28px" onclick="genreConfirmNext()">Confirmar →</button>
+      <button class="playtime-btn" data-v="little"    onclick="playtimeAndNext('little')">🕹 Joguei pouco</button>
+      <button class="playtime-btn" data-v="medium"    onclick="playtimeAndNext('medium')">🎮 Joguei médio</button>
+      <button class="playtime-btn" data-v="much"      onclick="playtimeAndNext('much')">🏆 Joguei muito</button>
+      <button class="playtime-btn" data-v="completed" onclick="playtimeAndNext('completed')">✅ Zerei</button>
     </div>
     <div class="rate-actions">
       <button class="rate-skip" onclick="rateSkip()">Pular →</button>
@@ -375,6 +315,7 @@
             <option value="little">🕹 Pouco</option>
             <option value="medium">🎮 Médio</option>
             <option value="much">🏆 Muito</option>
+            <option value="completed">✅ Zerei</option>
           </select>
         </div>
       </div>
@@ -551,7 +492,7 @@ function renderCatalog() {
     const replay = replayStatus(g.year);
     const services = (g.availableOn || []).filter(a => DEFAULT_SERVICES.includes(a) || !DEFAULT_PLATFORMS.includes(a));
     const platforms = (g.availableOn || []).filter(a => DEFAULT_PLATFORMS.includes(a));
-    const playtimeMap = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🏆 Muito' };
+    const playtimeMap = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🏆 Muito', completed: '✅ Zerado' };
     return `<div class="game-card">
       <div class="card-header">
         <span class="game-title">${esc(g.title)}</span>
@@ -694,7 +635,9 @@ function saveGame() {
     platformPlayed: document.getElementById('game-platform-played').value || null,
     playtime: document.getElementById('game-playtime').value || null,
     played: document.getElementById('game-played').value || null,
-    completed: document.getElementById('game-completed').value || null,
+    completed: document.getElementById('game-playtime').value === 'completed'
+      ? 'yes'
+      : (document.getElementById('game-completed').value || null),
     notes: document.getElementById('game-notes').value.trim(),
   };
 
@@ -1008,9 +951,8 @@ function showRateCurrent() {
     return;
   }
 
-  starsEl.style.visibility                                  = _rateMode === 'stars'    ? 'visible' : 'hidden';
-  ptEl.style.display                                        = _rateMode === 'playtime' ? 'flex'    : 'none';
-  document.getElementById('rate-genre-wrap').style.display  = _rateMode === 'genre'    ? 'flex'    : 'none';
+  starsEl.style.visibility = _rateMode === 'stars'    ? 'visible' : 'hidden';
+  ptEl.style.display       = _rateMode === 'playtime' ? 'flex'    : 'none';
   actionsEl.style.visibility = 'visible';
 
   const g = _rateQueue[_rateIdx];
@@ -1037,8 +979,6 @@ function showRateCurrent() {
       b.style.borderColor = b.dataset.v === cur ? 'var(--accent)' : 'var(--border)';
       b.style.background  = b.dataset.v === cur ? 'rgba(124,92,252,.15)' : 'var(--surface)';
     });
-  } else if (_rateMode === 'genre') {
-    buildGenreChipsRate(g.genres || []);
   }
 }
 
@@ -1052,43 +992,14 @@ function rateAndNext(stars) {
   showRateCurrent();
 }
 
-const QUICK_GENRES = [
-  'Action RPG','RPG','FPS','Soulslike','Metroidvania','Roguelike',
-  'Plataforma','Aventura','Action-Aventura','Horror','Puzzle',
-  'Estratégia','Esportes','Stealth','Card Game','Co-op',
-];
-
-let _selectedGenres = new Set();
-
-function buildGenreChipsRate(current = []) {
-  _selectedGenres = new Set(current);
-  const grid = document.getElementById('rate-genre-grid');
-  grid.innerHTML = QUICK_GENRES.map(g =>
-    `<button class="genre-chip ${_selectedGenres.has(g) ? 'selected' : ''}"
-       onclick="toggleGenreChip(this,'${g.replace(/'/g,"\\'")}')">${g}</button>`
-  ).join('');
-}
-
-function toggleGenreChip(el, genre) {
-  if (_selectedGenres.has(genre)) { _selectedGenres.delete(genre); el.classList.remove('selected'); }
-  else                            { _selectedGenres.add(genre);    el.classList.add('selected');    }
-}
-
-function genreConfirmNext() {
-  if (_rateIdx >= _rateQueue.length) return;
-  const games = loadGames();
-  const idx = games.findIndex(x => x.id === _rateQueue[_rateIdx].id);
-  if (idx >= 0) games[idx].genres = [..._selectedGenres];
-  saveGames(games);
-  _rateIdx++;
-  showRateCurrent();
-}
-
 function playtimeAndNext(val) {
   if (_rateIdx >= _rateQueue.length) return;
   const games = loadGames();
   const idx = games.findIndex(x => x.id === _rateQueue[_rateIdx].id);
-  if (idx >= 0) games[idx].playtime = val;
+  if (idx >= 0) {
+    games[idx].playtime = val;
+    if (val === 'completed') games[idx].completed = 'yes';
+  }
   saveGames(games);
   _rateIdx++;
   showRateCurrent();
@@ -1097,15 +1008,6 @@ function playtimeAndNext(val) {
 function rateSkip() {
   _rateIdx++;
   showRateCurrent();
-}
-
-function removeUnrated() {
-  const games = loadGames();
-  const before = games.length;
-  const filtered = games.filter(g => g.rating);
-  saveGames(filtered);
-  renderCatalog();
-  showToast(`${before - filtered.length} jogos sem nota removidos`, 'success');
 }
 
 // Star hover + click
@@ -1144,242 +1046,20 @@ document.addEventListener('keydown', e => {
     if (e.key === '1') playtimeAndNext('little');
     if (e.key === '2') playtimeAndNext('medium');
     if (e.key === '3') playtimeAndNext('much');
+    if (e.key === '4') playtimeAndNext('completed');
   }
   if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); rateSkip(); }
   if (e.key === 'Escape') closeRateMode();
 });
 
-// ─── Genre fetch via Wikipedia ───────────────────────────────────────────────
-const GENRE_RULES = [
-  [/soulslike|souls.like/i,              'Soulslike'],
-  [/metroidvania/i,                      'Metroidvania'],
-  [/battle.royale/i,                     'Battle Royale'],
-  [/action.role.play|action.rpg/i,       'Action RPG'],
-  [/role.play/i,                         'RPG'],
-  [/first.person.shoot/i,                'FPS'],
-  [/third.person.shoot/i,                'TPS'],
-  [/hack.and.slash/i,                    'Hack and Slash'],
-  [/roguelike|roguelite/i,               'Roguelike'],
-  [/tower.defense/i,                     'Tower Defense'],
-  [/survival.horror/i,                   'Survival Horror'],
-  [/horror/i,                            'Horror'],
-  [/open.world/i,                        'Mundo Aberto'],
-  [/platform/i,                          'Plataforma'],
-  [/fighting/i,                          'Luta'],
-  [/racing/i,                            'Corrida'],
-  [/sport/i,                             'Esportes'],
-  [/puzzle/i,                            'Puzzle'],
-  [/simulation/i,                        'Simulação'],
-  [/real.time.strategy/i,                'RTS'],
-  [/turn.based.strategy/i,               'Estratégia Turn-Based'],
-  [/strategy/i,                          'Estratégia'],
-  [/stealth/i,                           'Stealth'],
-  [/sandbox/i,                           'Sandbox'],
-  [/beat.em.up/i,                        'Beat \'em Up'],
-  [/visual.novel/i,                      'Visual Novel'],
-  [/rhythm/i,                            'Rhythm'],
-  [/card.game/i,                         'Card Game'],
-  [/moba/i,                              'MOBA'],
-  [/action.adventure/i,                  'Action-Aventura'],
-  [/adventure/i,                         'Aventura'],
-  [/action/i,                            'Action'],
-];
-
-function categoriesToGenres(cats) {
-  const genres = [];
-  const seen = new Set();
-  for (const cat of cats) {
-    for (const [re, label] of GENRE_RULES) {
-      if (re.test(cat) && !seen.has(label)) {
-        seen.add(label);
-        genres.push(label);
-        break;
-      }
-    }
-  }
-  return genres;
-}
-
-async function wikiSearch(title) {
-  const q = encodeURIComponent(title + ' video game');
-  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${q}&srlimit=1&format=json&origin=*`;
-  const r = await fetch(url);
-  const data = await r.json();
-  return data?.query?.search?.[0]?.pageid ?? null;
-}
-
-async function wikiCategories(pageId) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&prop=categories&pageids=${pageId}&cllimit=50&clshow=!hidden&format=json&origin=*`;
-  const r = await fetch(url);
-  const data = await r.json();
-  const page = data?.query?.pages?.[pageId];
-  return (page?.categories || []).map(c => c.title.replace('Category:', ''));
-}
-
-async function fetchAllGenres() {
-  const games = loadGames();
-  const toFetch = games.filter(g => !g.genres || g.genres.length === 0);
-  if (!toFetch.length) { showToast('Todos os jogos já têm gênero!', 'success'); return; }
-
-  const overlay = document.getElementById('genre-overlay');
-  overlay.classList.add('open');
-  let updated = 0;
-
-  for (let i = 0; i < toFetch.length; i++) {
-    const g = toFetch[i];
-    const pct = Math.round((i / toFetch.length) * 100);
-    document.getElementById('genre-progress').style.width = pct + '%';
-    document.getElementById('genre-counter').textContent = `${i + 1} / ${toFetch.length}`;
-    document.getElementById('genre-current').textContent = g.title;
-    document.getElementById('genre-found').textContent = '…';
-
-    try {
-      const pageId = await wikiSearch(g.title);
-      let genres = [];
-      if (pageId) {
-        const cats = await wikiCategories(pageId);
-        genres = categoriesToGenres(cats);
-      }
-      const idx = games.findIndex(x => x.id === g.id);
-      if (idx >= 0) games[idx].genres = genres;
-      document.getElementById('genre-found').textContent =
-        genres.length ? genres.join(', ') : '(não encontrado)';
-      if (genres.length) updated++;
-    } catch {
-      document.getElementById('genre-found').textContent = '(erro)';
-    }
-
-    saveGames(games);
-    await new Promise(r => setTimeout(r, 120)); // respeita rate limit Wikipedia
-  }
-
-  document.getElementById('genre-progress').style.width = '100%';
-  document.getElementById('genre-counter').textContent = `Concluído — ${updated} jogos atualizados`;
-  document.getElementById('genre-current').textContent = '✓ Gêneros encontrados!';
-  document.getElementById('genre-found').textContent = '';
-  setTimeout(() => { overlay.classList.remove('open'); renderCatalog(); }, 1500);
-}
-
-// ─── Discovery Mode ───────────────────────────────────────────────────────────
-let _catalog    = [];   // games from catalog.json, shrinks as user reviews
-let _discIdx    = 0;
-let _discTotal  = 0;    // original count at session open
-let _discReviewed = 0;  // how many reviewed this session
-
-function saveCatalog() {
-  fetch('catalog.json', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(_catalog)
-  }).catch(() => {});
-}
-
-function openDiscovery() {
-  _discIdx      = 0;
-  _discTotal    = _catalog.length;
-  _discReviewed = 0;
-  document.getElementById('discover-overlay').classList.add('open');
-  showDiscoverCurrent();
-}
-
-function closeDiscovery() {
-  document.getElementById('discover-overlay').classList.remove('open');
-  renderCatalog();
-}
-
-function scoreColor(s) {
-  if (!s) return '';
-  if (s >= 90) return 'green';
-  if (s >= 75) return 'yellow';
-  return '';
-}
-
-function showDiscoverCurrent() {
-  const card    = document.getElementById('discover-card');
-  const doneMsg = document.getElementById('discover-done');
-
-  document.getElementById('discover-progress').style.width =
-    _discTotal ? Math.round((_discReviewed / _discTotal) * 100) + '%' : '100%';
-  document.getElementById('discover-counter').textContent =
-    _catalog.length > 0 ? `${_discReviewed + 1} / ${_discTotal}` : '';
-
-  if (_discIdx >= _catalog.length) {
-    card.style.display = 'none';
-    doneMsg.style.display = '';
-    doneMsg.textContent = '✓ Tudo revisado!';
-    document.getElementById('discover-counter').textContent = `${_discReviewed} jogos revisados`;
-    return;
-  }
-
-  card.style.display = '';
-  doneMsg.style.display = 'none';
-
-  const g = _catalog[_discIdx];
-  document.getElementById('discover-title').textContent = g.title;
-
-  const sc = document.getElementById('discover-score');
-  sc.textContent = g.metacritic ? `⭐ ${g.metacritic}` : '—';
-  sc.className = `discover-score ${scoreColor(g.metacritic)}`;
-
-  document.getElementById('discover-platforms').innerHTML =
-    (g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('');
-  document.getElementById('discover-genres').innerHTML =
-    (g.genres || []).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('');
-}
-
-function discoverAction(action) {
-  if (_discIdx >= _catalog.length) return;
-  const g = _catalog[_discIdx];
-
-  if (action === 'played') {
-    const games = loadGames();
-    games.push({
-      id:           Date.now(),
-      title:        g.title,
-      played:       'yes',
-      rating:       null,
-      year:         null,
-      genres:       g.genres || [],
-      platformPlayed: null,
-      availableOn:  g.platforms || [],
-      notes:        '',
-      rawg_id:      g.rawg_id || null,
-      metacritic:   g.metacritic || null,
-    });
-    saveGames(games);
-  }
-  // both 'played' and 'skip' remove from catalog
-  _catalog.splice(_discIdx, 1);
-  saveCatalog();
-  _discReviewed++;
-  // don't advance index — next item shifts into current position
-  if (_discIdx >= _catalog.length) _discIdx = _catalog.length;
-  showDiscoverCurrent();
-}
-
-// Keyboard shortcuts for discovery
-document.addEventListener('keydown', e => {
-  if (!document.getElementById('discover-overlay').classList.contains('open')) return;
-  if (e.key === '1') discoverAction('played');
-  if (e.key === '2') discoverAction('skip');
-  if (e.key === 'Escape') closeDiscovery();
-});
-
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
-  const [catRes, gamesRes] = await Promise.allSettled([
-    fetch('catalog.json').then(r => r.json()),
-    fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()),
-  ]);
+  const res = await fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()).catch(() => null);
 
-  if (catRes.status === 'fulfilled' && Array.isArray(catRes.value))
-    _catalog = catRes.value;
-
-  if (gamesRes.status === 'fulfilled' && Array.isArray(gamesRes.value.games)) {
-    _games   = gamesRes.value.games;
-    _profile = gamesRes.value.profile || { platforms: [], subscriptions: [] };
+  if (res && Array.isArray(res.games)) {
+    _games   = res.games;
+    _profile = res.profile || { platforms: [], subscriptions: [] };
   } else {
-    // one-time migration from localStorage
     const lsGames   = localStorage.getItem('gamelog_games');
     const lsProfile = localStorage.getItem('gamelog_profile');
     _games   = lsGames   ? JSON.parse(lsGames)   : [];
@@ -1391,8 +1071,6 @@ async function init() {
   }
 
   renderCatalog();
-
-  if (_catalog.length > 0) openDiscovery();
 }
 init();
 </script>
