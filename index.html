@@ -1174,7 +1174,7 @@ function backlogMarkPlayed(rawgId) {
 async function init() {
   const [gamesRes, backlogRes] = await Promise.allSettled([
     fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()),
-    fetch('catalog_rawg.json').then(r => r.json()),
+    fetch('backlog.json').then(r => r.json()),
   ]);
 
   if (gamesRes.status === 'fulfilled' && Array.isArray(gamesRes.value.games)) {
