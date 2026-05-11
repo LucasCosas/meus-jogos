@@ -1079,9 +1079,24 @@ document.addEventListener('keydown', e => {
 // ─── Backlog ──────────────────────────────────────────────────────────────────
 let _backlog = [];
 
+// Tags relevantes de gameplay expostos no filtro (além dos gêneros RAWG)
+const BACKLOG_TAGS = [
+  'Roguelike','Roguelite','Action Roguelike',
+  'Souls-like','Metroidvania',
+  'Action RPG','Action-Adventure','Hack and Slash',
+  'Open World','Survival','Survival Horror',
+  'Stealth','Turn-Based','Turn-Based Strategy',
+  'Co-op','Online Co-Op','Puzzle-Platformer',
+  'Card Game','Sandbox','Horror','Point & Click',
+];
+
+function backlogCategories(g) {
+  return [...new Set([...(g.genres || []), ...(g.tags || []).filter(t => BACKLOG_TAGS.includes(t))])];
+}
+
 function renderBacklog() {
   const q        = document.getElementById('backlog-search').value.toLowerCase();
-  const genre    = document.getElementById('backlog-genre').value;
+  const category = document.getElementById('backlog-genre').value;
   const platform = document.getElementById('backlog-platform').value;
   const sort     = document.getElementById('backlog-sort').value;
 
@@ -1090,7 +1105,7 @@ function renderBacklog() {
   let list = _backlog.filter(g => {
     if (playedIds.has(g.rawg_id)) return false;
     if (q && !g.title.toLowerCase().includes(q)) return false;
-    if (genre    && !(g.genres    || []).includes(genre))    return false;
+    if (category && !backlogCategories(g).includes(category)) return false;
     if (platform && !(g.platforms || []).includes(platform)) return false;
     return true;
   });
@@ -1101,13 +1116,13 @@ function renderBacklog() {
   else if (sort === 'released') list.sort((a, b) => (b.released || '').localeCompare(a.released || ''));
 
   // Update filter dropdowns
-  const allGenres    = [...new Set(_backlog.flatMap(g => g.genres    || []))].sort();
-  const allPlatforms = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
+  const allCategories = [...new Set(_backlog.flatMap(g => backlogCategories(g)))].sort();
+  const allPlatforms  = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
   const gSel = document.getElementById('backlog-genre');
   const pSel = document.getElementById('backlog-platform');
   const gCur = gSel.value, pCur = pSel.value;
-  gSel.innerHTML = '<option value="">Todos os gêneros</option>'    + allGenres.map(v    => `<option value="${v}" ${v===gCur?'selected':''}>${v}</option>`).join('');
-  pSel.innerHTML = '<option value="">Todas as plataformas</option>' + allPlatforms.map(v => `<option value="${v}" ${v===pCur?'selected':''}>${v}</option>`).join('');
+  gSel.innerHTML = '<option value="">Todos os gêneros / tags</option>' + allCategories.map(v => `<option value="${v}" ${v===gCur?'selected':''}>${v}</option>`).join('');
+  pSel.innerHTML = '<option value="">Todas as plataformas</option>'    + allPlatforms.map(v  => `<option value="${v}" ${v===pCur?'selected':''}>${v}</option>`).join('');
 
   document.getElementById('backlog-count').textContent = `${list.length} jogos`;
 
@@ -1120,13 +1135,14 @@ function renderBacklog() {
   grid.innerHTML = list.map(g => {
     const year = g.released ? g.released.slice(0, 4) : null;
     const metacriticColor = g.metacritic >= 90 ? 'var(--green)' : g.metacritic >= 75 ? 'var(--accent2)' : g.metacritic >= 60 ? 'var(--yellow)' : 'var(--muted)';
+    const cats = backlogCategories(g);
     return `<div class="game-card">
       <div class="card-header">
         <span class="game-title">${esc(g.title)}</span>
         <span class="game-rating" style="color:${metacriticColor}">${g.metacritic}</span>
       </div>
       <div class="tags">
-        ${(g.genres || []).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
+        ${cats.map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
       </div>
       <div class="tags">
         ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
