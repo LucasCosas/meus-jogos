@@ -37,7 +37,7 @@
   .page.active { display: flex; }
 
   /* Catalog page */
-  #page-catalog { flex-direction: column; }
+  #page-catalog, #page-backlog { flex-direction: column; }
   .catalog-toolbar { padding: 16px 24px; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .search-box { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 8px; font-size: 14px; outline: none; }
   .search-box:focus { border-color: var(--accent); }
@@ -190,6 +190,7 @@
     <span class="logo">🎮 GameLog</span>
     <nav>
       <button class="nav-btn active" onclick="switchPage('catalog')">Catálogo</button>
+      <button class="nav-btn" onclick="switchPage('backlog')">Backlog</button>
       <button class="nav-btn" onclick="switchPage('recs')">Recomendações</button>
       <button class="nav-btn" onclick="switchPage('profile')">Perfil & Stats</button>
     </nav>
@@ -217,6 +218,27 @@
       </select>
     </div>
     <div class="catalog-grid" id="catalog-grid"></div>
+  </div>
+
+  <!-- Backlog -->
+  <div id="page-backlog" class="page">
+    <div class="catalog-toolbar">
+      <input class="search-box" id="backlog-search" placeholder="Buscar no backlog..." oninput="renderBacklog()">
+      <select class="filter-select" id="backlog-genre" onchange="renderBacklog()">
+        <option value="">Todos os gêneros</option>
+      </select>
+      <select class="filter-select" id="backlog-platform" onchange="renderBacklog()">
+        <option value="">Todas as plataformas</option>
+      </select>
+      <select class="filter-select" id="backlog-sort" onchange="renderBacklog()">
+        <option value="metacritic">Metacritic</option>
+        <option value="rating">Nota RAWG</option>
+        <option value="title">A-Z</option>
+        <option value="released">Lançamento</option>
+      </select>
+      <span id="backlog-count" style="font-size:13px;color:var(--muted);white-space:nowrap"></span>
+    </div>
+    <div class="catalog-grid" id="backlog-grid"></div>
   </div>
 
   <!-- Recommendations -->
@@ -426,6 +448,7 @@ function switchPage(name) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   event.target.classList.add('active');
+  if (name === 'backlog') renderBacklog();
   if (name === 'recs') renderRecs();
   if (name === 'profile') renderProfile();
 }
@@ -1053,13 +1076,104 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeRateMode();
 });
 
+// ─── Backlog ──────────────────────────────────────────────────────────────────
+let _backlog = [];
+
+function renderBacklog() {
+  const q        = document.getElementById('backlog-search').value.toLowerCase();
+  const genre    = document.getElementById('backlog-genre').value;
+  const platform = document.getElementById('backlog-platform').value;
+  const sort     = document.getElementById('backlog-sort').value;
+
+  const playedIds = new Set(_games.map(g => g.rawg_id).filter(Boolean));
+
+  let list = _backlog.filter(g => {
+    if (playedIds.has(g.rawg_id)) return false;
+    if (q && !g.title.toLowerCase().includes(q)) return false;
+    if (genre    && !(g.genres    || []).includes(genre))    return false;
+    if (platform && !(g.platforms || []).includes(platform)) return false;
+    return true;
+  });
+
+  if (sort === 'metacritic') list.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
+  else if (sort === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  else if (sort === 'title')  list.sort((a, b) => a.title.localeCompare(b.title));
+  else if (sort === 'released') list.sort((a, b) => (b.released || '').localeCompare(a.released || ''));
+
+  // Update filter dropdowns
+  const allGenres    = [...new Set(_backlog.flatMap(g => g.genres    || []))].sort();
+  const allPlatforms = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
+  const gSel = document.getElementById('backlog-genre');
+  const pSel = document.getElementById('backlog-platform');
+  const gCur = gSel.value, pCur = pSel.value;
+  gSel.innerHTML = '<option value="">Todos os gêneros</option>'    + allGenres.map(v    => `<option value="${v}" ${v===gCur?'selected':''}>${v}</option>`).join('');
+  pSel.innerHTML = '<option value="">Todas as plataformas</option>' + allPlatforms.map(v => `<option value="${v}" ${v===pCur?'selected':''}>${v}</option>`).join('');
+
+  document.getElementById('backlog-count').textContent = `${list.length} jogos`;
+
+  const grid = document.getElementById('backlog-grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state"><h3>Nenhum jogo encontrado</h3><p>Tente outros filtros.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(g => {
+    const year = g.released ? g.released.slice(0, 4) : null;
+    const metacriticColor = g.metacritic >= 90 ? 'var(--green)' : g.metacritic >= 75 ? 'var(--accent2)' : g.metacritic >= 60 ? 'var(--yellow)' : 'var(--muted)';
+    return `<div class="game-card">
+      <div class="card-header">
+        <span class="game-title">${esc(g.title)}</span>
+        <span class="game-rating" style="color:${metacriticColor}">${g.metacritic}</span>
+      </div>
+      <div class="tags">
+        ${(g.genres || []).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
+      </div>
+      <div class="tags">
+        ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
+      </div>
+      <div class="card-meta">
+        ${year ? `<span>📅 ${year}</span>` : ''}
+        ${g.rating ? `<span>⭐ ${g.rating} RAWG</span>` : ''}
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.rawg_id})">✅ Já joguei</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function backlogMarkPlayed(rawgId) {
+  const g = _backlog.find(x => x.rawg_id === rawgId);
+  if (!g) return;
+  const games = loadGames();
+  games.push({
+    id:          Date.now(),
+    title:       g.title,
+    played:      'yes',
+    rating:      null,
+    year:        g.released ? parseInt(g.released.slice(0, 4)) : null,
+    genres:      g.genres || [],
+    platformPlayed: null,
+    availableOn: g.platforms || [],
+    notes:       '',
+    rawg_id:     g.rawg_id,
+    metacritic:  g.metacritic || null,
+  });
+  saveGames(games);
+  showToast(`${g.title} adicionado ao catálogo!`, 'success');
+  renderBacklog();
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 async function init() {
-  const res = await fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()).catch(() => null);
+  const [gamesRes, backlogRes] = await Promise.allSettled([
+    fetch('games.json').then(r => r.ok ? r.json() : Promise.reject()),
+    fetch('catalog_rawg.json').then(r => r.json()),
+  ]);
 
-  if (res && Array.isArray(res.games)) {
-    _games   = res.games;
-    _profile = res.profile || { platforms: [], subscriptions: [] };
+  if (gamesRes.status === 'fulfilled' && Array.isArray(gamesRes.value.games)) {
+    _games   = gamesRes.value.games;
+    _profile = gamesRes.value.profile || { platforms: [], subscriptions: [] };
   } else {
     const lsGames   = localStorage.getItem('gamelog_games');
     const lsProfile = localStorage.getItem('gamelog_profile');
@@ -1070,6 +1184,9 @@ async function init() {
     localStorage.removeItem('gamelog_profile');
     if (_games.length) showToast(`${_games.length} jogos migrados para games.json`, 'success');
   }
+
+  if (backlogRes.status === 'fulfilled' && Array.isArray(backlogRes.value))
+    _backlog = backlogRes.value;
 
   renderCatalog();
 }
