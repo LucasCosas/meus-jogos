@@ -511,6 +511,7 @@ function renderCatalog() {
         ${g.year ? `<span>📅 ${g.year}</span>` : ''}
         ${g.playtime ? `<span>${playtimeMap[g.playtime]}</span>` : ''}
         ${g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
+        ${g.rawg_id ? `<span style="color:var(--border)">RAWG #${g.rawg_id}</span>` : ''}
       </div>
       ${replay ? `<div><span class="replay-badge ${replay.cls}">${replay.label}</span></div>` : ''}
       ${g.notes ? `<div style="font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:10px">${esc(g.notes)}</div>` : ''}
