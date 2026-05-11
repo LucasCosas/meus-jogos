@@ -64,6 +64,7 @@
   .tag.genre { color: #93c5fd; border-color: rgba(147,197,253,.3); background: rgba(147,197,253,.08); }
   .tag.platform { color: var(--green); border-color: rgba(74,222,128,.3); background: rgba(74,222,128,.08); }
   .tag.service { color: var(--orange); border-color: rgba(251,146,60,.3); background: rgba(251,146,60,.08); }
+  .tag.played { color: #a78bfa; border-color: rgba(167,139,250,.3); background: rgba(167,139,250,.08); }
   .card-meta { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
   .card-meta span { display: flex; align-items: center; gap: 4px; }
   .card-actions { display: flex; gap: 8px; margin-top: auto; }
@@ -345,7 +346,7 @@
       </div>
 
       <div class="form-group">
-        <label>Nota (1–10) *</label>
+        <label>Nota (1–10)</label>
         <div class="rating-input" id="rating-input"></div>
       </div>
 
@@ -355,9 +356,44 @@
           <input class="form-control" id="game-year" type="number" min="1980" max="2030" placeholder="Ex: 2022">
         </div>
         <div class="form-group">
-          <label>Plataforma</label>
+          <label>Horas jogadas</label>
+          <input class="form-control" id="game-hours" type="number" min="0" placeholder="Ex: 40">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Plataforma jogada</label>
           <select class="form-control" id="game-platform-played">
             <option value="">Selecione...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Quanto jogou</label>
+          <select class="form-control" id="game-playtime">
+            <option value="">Selecione...</option>
+            <option value="little">🕹 Pouco</option>
+            <option value="medium">🎮 Médio</option>
+            <option value="much">🏆 Muito</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Jogado?</label>
+          <select class="form-control" id="game-played">
+            <option value="">Não definido</option>
+            <option value="yes">✅ Sim</option>
+            <option value="no">❌ Não</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Zerado?</label>
+          <select class="form-control" id="game-completed">
+            <option value="">Não definido</option>
+            <option value="yes">✅ Sim</option>
+            <option value="no">❌ Não</option>
           </select>
         </div>
       </div>
@@ -522,6 +558,7 @@ function renderCatalog() {
         <span class="game-rating" style="color:${ratingColor(g.rating)}">${starsDisplay(g.rating)}</span>
       </div>
       <div class="tags">
+        ${g.played === 'yes' ? '<span class="tag played">✅ Jogado</span>' : ''}
         ${(g.genres||[]).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
       </div>
       <div class="tags">
@@ -559,7 +596,7 @@ function buildRatingInput() {
 
 function buildGenreChips(selected=[]) {
   const profile = loadProfile();
-  const allGenres = [...new Set([...DEFAULT_GENRES, ...profile.customGenres||[]])];
+  const allGenres = [...new Set([...DEFAULT_GENRES, ...profile.customGenres||[], ...selected])].sort();
   selectedGenres = new Set(selected);
   document.getElementById('genres-chips').innerHTML = allGenres.map((g,i) =>
     `<input type="checkbox" id="gc${i}" value="${g}" ${selectedGenres.has(g)?'checked':''} onchange="toggleGenre('${g}',this.checked)">
@@ -604,7 +641,11 @@ function openModal(game=null) {
   document.getElementById('game-id').value = '';
   document.getElementById('game-title').value = '';
   document.getElementById('game-year').value = '';
+  document.getElementById('game-hours').value = '';
   document.getElementById('game-notes').value = '';
+  document.getElementById('game-playtime').value = '';
+  document.getElementById('game-played').value = '';
+  document.getElementById('game-completed').value = '';
   buildRatingInput();
   buildGenreChips();
   buildPlatformPlayed();
@@ -613,7 +654,11 @@ function openModal(game=null) {
     document.getElementById('modal-title').textContent = 'Editar Jogo';
     document.getElementById('game-title').value = game.title || '';
     document.getElementById('game-year').value = game.year || '';
+    document.getElementById('game-hours').value = game.hours || '';
     document.getElementById('game-notes').value = game.notes || '';
+    document.getElementById('game-playtime').value = game.playtime || '';
+    document.getElementById('game-played').value = game.played || '';
+    document.getElementById('game-completed').value = game.completed || '';
     if (game.rating) {
       const radio = document.querySelector(`#rating-input input[value="${game.rating}"]`);
       if (radio) radio.checked = true;
@@ -636,17 +681,20 @@ function saveGame() {
   const title = document.getElementById('game-title').value.trim();
   if (!title) return showToast('Informe o título do jogo', 'error');
   const ratingEl = document.querySelector('#rating-input input:checked');
-  if (!ratingEl) return showToast('Selecione uma nota', 'error');
 
   const prev = loadGames().find(g => g.id === editingId) || {};
   const game = {
     ...prev,
     id: editingId || Date.now(),
     title,
-    rating: parseInt(ratingEl.value),
+    rating: ratingEl ? parseInt(ratingEl.value) : (prev.rating || null),
     year: parseInt(document.getElementById('game-year').value) || null,
+    hours: parseInt(document.getElementById('game-hours').value) || null,
     genres: [...selectedGenres],
     platformPlayed: document.getElementById('game-platform-played').value || null,
+    playtime: document.getElementById('game-playtime').value || null,
+    played: document.getElementById('game-played').value || null,
+    completed: document.getElementById('game-completed').value || null,
     notes: document.getElementById('game-notes').value.trim(),
   };
 
@@ -703,7 +751,7 @@ function renderRecs() {
     .slice(0, 5);
 
   // Highlight top-rated games
-  const topRated = [...games].sort((a,b)=>b.rating-a.rating).slice(0,3);
+  const topRated = [...games].filter(g=>g.rating).sort((a,b)=>b.rating-a.rating).slice(0,3);
 
   // Recently played (can remind to finish or start sequels)
   const recent = games.filter(g=>g.year && (curYear-g.year)<=1).sort((a,b)=>b.rating-a.rating).slice(0,3);
@@ -743,7 +791,7 @@ function renderRecs() {
   if (recent.length) {
     html += `<div class="recs-section"><h3>🕹 Jogados Recentemente</h3>`;
     recent.forEach(g => {
-      html += recCard(g, g.completed === 'partial' || g.completed === 'little'
+      html += recCard(g, g.completed === 'no'
         ? `Você ainda não terminou — que tal continuar?`
         : `Acabou de jogar em ${g.year}.`);
     });
@@ -767,7 +815,7 @@ function renderRecs() {
 
 function recCard(g, reason) {
   return `<div class="rec-card">
-    <div class="rec-score" style="color:${ratingColor(g.rating)}">${g.rating}</div>
+    <div class="rec-score" style="color:${ratingColor(g.rating)}">${g.rating ?? '—'}</div>
     <div class="rec-info">
       <h4>${esc(g.title)}</h4>
       <div class="tags">${(g.genres||[]).map(gn=>`<span class="tag genre">${esc(gn)}</span>`).join('')}</div>
@@ -783,7 +831,8 @@ function renderProfile() {
   const body = document.getElementById('profile-body');
 
   const totalHours = games.reduce((s,g)=>s+(g.hours||0),0);
-  const avgRating = games.length ? (games.reduce((s,g)=>s+(g.rating||0),0)/games.length).toFixed(1) : 0;
+  const ratedGames = games.filter(g => g.rating);
+  const avgRating = ratedGames.length ? (ratedGames.reduce((s,g)=>s+g.rating,0)/ratedGames.length).toFixed(1) : '—';
   const zeroed = games.filter(g=>g.completed==='yes').length;
   const allGenres = [...new Set(games.flatMap(g=>g.genres||[]))];
 
@@ -1211,23 +1260,11 @@ async function fetchAllGenres() {
   setTimeout(() => { overlay.classList.remove('open'); renderCatalog(); }, 1500);
 }
 
-let GAME_CATALOG = [];
-
 // ─── Discovery Mode ───────────────────────────────────────────────────────────
-let _discovery = { skip: [], wishlist: [] };
-
-function loadDiscovery() { return _discovery; }
-function saveDiscovery(d) {
-  _discovery = d;
-  fetch('discovery.json', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(d)
-  }).catch(() => {});
-}
-
-let _catalog = [];   // games from catalog.json, shrinks as user reviews
-let _discIdx  = 0;
+let _catalog    = [];   // games from catalog.json, shrinks as user reviews
+let _discIdx    = 0;
+let _discTotal  = 0;    // original count at session open
+let _discReviewed = 0;  // how many reviewed this session
 
 function saveCatalog() {
   fetch('catalog.json', {
@@ -1238,7 +1275,9 @@ function saveCatalog() {
 }
 
 function openDiscovery() {
-  _discIdx = 0;
+  _discIdx      = 0;
+  _discTotal    = _catalog.length;
+  _discReviewed = 0;
   document.getElementById('discover-overlay').classList.add('open');
   showDiscoverCurrent();
 }
@@ -1258,19 +1297,17 @@ function scoreColor(s) {
 function showDiscoverCurrent() {
   const card    = document.getElementById('discover-card');
   const doneMsg = document.getElementById('discover-done');
-  const total   = _catalog.length;
-  const remaining = total - _discIdx;
 
   document.getElementById('discover-progress').style.width =
-    total ? Math.round((_discIdx / total) * 100) + '%' : '100%';
+    _discTotal ? Math.round((_discReviewed / _discTotal) * 100) + '%' : '100%';
   document.getElementById('discover-counter').textContent =
-    remaining > 0 ? `${_discIdx + 1} / ${total}` : '';
+    _catalog.length > 0 ? `${_discReviewed + 1} / ${_discTotal}` : '';
 
-  if (_discIdx >= total) {
+  if (_discIdx >= _catalog.length) {
     card.style.display = 'none';
     doneMsg.style.display = '';
     doneMsg.textContent = '✓ Tudo revisado!';
-    document.getElementById('discover-counter').textContent = `${total} jogos revisados`;
+    document.getElementById('discover-counter').textContent = `${_discReviewed} jogos revisados`;
     return;
   }
 
@@ -1297,8 +1334,9 @@ function discoverAction(action) {
   if (action === 'played') {
     const games = loadGames();
     games.push({
-      id: Date.now(),
+      id:           Date.now(),
       title:        g.title,
+      played:       'yes',
       rating:       null,
       year:         null,
       genres:       g.genres || [],
@@ -1313,6 +1351,7 @@ function discoverAction(action) {
   // both 'played' and 'skip' remove from catalog
   _catalog.splice(_discIdx, 1);
   saveCatalog();
+  _discReviewed++;
   // don't advance index — next item shifts into current position
   if (_discIdx >= _catalog.length) _discIdx = _catalog.length;
   showDiscoverCurrent();
