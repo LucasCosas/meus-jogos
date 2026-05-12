@@ -5005,7 +5005,7 @@
       "metacritic": 91,
       "playtime": "much",
       "igdb_id": 1073,
-      "igdb_rating": 100.0
+      "igdb_rating": 100
     },
     {
       "id": 1778537081735,
@@ -5076,7 +5076,7 @@
       "playtime": "completed",
       "completed": "yes",
       "igdb_id": 113,
-      "igdb_rating": 80.0
+      "igdb_rating": 80
     },
     {
       "id": 1778537143384,
@@ -5150,7 +5150,7 @@
       "playtime": "completed",
       "completed": "yes",
       "igdb_id": 1266,
-      "igdb_rating": 96.0
+      "igdb_rating": 96
     },
     {
       "id": 1778537148684,
@@ -5220,7 +5220,7 @@
       "metacritic": 92,
       "playtime": "much",
       "igdb_id": 499,
-      "igdb_rating": 96.0
+      "igdb_rating": 96
     },
     {
       "id": 1778551455486,
@@ -5244,34 +5244,10 @@
       "rawg_id": 44996,
       "metacritic": 76,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 52200,
       "igdb_rating": 76.7
-    },
-    {
-      "id": 1778551455487,
-      "title": "The Godfather II",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Strategy",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5682,
-      "metacritic": 65,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 575,
-      "igdb_rating": 65.0
     },
     {
       "id": 1778551455488,
@@ -5294,37 +5270,10 @@
       "rawg_id": 3687,
       "metacritic": 77,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1121,
       "igdb_rating": 81.1
-    },
-    {
-      "id": 1778551455489,
-      "title": "Minecraft: Dungeons",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Adventure",
-        "Action",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Xbox Series",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 257195,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 110474,
-      "igdb_rating": 73.6
     },
     {
       "id": 1778551455490,
@@ -5345,34 +5294,10 @@
       "rawg_id": 490,
       "metacritic": 74,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 18311,
       "igdb_rating": 76.4
-    },
-    {
-      "id": 1778551455491,
-      "title": "F.E.A.R. 3",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5565,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 514,
-      "igdb_rating": 75.8
     },
     {
       "id": 1778551455492,
@@ -5396,58 +5321,10 @@
       "rawg_id": 58859,
       "metacritic": 68,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 26950,
-      "igdb_rating": 40.0
-    },
-    {
-      "id": 1778551455493,
-      "title": "FIFA 22",
-      "rating": null,
-      "year": 2021,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "PS5",
-        "Xbox One",
-        "PS4",
-        "Xbox Series",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 546464,
-      "metacritic": 76,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 240455,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455494,
-      "title": "Tell Me Why",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Adventure"
-      ],
-      "platformPlayed": "Xbox Series",
-      "availableOn": [
-        "PC",
-        "Xbox One"
-      ],
-      "notes": "",
-      "rawg_id": 391399,
-      "metacritic": 76,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 125628,
-      "igdb_rating": 80.9
+      "igdb_rating": 40
     },
     {
       "id": 1778551455495,
@@ -5467,10 +5344,10 @@
       "rawg_id": 5390,
       "metacritic": 87,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 620,
-      "igdb_rating": 93.0
+      "igdb_rating": 93
     },
     {
       "id": 1778551455496,
@@ -5493,33 +5370,10 @@
       "rawg_id": 58777,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 103298,
       "igdb_rating": 86.1
-    },
-    {
-      "id": 1778551455497,
-      "title": "Quantum Theory",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4087,
-      "metacritic": 40,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 7149,
-      "igdb_rating": 51.3
     },
     {
       "id": 1778551455498,
@@ -5541,55 +5395,10 @@
       "rawg_id": 4502,
       "metacritic": 83,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1270,
       "igdb_rating": 81.6
-    },
-    {
-      "id": 1778551455499,
-      "title": "The Orange Box",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Shooter"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 28581,
-      "metacritic": 94,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 339,
-      "igdb_rating": 90.0
-    },
-    {
-      "id": 1778551455500,
-      "title": "Motionsports",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360"
-      ],
-      "notes": "",
-      "rawg_id": 29056,
-      "metacritic": 40,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 2658,
-      "igdb_rating": 50.0
     },
     {
       "id": 1778551455501,
@@ -5609,63 +5418,10 @@
       "rawg_id": 39118,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 2674,
-      "igdb_rating": 90.0
-    },
-    {
-      "id": 1778551455502,
-      "title": "LEGO Harry Potter: Years 1-4",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Family",
-        "Platformer",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Android",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 447,
-      "metacritic": 79,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 3149,
-      "igdb_rating": 80.7
-    },
-    {
-      "id": 1778551455503,
-      "title": "Fallout 3",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Shooter",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5562,
-      "metacritic": 91,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 15,
-      "igdb_rating": 89.1
+      "igdb_rating": 90
     },
     {
       "id": 1778551455504,
@@ -5686,35 +5442,10 @@
       "rawg_id": 58698,
       "metacritic": 68,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 103261,
       "igdb_rating": 69.4
-    },
-    {
-      "id": 1778551455505,
-      "title": "Mafia: Definitive Edition",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Xbox Series"
-      ],
-      "notes": "",
-      "rawg_id": 442854,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 134070,
-      "igdb_rating": 74.7
     },
     {
       "id": 1778551455506,
@@ -5735,7 +5466,7 @@
       "rawg_id": 5528,
       "metacritic": 83,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 343822,
       "igdb_rating": null
@@ -5758,10 +5489,10 @@
       "rawg_id": 3879,
       "metacritic": 64,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 4675,
-      "igdb_rating": 55.0
+      "igdb_rating": 55
     },
     {
       "id": 1778551455508,
@@ -5783,10 +5514,10 @@
       "rawg_id": 34,
       "metacritic": 81,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 26196,
-      "igdb_rating": 78.0
+      "igdb_rating": 78
     },
     {
       "id": 1778551455509,
@@ -5808,35 +5539,10 @@
       "rawg_id": 14446,
       "metacritic": 74,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 21865,
-      "igdb_rating": 83.0
-    },
-    {
-      "id": 1778551455510,
-      "title": "LEGO Harry Potter: Years 5-7",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Android",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4241,
-      "metacritic": 80,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 3150,
-      "igdb_rating": 76.1
+      "igdb_rating": 83
     },
     {
       "id": 1778551455511,
@@ -5859,61 +5565,10 @@
       "rawg_id": 3771,
       "metacritic": 89,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 1968,
       "igdb_rating": 80.9
-    },
-    {
-      "id": 1778551455512,
-      "title": "Prison Architect",
-      "rating": null,
-      "year": 2015,
-      "genres": [
-        "Strategy",
-        "Indie",
-        "Simulation"
-      ],
-      "platformPlayed": "Windows",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 12320,
-      "metacritic": 83,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1338,
-      "igdb_rating": 81.1
-    },
-    {
-      "id": 1778551455513,
-      "title": "Robert Ludlum's The Bourne Conspiracy",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Shooter",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 39785,
-      "metacritic": 70,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1256,
-      "igdb_rating": 64.8
     },
     {
       "id": 1778551455514,
@@ -5937,10 +5592,10 @@
       "rawg_id": 257255,
       "metacritic": 92,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 119402,
-      "igdb_rating": 88.0
+      "igdb_rating": 88
     },
     {
       "id": 1778551455515,
@@ -5960,65 +5615,10 @@
       "rawg_id": 28613,
       "metacritic": 91,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 990,
-      "igdb_rating": 89.0
-    },
-    {
-      "id": 1778551455516,
-      "title": "For The King",
-      "rating": null,
-      "year": 2018,
-      "genres": [
-        "Indie",
-        "Strategy",
-        "Adventure",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 11676,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 7528,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455517,
-      "title": "The Flame in the Flood",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Indie",
-        "Action",
-        "Simulation"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 6879,
-      "metacritic": 73,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 9732,
-      "igdb_rating": 76.9
+      "igdb_rating": 89
     },
     {
       "id": 1778551455518,
@@ -6044,37 +5644,10 @@
       "rawg_id": 11663,
       "metacritic": 76,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 25901,
       "igdb_rating": 73.4
-    },
-    {
-      "id": 1778551455519,
-      "title": "LEGO Indiana Jones 2: The Adventure Continues",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5606,
-      "metacritic": 66,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 194933,
-      "igdb_rating": null
     },
     {
       "id": 1778551455520,
@@ -6098,86 +5671,10 @@
       "rawg_id": 4123,
       "metacritic": 91,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 240941,
       "igdb_rating": null
-    },
-    {
-      "id": 1778551455521,
-      "title": "Tom Clancy's Ghost Recon Advanced Warfighter 2",
-      "rating": null,
-      "year": 2007,
-      "genres": [
-        "Shooter",
-        "Strategy",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4679,
-      "metacritic": 82,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1301,
-      "igdb_rating": 83.8
-    },
-    {
-      "id": 1778551455522,
-      "title": "FIFA 12",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "iOS",
-        "Android",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 28414,
-      "metacritic": 85,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 2946,
-      "igdb_rating": 83.8
-    },
-    {
-      "id": 1778551455523,
-      "title": "Dark Souls",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Action",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5538,
-      "metacritic": 89,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 2155,
-      "igdb_rating": 90.6
     },
     {
       "id": 1778551455524,
@@ -6199,7 +5696,7 @@
       "rawg_id": 5698,
       "metacritic": 61,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 335116,
       "igdb_rating": null
@@ -6222,64 +5719,10 @@
       "rawg_id": 4252,
       "metacritic": 81,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1051,
       "igdb_rating": 72.5
-    },
-    {
-      "id": 1778551455526,
-      "title": "LEGO Marvel Super Heroes",
-      "rating": null,
-      "year": 2013,
-      "genres": [
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "iOS",
-        "Android",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 3850,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 2050,
-      "igdb_rating": 84.6
-    },
-    {
-      "id": 1778551455527,
-      "title": "FIFA 11",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 40214,
-      "metacritic": 84,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 240384,
-      "igdb_rating": null
     },
     {
       "id": 1778551455528,
@@ -6301,37 +5744,10 @@
       "rawg_id": 28492,
       "metacritic": 74,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 536,
       "igdb_rating": 69.9
-    },
-    {
-      "id": 1778551455529,
-      "title": "Ice Age: Dawn of the Dinosaurs",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Arcade",
-        "Platformer",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 28323,
-      "metacritic": 59,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 4923,
-      "igdb_rating": 100.0
     },
     {
       "id": 1778551455530,
@@ -6354,7 +5770,7 @@
       "rawg_id": 3731,
       "metacritic": 60,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 5169,
       "igdb_rating": 65.8
@@ -6379,7 +5795,7 @@
       "rawg_id": 9966,
       "metacritic": 72,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 18866,
       "igdb_rating": 67.1
@@ -6407,61 +5823,10 @@
       "rawg_id": 4923,
       "metacritic": 79,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 570,
       "igdb_rating": 78.4
-    },
-    {
-      "id": 1778551455533,
-      "title": "Captain America: Super Soldier",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 24288,
-      "metacritic": 57,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 4745,
-      "igdb_rating": 56.5
-    },
-    {
-      "id": 1778551455534,
-      "title": "LEGO Indiana Jones: The Original Adventures",
-      "rating": null,
-      "year": 2007,
-      "genres": [
-        "Family",
-        "Platformer",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 5260,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 194936,
-      "igdb_rating": null
     },
     {
       "id": 1778551455535,
@@ -6482,7 +5847,7 @@
       "rawg_id": 25909,
       "metacritic": 75,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 573,
       "igdb_rating": 71.7
@@ -6507,8 +5872,8 @@
       "rawg_id": 19524,
       "metacritic": 51,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 543,
       "igdb_rating": 50.8
     },
@@ -6535,38 +5900,10 @@
       "rawg_id": 327260,
       "metacritic": 69,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 16612,
       "igdb_rating": 78.8
-    },
-    {
-      "id": 1778551455538,
-      "title": "Call of the Sea",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Casual",
-        "Indie",
-        "Adventure",
-        "Puzzle"
-      ],
-      "platformPlayed": "Xbox Series",
-      "availableOn": [
-        "PC",
-        "PS5",
-        "Xbox One",
-        "PS4",
-        "Xbox Series"
-      ],
-      "notes": "",
-      "rawg_id": 440083,
-      "metacritic": 77,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 133306,
-      "igdb_rating": 72.5
     },
     {
       "id": 1778551455539,
@@ -6590,37 +5927,10 @@
       "rawg_id": 10436,
       "metacritic": 69,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 24985,
       "igdb_rating": 72.2
-    },
-    {
-      "id": 1778551455540,
-      "title": "Resident Evil 6",
-      "rating": null,
-      "year": 2012,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "Switch",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 2623,
-      "metacritic": 67,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1082,
-      "igdb_rating": 63.9
     },
     {
       "id": 1778551455541,
@@ -6642,8 +5952,8 @@
       "rawg_id": 19600,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 317303,
       "igdb_rating": null
     },
@@ -6667,10 +5977,10 @@
       "rawg_id": 4397,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 343,
-      "igdb_rating": 85.0
+      "igdb_rating": 85
     },
     {
       "id": 1778551455543,
@@ -6691,34 +6001,10 @@
       "rawg_id": 2235,
       "metacritic": 74,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 2003,
       "igdb_rating": 71.1
-    },
-    {
-      "id": 1778551455544,
-      "title": "F1 2010",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Racing",
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 19277,
-      "metacritic": 84,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1375,
-      "igdb_rating": 84.0
     },
     {
       "id": 1778551455545,
@@ -6736,146 +6022,10 @@
       "rawg_id": 29089,
       "metacritic": 61,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 2657,
-      "igdb_rating": 65.0
-    },
-    {
-      "id": 1778551455546,
-      "title": "LEGO The Incredibles",
-      "rating": null,
-      "year": 2018,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 58086,
-      "metacritic": 69,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 94876,
-      "igdb_rating": 72.3
-    },
-    {
-      "id": 1778551455547,
-      "title": "No Man's Sky",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Adventure",
-        "Action",
-        "RPG",
-        "Simulation",
-        "Indie",
-        "Massively Multiplayer"
-      ],
-      "platformPlayed": "Xbox Series",
-      "availableOn": [
-        "PC",
-        "PS5",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 2093,
-      "metacritic": 75,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 3225,
-      "igdb_rating": 73.8
-    },
-    {
-      "id": 1778551455548,
-      "title": "LEGO Harry Potter Collection",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Casual",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 1019,
-      "metacritic": 73,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 315367,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455549,
-      "title": "Madagascar: Escape 2 Africa",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Family",
-        "Platformer",
-        "Arcade"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 5614,
-      "metacritic": 59,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 3765,
-      "igdb_rating": 45.0
-    },
-    {
-      "id": 1778551455550,
-      "title": "Lumo",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Indie",
-        "Platformer",
-        "Adventure",
-        "Puzzle"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 1601,
-      "metacritic": 77,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 19850,
-      "igdb_rating": 77.0
+      "igdb_rating": 65
     },
     {
       "id": 1778551455551,
@@ -6899,7 +6049,7 @@
       "rawg_id": 50576,
       "metacritic": 73,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 76747,
       "igdb_rating": 71.5
@@ -6925,57 +6075,10 @@
       "rawg_id": 29215,
       "metacritic": 77,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 29004,
       "igdb_rating": 77.1
-    },
-    {
-      "id": 1778551455553,
-      "title": "Disc Room",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Indie",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Windows",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 427971,
-      "metacritic": 82,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 131614,
-      "igdb_rating": 90.0
-    },
-    {
-      "id": 1778551455554,
-      "title": "Lego Rock Band",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Arcade"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 26154,
-      "metacritic": 75,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 2695,
-      "igdb_rating": 77.2
     },
     {
       "id": 1778551455555,
@@ -6998,7 +6101,7 @@
       "rawg_id": 7439,
       "metacritic": 68,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 2033,
       "igdb_rating": 73.6
@@ -7027,35 +6130,10 @@
       "rawg_id": 211,
       "metacritic": 80,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 1918,
-      "igdb_rating": 80.0
-    },
-    {
-      "id": 1778551455557,
-      "title": "The Sims 3",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Casual",
-        "Simulation"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "iOS",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5689,
-      "metacritic": 86,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 264365,
-      "igdb_rating": null
+      "igdb_rating": 80
     },
     {
       "id": 1778551455558,
@@ -7076,61 +6154,10 @@
       "rawg_id": 50566,
       "metacritic": 83,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 989,
       "igdb_rating": 77.7
-    },
-    {
-      "id": 1778551455559,
-      "title": "Pandemic: The Board Game",
-      "rating": null,
-      "year": 2013,
-      "genres": [
-        "Strategy",
-        "Board Games",
-        "Simulation"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Switch",
-        "iOS",
-        "Android"
-      ],
-      "notes": "",
-      "rawg_id": 2395,
-      "metacritic": 83,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 69425,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455560,
-      "title": "eFootball PES 2020",
-      "rating": null,
-      "year": 2019,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "iOS",
-        "Android"
-      ],
-      "notes": "",
-      "rawg_id": 327269,
-      "metacritic": 82,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 119422,
-      "igdb_rating": 77.4
     },
     {
       "id": 1778551455561,
@@ -7152,64 +6179,10 @@
       "rawg_id": 4280,
       "metacritic": 87,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 960,
       "igdb_rating": 89.3
-    },
-    {
-      "id": 1778551455562,
-      "title": "LEGO DC Super-Villains",
-      "rating": null,
-      "year": 2018,
-      "genres": [
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 58597,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 102321,
-      "igdb_rating": 70.1
-    },
-    {
-      "id": 1778551455563,
-      "title": "LEGO Batman 2 DC Super Heroes",
-      "rating": null,
-      "year": 2012,
-      "genres": [
-        "Family",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "iOS",
-        "Android",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 19908,
-      "metacritic": 75,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 6836,
-      "igdb_rating": 80.7
     },
     {
       "id": 1778551455564,
@@ -7236,7 +6209,7 @@
       "rawg_id": 15730,
       "metacritic": 82,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 25837,
       "igdb_rating": 72.5
@@ -7260,10 +6233,10 @@
       "rawg_id": 16113,
       "metacritic": 81,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 1267,
-      "igdb_rating": 82.0
+      "igdb_rating": 82
     },
     {
       "id": 1778551455566,
@@ -7285,60 +6258,10 @@
       "rawg_id": 4154,
       "metacritic": 77,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1216,
       "igdb_rating": 73.7
-    },
-    {
-      "id": 1778551455567,
-      "title": "Disney Epic Mickey 2: The Power of Two",
-      "rating": null,
-      "year": 2012,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4180,
-      "metacritic": 59,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1510,
-      "igdb_rating": 52.1
-    },
-    {
-      "id": 1778551455568,
-      "title": "What Remains of Edith Finch",
-      "rating": null,
-      "year": 2017,
-      "genres": [
-        "Indie",
-        "Adventure"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "iOS"
-      ],
-      "notes": "",
-      "rawg_id": 42,
-      "metacritic": 89,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 11233,
-      "igdb_rating": 87.0
     },
     {
       "id": 1778551455569,
@@ -7359,10 +6282,10 @@
       "rawg_id": 7689,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 7323,
-      "igdb_rating": 87.0
+      "igdb_rating": 87
     },
     {
       "id": 1778551455570,
@@ -7384,8 +6307,8 @@
       "rawg_id": 1322,
       "metacritic": 78,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 496,
       "igdb_rating": 80.7
     },
@@ -7409,36 +6332,10 @@
       "rawg_id": 398416,
       "metacritic": 67,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 127355,
       "igdb_rating": 68.8
-    },
-    {
-      "id": 1778551455572,
-      "title": "Empire of Sin",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Strategy",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 327238,
-      "metacritic": 56,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 119386,
-      "igdb_rating": 58.0
     },
     {
       "id": 1778551455573,
@@ -7456,7 +6353,7 @@
       "rawg_id": 28460,
       "metacritic": 91,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 3068,
       "igdb_rating": 85.7
@@ -7485,34 +6382,10 @@
       "rawg_id": 13247,
       "metacritic": 70,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 16992,
       "igdb_rating": 72.8
-    },
-    {
-      "id": 1778551455575,
-      "title": "FIFA 10",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 29069,
-      "metacritic": 84,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 3133,
-      "igdb_rating": 85.9
     },
     {
       "id": 1778551455576,
@@ -7533,7 +6406,7 @@
       "rawg_id": 58753,
       "metacritic": 90,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 82090,
       "igdb_rating": 90.8
@@ -7557,8 +6430,8 @@
       "rawg_id": 13535,
       "metacritic": 89,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 122,
       "igdb_rating": 84.9
     },
@@ -7584,60 +6457,10 @@
       "rawg_id": 490123,
       "metacritic": 70,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 132038,
       "igdb_rating": 76.4
-    },
-    {
-      "id": 1778551455579,
-      "title": "Saints Row 2",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4599,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 826,
-      "igdb_rating": 81.2
-    },
-    {
-      "id": 1778551455580,
-      "title": "Saints Row: The Third",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4386,
-      "metacritic": 84,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 873,
-      "igdb_rating": 84.5
     },
     {
       "id": 1778551455581,
@@ -7659,35 +6482,10 @@
       "rawg_id": 37337,
       "metacritic": 55,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 300074,
       "igdb_rating": null
-    },
-    {
-      "id": 1778551455582,
-      "title": "Wolfenstein: Youngblood",
-      "rating": null,
-      "year": 2019,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Windows",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 58782,
-      "metacritic": 66,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 103301,
-      "igdb_rating": 71.2
     },
     {
       "id": 1778551455583,
@@ -7708,8 +6506,8 @@
       "rawg_id": 4700,
       "metacritic": 75,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 6958,
       "igdb_rating": 74.4
     },
@@ -7734,87 +6532,10 @@
       "rawg_id": 949,
       "metacritic": 93,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 9761,
       "igdb_rating": null
-    },
-    {
-      "id": 1778551455585,
-      "title": "Lego Star Wars: The Skywalker Saga",
-      "rating": null,
-      "year": 2022,
-      "genres": [
-        "Platformer",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox Series",
-      "availableOn": [
-        "PC",
-        "PS5",
-        "Xbox One",
-        "PS4",
-        "Xbox Series",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 326239,
-      "metacritic": 80,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 119305,
-      "igdb_rating": 82.2
-    },
-    {
-      "id": 1778551455586,
-      "title": "LEGO Pirates of the Caribbean: The Video Game",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4471,
-      "metacritic": 73,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 542,
-      "igdb_rating": 70.6
-    },
-    {
-      "id": 1778551455587,
-      "title": "LEGO Worlds",
-      "rating": null,
-      "year": 2017,
-      "genres": [
-        "Adventure"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 227,
-      "metacritic": 66,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 10910,
-      "igdb_rating": 70.7
     },
     {
       "id": 1778551455588,
@@ -7835,10 +6556,10 @@
       "rawg_id": 28547,
       "metacritic": 84,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 473,
-      "igdb_rating": 88.0
+      "igdb_rating": 88
     },
     {
       "id": 1778551455589,
@@ -7857,10 +6578,10 @@
       "rawg_id": 28447,
       "metacritic": 73,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 17478,
-      "igdb_rating": 75.0
+      "igdb_rating": 75
     },
     {
       "id": 1778551455590,
@@ -7882,60 +6603,10 @@
       "rawg_id": 9840,
       "metacritic": 64,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 9182,
-      "igdb_rating": 63.0
-    },
-    {
-      "id": 1778551455591,
-      "title": "Red Faction: Guerrilla",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 15566,
-      "metacritic": 82,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 846,
-      "igdb_rating": 82.2
-    },
-    {
-      "id": 1778551455592,
-      "title": "Worms W.M.D",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Strategy",
-        "Action"
-      ],
-      "platformPlayed": "Windows",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 1820,
-      "metacritic": 79,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 19696,
-      "igdb_rating": 79.1
+      "igdb_rating": 63
     },
     {
       "id": 1778551455593,
@@ -7956,7 +6627,7 @@
       "rawg_id": 40254,
       "metacritic": 43,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 166362,
       "igdb_rating": null
@@ -7982,7 +6653,7 @@
       "rawg_id": 5663,
       "metacritic": 69,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 475,
       "igdb_rating": 62.2
@@ -8009,60 +6680,10 @@
       "rawg_id": 4535,
       "metacritic": 92,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 134651,
       "igdb_rating": null
-    },
-    {
-      "id": 1778551455596,
-      "title": "Afterparty",
-      "rating": null,
-      "year": 2019,
-      "genres": [
-        "Indie",
-        "Adventure"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 58765,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 78152,
-      "igdb_rating": 74.9
-    },
-    {
-      "id": 1778551455597,
-      "title": "Need for Speed: Shift",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Racing"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Android",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 19400,
-      "metacritic": 83,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 102,
-      "igdb_rating": 79.5
     },
     {
       "id": 1778551455598,
@@ -8088,8 +6709,8 @@
       "rawg_id": 50675,
       "metacritic": 78,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 76770,
       "igdb_rating": 78.4
     },
@@ -8113,8 +6734,8 @@
       "rawg_id": 38283,
       "metacritic": 82,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 2671,
       "igdb_rating": 83.7
     },
@@ -8136,7 +6757,7 @@
       "rawg_id": 5342,
       "metacritic": 72,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 556,
       "igdb_rating": 74.4
@@ -8162,7 +6783,7 @@
       "rawg_id": 50781,
       "metacritic": 68,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 11137,
       "igdb_rating": 66.4
@@ -8186,65 +6807,10 @@
       "rawg_id": 28608,
       "metacritic": 89,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 522,
       "igdb_rating": 85.8
-    },
-    {
-      "id": 1778551455603,
-      "title": "LEGO Star Wars III - The Clone Wars",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Arcade",
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 12729,
-      "metacritic": 76,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 6844,
-      "igdb_rating": 70.0
-    },
-    {
-      "id": 1778551455604,
-      "title": "Neon Abyss",
-      "rating": null,
-      "year": 2020,
-      "genres": [
-        "Platformer",
-        "Shooter",
-        "Indie",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 302369,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 116100,
-      "igdb_rating": 90.0
     },
     {
       "id": 1778551455605,
@@ -8266,35 +6832,10 @@
       "rawg_id": 39277,
       "metacritic": 68,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 560,
-      "igdb_rating": 74.0
-    },
-    {
-      "id": 1778551455606,
-      "title": "FIFA 15",
-      "rating": null,
-      "year": 2014,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 3580,
-      "metacritic": 82,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 7574,
-      "igdb_rating": 81.5
+      "igdb_rating": 74
     },
     {
       "id": 1778551455607,
@@ -8315,8 +6856,8 @@
       "rawg_id": 4518,
       "metacritic": 75,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 264363,
       "igdb_rating": null
     },
@@ -8340,97 +6881,10 @@
       "rawg_id": 5544,
       "metacritic": 87,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 524,
       "igdb_rating": 85.9
-    },
-    {
-      "id": 1778551455609,
-      "title": "LEGO Batman 3: Beyond Gotham",
-      "rating": null,
-      "year": 2014,
-      "genres": [
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "iOS",
-        "Android",
-        "Mac",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 3513,
-      "metacritic": 75,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 7685,
-      "igdb_rating": 75.6
-    },
-    {
-      "id": 1778551455610,
-      "title": "FIFA 14",
-      "rating": null,
-      "year": 2013,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "Switch",
-        "iOS",
-        "Android",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 5783,
-      "metacritic": 86,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 240419,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455611,
-      "title": "The LEGO Movie - Videogame",
-      "rating": null,
-      "year": 2014,
-      "genres": [
-        "Family",
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "PS4",
-        "Xbox One",
-        "iOS",
-        "Mac",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 17543,
-      "metacritic": 72,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 4845,
-      "igdb_rating": 63.5
     },
     {
       "id": 1778551455612,
@@ -8453,8 +6907,8 @@
       "rawg_id": 12536,
       "metacritic": 83,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 7603,
       "igdb_rating": 84.3
     },
@@ -8478,7 +6932,7 @@
       "rawg_id": 58751,
       "metacritic": 84,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 103281,
       "igdb_rating": 87.9
@@ -8502,59 +6956,10 @@
       "rawg_id": 25282,
       "metacritic": 70,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 2656,
-      "igdb_rating": 68.0
-    },
-    {
-      "id": 1778551455615,
-      "title": "FIFA 13",
-      "rating": null,
-      "year": 2012,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "iOS",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 41462,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 240397,
-      "igdb_rating": null
-    },
-    {
-      "id": 1778551455616,
-      "title": "Terminator Salvation",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 5673,
-      "metacritic": 47,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 142768,
-      "igdb_rating": null
+      "igdb_rating": 68
     },
     {
       "id": 1778551455617,
@@ -8575,37 +6980,10 @@
       "rawg_id": 5524,
       "metacritic": 70,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 502,
       "igdb_rating": 73.4
-    },
-    {
-      "id": 1778551455618,
-      "title": "Resident Evil 5",
-      "rating": null,
-      "year": 2009,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 13461,
-      "metacritic": 86,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 847,
-      "igdb_rating": 78.4
     },
     {
       "id": 1778551455619,
@@ -8627,63 +7005,10 @@
       "rawg_id": 28222,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 52826,
       "igdb_rating": null
-    },
-    {
-      "id": 1778551455620,
-      "title": "Untitled Goose Game",
-      "rating": null,
-      "year": 2019,
-      "genres": [
-        "Indie",
-        "Family",
-        "Action",
-        "Puzzle"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 59637,
-      "metacritic": 80,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 72813,
-      "igdb_rating": 82.2
-    },
-    {
-      "id": 1778551455621,
-      "title": "Bulletstorm",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4602,
-      "metacritic": 83,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 494,
-      "igdb_rating": 87.1
     },
     {
       "id": 1778551455622,
@@ -8705,8 +7030,8 @@
       "rawg_id": 339961,
       "metacritic": 71,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 55047,
       "igdb_rating": 71.5
     },
@@ -8734,8 +7059,8 @@
       "rawg_id": 416,
       "metacritic": 93,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 732,
       "igdb_rating": 93.1
     },
@@ -8759,10 +7084,10 @@
       "rawg_id": 19487,
       "metacritic": 83,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1062,
-      "igdb_rating": 83.0
+      "igdb_rating": 83
     },
     {
       "id": 1778551455625,
@@ -8781,7 +7106,7 @@
       "rawg_id": 28619,
       "metacritic": 93,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 548,
       "igdb_rating": 90.4
@@ -8805,34 +7130,10 @@
       "rawg_id": 1320,
       "metacritic": 82,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 4797,
       "igdb_rating": 82.4
-    },
-    {
-      "id": 1778551455627,
-      "title": "Dark Sector",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 19565,
-      "metacritic": 66,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 6959,
-      "igdb_rating": 70.4
     },
     {
       "id": 1778551455628,
@@ -8853,8 +7154,8 @@
       "rawg_id": 31759,
       "metacritic": 88,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 165181,
       "igdb_rating": null
     },
@@ -8877,8 +7178,8 @@
       "rawg_id": 12020,
       "metacritic": 89,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 124,
       "igdb_rating": 88.6
     },
@@ -8902,7 +7203,7 @@
       "rawg_id": 3842,
       "metacritic": 81,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 1979,
       "igdb_rating": 80.3
@@ -8927,10 +7228,10 @@
       "rawg_id": 4550,
       "metacritic": 87,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 38,
-      "igdb_rating": 90.0
+      "igdb_rating": 90
     },
     {
       "id": 1778551455632,
@@ -8956,10 +7257,10 @@
       "rawg_id": 4544,
       "metacritic": 95,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 260737,
-      "igdb_rating": 77.0
+      "igdb_rating": 77
     },
     {
       "id": 1778551455633,
@@ -8980,7 +7281,7 @@
       "rawg_id": 8278,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 11186,
       "igdb_rating": 83.1
@@ -9007,36 +7308,10 @@
       "rawg_id": 28559,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 1887,
       "igdb_rating": 87.9
-    },
-    {
-      "id": 1778551455635,
-      "title": "LEGO Marvel Super Heroes 2",
-      "rating": null,
-      "year": 2017,
-      "genres": [
-        "Adventure",
-        "Action"
-      ],
-      "platformPlayed": "Xbox One",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "PS4",
-        "Switch",
-        "Mac"
-      ],
-      "notes": "",
-      "rawg_id": 28083,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 28815,
-      "igdb_rating": 73.8
     },
     {
       "id": 1778551455636,
@@ -9059,8 +7334,8 @@
       "rawg_id": 957,
       "metacritic": 64,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 203141,
       "igdb_rating": null
     },
@@ -9084,7 +7359,7 @@
       "rawg_id": 20654,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 314292,
       "igdb_rating": null
@@ -9111,7 +7386,7 @@
       "rawg_id": 865,
       "metacritic": 81,
       "played": "yes",
-      "playtime": null,
+      "playtime": "much",
       "completed": null,
       "igdb_id": 135299,
       "igdb_rating": null
@@ -9137,56 +7412,10 @@
       "rawg_id": 4161,
       "metacritic": 88,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 529,
       "igdb_rating": 89.5
-    },
-    {
-      "id": 1778551455640,
-      "title": "Disneyland Adventures",
-      "rating": null,
-      "year": 2017,
-      "genres": [
-        "Adventure"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One"
-      ],
-      "notes": "",
-      "rawg_id": 47525,
-      "metacritic": 70,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 108251,
-      "igdb_rating": 68.3
-    },
-    {
-      "id": 1778551455641,
-      "title": "FIFA 09",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox 360",
-        "PS3",
-        "PS2"
-      ],
-      "notes": "",
-      "rawg_id": 38703,
-      "metacritic": 83,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 240317,
-      "igdb_rating": null
     },
     {
       "id": 1778551455642,
@@ -9207,7 +7436,7 @@
       "rawg_id": 4385,
       "metacritic": 66,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 526,
       "igdb_rating": 66.6
@@ -9232,7 +7461,7 @@
       "rawg_id": 4527,
       "metacritic": 86,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 559,
       "igdb_rating": 85.3
@@ -9258,8 +7487,8 @@
       "rawg_id": 902,
       "metacritic": 54,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 196243,
       "igdb_rating": null
     },
@@ -9280,10 +7509,10 @@
       "rawg_id": 40179,
       "metacritic": 84,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 8248,
-      "igdb_rating": 88.0
+      "igdb_rating": 88
     },
     {
       "id": 1778551578443,
@@ -9304,7 +7533,7 @@
       "rawg_id": 4489,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 471,
       "igdb_rating": 86.5
@@ -9331,7 +7560,7 @@
       "rawg_id": 11276,
       "metacritic": 85,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 979,
       "igdb_rating": 81.1
@@ -9358,7 +7587,7 @@
       "rawg_id": 16543,
       "metacritic": 80,
       "played": "yes",
-      "playtime": null,
+      "playtime": "medium",
       "completed": null,
       "igdb_id": 213256,
       "igdb_rating": null
@@ -9384,58 +7613,10 @@
       "rawg_id": 3226,
       "metacritic": 76,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 2988,
       "igdb_rating": 77.1
-    },
-    {
-      "id": 1778551578447,
-      "title": "Tom Clancy's Ghost Recon: Future Soldier",
-      "rating": null,
-      "year": 2012,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4345,
-      "metacritic": 71,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1293,
-      "igdb_rating": 74.6
-    },
-    {
-      "id": 1778551578448,
-      "title": "Motionsports Adrenaline",
-      "rating": null,
-      "year": 2011,
-      "genres": [
-        "Arcade",
-        "Sports"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 40942,
-      "metacritic": 41,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 20215,
-      "igdb_rating": 40.0
     },
     {
       "id": 1778551578449,
@@ -9458,8 +7639,8 @@
       "rawg_id": 26223,
       "metacritic": 60,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 200999,
       "igdb_rating": null
     },
@@ -9482,35 +7663,10 @@
       "rawg_id": 4477,
       "metacritic": 66,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 488,
       "igdb_rating": 69.4
-    },
-    {
-      "id": 1778551578451,
-      "title": "Mafia II",
-      "rating": null,
-      "year": 2010,
-      "genres": [
-        "Shooter",
-        "Action"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 1416,
-      "metacritic": 77,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 40,
-      "igdb_rating": 72.6
     },
     {
       "id": 1778551578452,
@@ -9530,10 +7686,10 @@
       "rawg_id": 26472,
       "metacritic": 73,
       "played": "yes",
-      "playtime": null,
-      "completed": null,
+      "playtime": "completed",
+      "completed": "yes",
       "igdb_id": 553,
-      "igdb_rating": 74.0
+      "igdb_rating": 74
     },
     {
       "id": 1778551578453,
@@ -9555,33 +7711,10 @@
       "rawg_id": 40185,
       "metacritic": 58,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 3670,
-      "igdb_rating": 60.0
-    },
-    {
-      "id": 1778551578454,
-      "title": "Mortal Kombat vs. DC Universe",
-      "rating": null,
-      "year": 2008,
-      "genres": [
-        "Arcade",
-        "Fighting"
-      ],
-      "platformPlayed": "Xbox 360",
-      "availableOn": [
-        "Xbox 360",
-        "PS3"
-      ],
-      "notes": "",
-      "rawg_id": 4561,
-      "metacritic": 74,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1617,
-      "igdb_rating": 77.1
+      "igdb_rating": 60
     },
     {
       "id": 1778551578455,
@@ -9603,59 +7736,223 @@
       "rawg_id": 4388,
       "metacritic": 87,
       "played": "yes",
-      "playtime": null,
+      "playtime": "little",
       "completed": null,
       "igdb_id": 352,
       "igdb_rating": 87.2
     },
     {
-      "id": 1778551578456,
-      "title": "Tom Clancy's Rainbow Six Vegas 2",
+      "id": 1778584142916,
+      "title": "The Outer Worlds 2",
+      "played": "yes",
       "rating": null,
-      "year": 2008,
+      "year": 2025,
       "genres": [
-        "Shooter",
-        "Strategy",
-        "Action"
+        "Role-playing (RPG)",
+        "Adventure"
       ],
-      "platformPlayed": "Xbox 360",
+      "platformPlayed": null,
       "availableOn": [
-        "PC",
-        "Xbox One",
-        "Xbox 360",
-        "PS3"
+        "Xbox Series X|S",
+        "PC (Microsoft Windows)",
+        "PlayStation 5"
       ],
       "notes": "",
-      "rawg_id": 16294,
-      "metacritic": 78,
-      "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 1853,
-      "igdb_rating": 82.0
+      "igdb_id": 152246,
+      "igdb_rating": 83.2,
+      "playtime": "completed",
+      "completed": "yes"
     },
     {
-      "id": 1778551578457,
-      "title": "Death Stranding",
+      "id": 1778584161832,
+      "title": "Clair Obscur: Expedition 33",
+      "played": "yes",
       "rating": null,
-      "year": 2019,
+      "year": 2025,
       "genres": [
+        "Role-playing (RPG)",
         "Adventure",
-        "Action"
+        "Indie"
       ],
-      "platformPlayed": "Xbox Series",
+      "platformPlayed": null,
       "availableOn": [
-        "PC",
-        "PS4"
+        "Xbox Series X|S",
+        "PC (Microsoft Windows)",
+        "PlayStation 5"
       ],
       "notes": "",
-      "rawg_id": 50738,
-      "metacritic": 84,
+      "igdb_id": 305152,
+      "igdb_rating": 87,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584350549,
+      "title": "Grand Theft Auto: Vice City",
       "played": "yes",
-      "playtime": null,
-      "completed": null,
-      "igdb_id": 19564,
-      "igdb_rating": 84.4
+      "rating": null,
+      "year": 2002,
+      "genres": [
+        "Shooter",
+        "Racing",
+        "Adventure",
+        "Arcade"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "Xbox",
+        "PlayStation 3",
+        "PC (Microsoft Windows)",
+        "Mac",
+        "PlayStation 2"
+      ],
+      "notes": "",
+      "igdb_id": 733,
+      "igdb_rating": 94,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584351732,
+      "title": "Grand Theft Auto III",
+      "played": "yes",
+      "rating": null,
+      "year": 2001,
+      "genres": [
+        "Shooter",
+        "Racing",
+        "Simulator",
+        "Adventure"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "Xbox",
+        "PlayStation 4",
+        "Android",
+        "PC (Microsoft Windows)",
+        "iOS",
+        "Mac",
+        "PlayStation 2"
+      ],
+      "notes": "",
+      "igdb_id": 730,
+      "igdb_rating": 95,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584353697,
+      "title": "Grand Theft Auto IV: The Ballad of Gay Tony",
+      "played": "yes",
+      "rating": null,
+      "year": 2009,
+      "genres": [
+        "Shooter",
+        "Racing",
+        "Adventure"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "PlayStation 3",
+        "PC (Microsoft Windows)",
+        "Xbox 360"
+      ],
+      "notes": "",
+      "igdb_id": 3174,
+      "igdb_rating": 91,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584361548,
+      "title": "Grand Theft Auto Online",
+      "played": "yes",
+      "rating": null,
+      "year": 2014,
+      "genres": [
+        "Shooter",
+        "Adventure"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "Xbox Series X|S",
+        "PlayStation 3",
+        "PlayStation 4",
+        "PC (Microsoft Windows)",
+        "PlayStation 5",
+        "Xbox 360",
+        "Xbox One"
+      ],
+      "notes": "",
+      "igdb_id": 134710,
+      "igdb_rating": 94,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584366298,
+      "title": "Grand Theft Auto Advance",
+      "played": "yes",
+      "rating": null,
+      "year": 2004,
+      "genres": [
+        "Shooter",
+        "Racing",
+        "Adventure"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "Game Boy Advance"
+      ],
+      "notes": "",
+      "igdb_id": 3266,
+      "igdb_rating": 60,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584368464,
+      "title": "Grand Theft Auto 2",
+      "played": "yes",
+      "rating": null,
+      "year": 1999,
+      "genres": [
+        "Shooter",
+        "Racing"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "PC (Microsoft Windows)",
+        "Dreamcast"
+      ],
+      "notes": "",
+      "igdb_id": 819,
+      "igdb_rating": 70,
+      "playtime": "completed",
+      "completed": "yes"
+    },
+    {
+      "id": 1778584371948,
+      "title": "Grand Theft Auto",
+      "played": "yes",
+      "rating": null,
+      "year": 1997,
+      "genres": [
+        "Shooter",
+        "Racing",
+        "Adventure"
+      ],
+      "platformPlayed": null,
+      "availableOn": [
+        "Nintendo 64",
+        "PC (Microsoft Windows)",
+        "DOS",
+        "PlayStation"
+      ],
+      "notes": "",
+      "igdb_id": 980,
+      "igdb_rating": 80,
+      "playtime": "much"
     }
   ],
   "profile": {
