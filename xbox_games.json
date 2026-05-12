@@ -74,8 +74,10 @@
     "source": "exophase",
     "profile": "frozen2711",
     "platforms": [
-      "Xbox 360"
-    ]
+      "Xbox 360",
+      "Xbox One"
+    ],
+    "time_played": "3h 46m"
   },
   {
     "title": "Just Dance: Disney",
@@ -101,7 +103,8 @@
     "profile": "frozen2711",
     "platforms": [
       "Xbox 360"
-    ]
+    ],
+    "time_played": "4m"
   },
   {
     "title": "DS FREEDOM/SI FREEDOM",
@@ -343,12 +346,13 @@
     "achievements_total": 40,
     "exp": 1648,
     "points": 407,
-    "last_played": "October 18, 2014",
+    "last_played": "October 26, 2024",
     "source": "exophase",
     "profile": "frozen2711",
     "platforms": [
       "Xbox 360"
-    ]
+    ],
+    "time_played": null
   },
   {
     "title": "FIFA 14",
@@ -382,12 +386,14 @@
     "achievements_total": 50,
     "exp": 754,
     "points": 100,
-    "last_played": "August 30, 2014",
+    "last_played": "February 19, 2022",
     "source": "exophase",
     "profile": "frozen2711",
     "platforms": [
-      "Xbox 360"
-    ]
+      "Xbox 360",
+      "Xbox One"
+    ],
+    "time_played": null
   },
   {
     "title": "Call of Duty: Ghosts",
@@ -603,12 +609,13 @@
     "achievements_total": 95,
     "exp": 407,
     "points": 390,
-    "last_played": "December 2, 2013",
+    "last_played": "March 28, 2021",
     "source": "exophase",
     "profile": "frozen2711",
     "platforms": [
       "Xbox 360"
-    ]
+    ],
+    "time_played": null
   },
   {
     "title": "FIFA 12",
@@ -2438,14 +2445,15 @@
     "title": "Botany Manor",
     "platforms": [
       "Xbox Series",
-      "Xbox One"
+      "Xbox One",
+      "Windows"
     ],
-    "time_played": "1h 37m",
-    "achievements_unlocked": 0,
+    "time_played": "7h 28m",
+    "achievements_unlocked": 28,
     "achievements_total": 36,
-    "exp": null,
-    "points": null,
-    "last_played": "December 4, 2024",
+    "exp": 774,
+    "points": 880,
+    "last_played": "November 22, 2024",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -2476,20 +2484,6 @@
     "exp": null,
     "points": null,
     "last_played": "December 2, 2024",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Botany Manor",
-    "platforms": [
-      "Windows"
-    ],
-    "time_played": "5h 51m",
-    "achievements_unlocked": 28,
-    "achievements_total": 36,
-    "exp": 774,
-    "points": 880,
-    "last_played": "November 22, 2024",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -2579,20 +2573,6 @@
     "exp": null,
     "points": null,
     "last_played": "November 4, 2024",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "LEGO Pirates of the Caribbean: The Video Game",
-    "platforms": [
-      "Xbox 360"
-    ],
-    "time_played": null,
-    "achievements_unlocked": 0,
-    "achievements_total": 40,
-    "exp": null,
-    "points": null,
-    "last_played": "October 26, 2024",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -2896,20 +2876,6 @@
     "source": "exophase"
   },
   {
-    "title": "Grand Theft Auto V",
-    "platforms": [
-      "Xbox One"
-    ],
-    "time_played": "3h 46m",
-    "achievements_unlocked": 0,
-    "achievements_total": 77,
-    "exp": null,
-    "points": null,
-    "last_played": "February 19, 2022",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
     "title": "LEGO Harry Potter Collection",
     "platforms": [
       "Xbox One"
@@ -2919,20 +2885,6 @@
     "achievements_total": 84,
     "exp": null,
     "points": null,
-    "last_played": "February 19, 2022",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Rayman Legends",
-    "platforms": [
-      "Xbox One"
-    ],
-    "time_played": null,
-    "achievements_unlocked": 1,
-    "achievements_total": 50,
-    "exp": 38,
-    "points": 10,
     "last_played": "February 19, 2022",
     "profile": "LucasCosas",
     "source": "exophase"
@@ -3020,13 +2972,14 @@
   {
     "title": "Overcooked! 2",
     "platforms": [
-      "Xbox One"
+      "Xbox One",
+      "Windows"
     ],
-    "time_played": "1h 27m",
-    "achievements_unlocked": 0,
+    "time_played": "1h 40m",
+    "achievements_unlocked": 2,
     "achievements_total": 54,
-    "exp": null,
-    "points": null,
+    "exp": 59,
+    "points": 30,
     "last_played": "September 29, 2021",
     "profile": "LucasCosas",
     "source": "exophase"
@@ -3185,28 +3138,15 @@
   {
     "title": "Hellblade: Senua's Sacrifice",
     "platforms": [
-      "Windows"
+      "Windows",
+      "Xbox One"
     ],
-    "time_played": "7h 12m",
+    "time_played": "7h 42m",
     "achievements_unlocked": 13,
     "achievements_total": 14,
     "exp": 3694,
     "points": 900,
-    "last_played": "April 1, 2021",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Red Dead Redemption",
-    "platforms": [
-      "Xbox 360"
-    ],
-    "time_played": null,
-    "achievements_unlocked": 0,
-    "achievements_total": 95,
-    "exp": null,
-    "points": null,
-    "last_played": "March 28, 2021",
+    "last_played": "August 1, 2020",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -3241,14 +3181,15 @@
   {
     "title": "Worms W.M.D",
     "platforms": [
-      "Windows"
+      "Windows",
+      "Xbox One"
     ],
-    "time_played": "1h 25m",
+    "time_played": "1h 29m",
     "achievements_unlocked": 0,
     "achievements_total": 29,
     "exp": null,
     "points": null,
-    "last_played": "February 8, 2021",
+    "last_played": "January 9, 2020",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -3278,20 +3219,6 @@
     "exp": 5,
     "points": 25,
     "last_played": "December 22, 2020",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Overcooked! 2",
-    "platforms": [
-      "Windows"
-    ],
-    "time_played": "13m",
-    "achievements_unlocked": 2,
-    "achievements_total": 54,
-    "exp": 59,
-    "points": 30,
-    "last_played": "December 21, 2020",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -3474,9 +3401,10 @@
   {
     "title": "Felix The Reaper",
     "platforms": [
-      "Windows"
+      "Windows",
+      "Xbox One"
     ],
-    "time_played": "19m",
+    "time_played": "44m",
     "achievements_unlocked": 2,
     "achievements_total": 26,
     "exp": 94,
@@ -3541,20 +3469,6 @@
     "exp": null,
     "points": null,
     "last_played": "August 15, 2020",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Hellblade: Senua's Sacrifice",
-    "platforms": [
-      "Xbox One"
-    ],
-    "time_played": "30m",
-    "achievements_unlocked": 0,
-    "achievements_total": 14,
-    "exp": null,
-    "points": null,
-    "last_played": "August 1, 2020",
     "profile": "LucasCosas",
     "source": "exophase"
   },
@@ -3631,13 +3545,14 @@
   {
     "title": "My Friend Pedro",
     "platforms": [
-      "Xbox One"
+      "Xbox One",
+      "Windows"
     ],
-    "time_played": "34m",
-    "achievements_unlocked": 0,
+    "time_played": "3h 44m",
+    "achievements_unlocked": 10,
     "achievements_total": 30,
-    "exp": null,
-    "points": null,
+    "exp": 1165,
+    "points": 230,
     "last_played": "January 25, 2020",
     "profile": "LucasCosas",
     "source": "exophase"
@@ -3686,34 +3601,6 @@
     "source": "exophase"
   },
   {
-    "title": "Worms W.M.D",
-    "platforms": [
-      "Xbox One"
-    ],
-    "time_played": "4m",
-    "achievements_unlocked": 0,
-    "achievements_total": 29,
-    "exp": null,
-    "points": null,
-    "last_played": "January 9, 2020",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "LEGO Batman 2: DC Super Heroes",
-    "platforms": [
-      "Xbox 360"
-    ],
-    "time_played": "4m",
-    "achievements_unlocked": 0,
-    "achievements_total": 37,
-    "exp": null,
-    "points": null,
-    "last_played": "January 9, 2020",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
     "title": "Life is Strange: Before the Storm",
     "platforms": [
       "Xbox One"
@@ -3757,20 +3644,6 @@
     "source": "exophase"
   },
   {
-    "title": "My Friend Pedro",
-    "platforms": [
-      "Windows"
-    ],
-    "time_played": "3h 10m",
-    "achievements_unlocked": 10,
-    "achievements_total": 30,
-    "exp": 1165,
-    "points": 230,
-    "last_played": "December 28, 2019",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
     "title": "The Turing Test",
     "platforms": [
       "Xbox Series",
@@ -3783,20 +3656,6 @@
     "exp": null,
     "points": null,
     "last_played": "December 26, 2019",
-    "profile": "LucasCosas",
-    "source": "exophase"
-  },
-  {
-    "title": "Felix The Reaper",
-    "platforms": [
-      "Xbox One"
-    ],
-    "time_played": "25m",
-    "achievements_unlocked": 0,
-    "achievements_total": 26,
-    "exp": null,
-    "points": null,
-    "last_played": "December 25, 2019",
     "profile": "LucasCosas",
     "source": "exophase"
   },
