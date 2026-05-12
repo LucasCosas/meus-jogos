@@ -1090,10 +1090,10 @@ function renderBacklog() {
   const platform = document.getElementById('backlog-platform').value;
   const sort     = document.getElementById('backlog-sort').value;
 
-  const playedIds = new Set(_games.map(g => g.rawg_id).filter(Boolean));
+  const playedIds = new Set(_games.map(g => g.igdb_id).filter(Boolean));
 
   let list = _backlog.filter(g => {
-    if (playedIds.has(g.rawg_id)) return false;
+    if (playedIds.has(g.igdb_id)) return false;
     if (q && !g.title.toLowerCase().includes(q)) return false;
     if (category && !backlogCategories(g).includes(category)) return false;
     if (platform && !(g.platforms || []).includes(platform)) return false;
@@ -1123,13 +1123,12 @@ function renderBacklog() {
   }
 
   grid.innerHTML = list.map(g => {
-    const year = g.released ? g.released.slice(0, 4) : null;
-    const metacriticColor = g.metacritic >= 90 ? 'var(--green)' : g.metacritic >= 75 ? 'var(--accent2)' : g.metacritic >= 60 ? 'var(--yellow)' : 'var(--muted)';
+    const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : g.igdb_rating >= 60 ? 'var(--yellow)' : 'var(--muted)';
     const cats = backlogCategories(g);
     return `<div class="game-card">
       <div class="card-header">
         <span class="game-title">${esc(g.title)}</span>
-        <span class="game-rating" style="color:${metacriticColor}">${g.metacritic}</span>
+        ${g.igdb_rating ? `<span class="game-rating" style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
       </div>
       <div class="tags">
         ${cats.map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
@@ -1138,18 +1137,18 @@ function renderBacklog() {
         ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
       </div>
       <div class="card-meta">
-        ${year ? `<span>📅 ${year}</span>` : ''}
-        ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
+        ${g.year ? `<span>📅 ${g.year}</span>` : ''}
+        ${g.community_rating ? `<span title="Rating da comunidade (IGDB)">👥 ${g.community_rating}</span>` : ''}
       </div>
       <div class="card-actions">
-        <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.rawg_id})">✅ Já joguei</button>
+        <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Já joguei</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function backlogMarkPlayed(rawgId) {
-  const g = _backlog.find(x => x.rawg_id === rawgId);
+function backlogMarkPlayed(igdbId) {
+  const g = _backlog.find(x => x.igdb_id === igdbId);
   if (!g) return;
   const games = loadGames();
   games.push({
@@ -1157,13 +1156,13 @@ function backlogMarkPlayed(rawgId) {
     title:       g.title,
     played:      'yes',
     rating:      null,
-    year:        g.released ? parseInt(g.released.slice(0, 4)) : null,
+    year:        g.year || null,
     genres:      g.genres || [],
     platformPlayed: null,
     availableOn: g.platforms || [],
     notes:       '',
-    rawg_id:     g.rawg_id,
-    metacritic:  g.metacritic || null,
+    igdb_id:     g.igdb_id,
+    igdb_rating: g.igdb_rating || null,
   });
   saveGames(games);
   showToast(`${g.title} adicionado ao catálogo!`, 'success');
