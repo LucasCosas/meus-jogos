@@ -4221,33 +4221,6 @@
       "igdb_rating": 90.2
     },
     {
-      "id": 1778450461128,
-      "title": "The Witcher 3: Wild Hunt",
-      "rating": 10,
-      "year": 2015,
-      "hours": null,
-      "genres": [
-        "RPG",
-        "Mundo Aberto"
-      ],
-      "platformPlayed": "PS4",
-      "availableOn": [
-        "PS4"
-      ],
-      "completed": "yes",
-      "notes": "21/79 troféus (30%)",
-      "_psn": {
-        "pct": 30,
-        "earned": 21,
-        "total": 79
-      },
-      "rawg_id": 3328,
-      "played": "yes",
-      "playtime": "completed",
-      "igdb_id": 1942,
-      "igdb_rating": 91.7
-    },
-    {
       "id": 1778450461065,
       "title": "The Witness",
       "rating": 10,
@@ -5225,7 +5198,7 @@
     {
       "id": 1778551455486,
       "title": "Descenders",
-      "rating": null,
+      "rating": 8,
       "year": 2019,
       "genres": [
         "Racing",
@@ -5252,7 +5225,7 @@
     {
       "id": 1778551455488,
       "title": "Watch Dogs",
-      "rating": null,
+      "rating": 8,
       "year": 2014,
       "genres": [
         "Adventure",
@@ -5278,7 +5251,7 @@
     {
       "id": 1778551455490,
       "title": "The Turing Test",
-      "rating": null,
+      "rating": 10,
       "year": 2016,
       "genres": [
         "Adventure"
@@ -5302,7 +5275,7 @@
     {
       "id": 1778551455492,
       "title": "Marvel’s Avengers",
-      "rating": null,
+      "rating": 6,
       "year": 2020,
       "genres": [
         "Adventure",
@@ -5329,7 +5302,7 @@
     {
       "id": 1778551455495,
       "title": "Burnout Paradise",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Racing",
@@ -5352,7 +5325,7 @@
     {
       "id": 1778551455496,
       "title": "DOOM Eternal",
-      "rating": null,
+      "rating": 4,
       "year": 2020,
       "genres": [
         "Shooter",
@@ -5378,7 +5351,7 @@
     {
       "id": 1778551455498,
       "title": "Darksiders",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Action"
@@ -5403,7 +5376,7 @@
     {
       "id": 1778551455501,
       "title": "Guitar Hero: Metallica",
-      "rating": null,
+      "rating": 8,
       "year": 2009,
       "genres": [
         "Arcade"
@@ -5426,7 +5399,7 @@
     {
       "id": 1778551455504,
       "title": "Just Cause 4",
-      "rating": null,
+      "rating": 6,
       "year": 2018,
       "genres": [
         "Adventure",
@@ -5450,7 +5423,7 @@
     {
       "id": 1778551455506,
       "title": "Call of Duty: World at War",
-      "rating": null,
+      "rating": 8,
       "year": 2008,
       "genres": [
         "Shooter"
@@ -5474,7 +5447,7 @@
     {
       "id": 1778551455507,
       "title": "Angry Birds Trilogy",
-      "rating": null,
+      "rating": 4,
       "year": 2012,
       "genres": [
         "Action",
@@ -5497,7 +5470,7 @@
     {
       "id": 1778551455508,
       "title": "Crash Bandicoot N. Sane Trilogy",
-      "rating": null,
+      "rating": 8,
       "year": 2017,
       "genres": [
         "Platformer",
@@ -5522,7 +5495,7 @@
     {
       "id": 1778551455509,
       "title": "Call of Duty: Black Ops II",
-      "rating": null,
+      "rating": 8,
       "year": 2012,
       "genres": [
         "Shooter",
@@ -5547,7 +5520,7 @@
     {
       "id": 1778551455511,
       "title": "Rayman Legends",
-      "rating": null,
+      "rating": 6,
       "year": 2013,
       "genres": [
         "Platformer"
@@ -5571,36 +5544,9 @@
       "igdb_rating": 80.9
     },
     {
-      "id": 1778551455514,
-      "title": "The Witcher 3 Wild Hunt - Complete Edition",
-      "rating": null,
-      "year": 2016,
-      "genres": [
-        "Adventure",
-        "RPG"
-      ],
-      "platformPlayed": "Xbox Series",
-      "availableOn": [
-        "PC",
-        "PS5",
-        "Xbox One",
-        "PS4",
-        "Xbox Series",
-        "Switch"
-      ],
-      "notes": "",
-      "rawg_id": 257255,
-      "metacritic": 92,
-      "played": "yes",
-      "playtime": "completed",
-      "completed": "yes",
-      "igdb_id": 119402,
-      "igdb_rating": 88
-    },
-    {
       "id": 1778551455515,
       "title": "Halo: Reach",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Shooter"
@@ -5623,7 +5569,7 @@
     {
       "id": 1778551455518,
       "title": "My Friend Pedro",
-      "rating": null,
+      "rating": 8,
       "year": 2019,
       "genres": [
         "Shooter",
@@ -5652,7 +5598,7 @@
     {
       "id": 1778551455520,
       "title": "Batman: Arkham Asylum",
-      "rating": null,
+      "rating": 10,
       "year": 2009,
       "genres": [
         "Action"
@@ -5679,7 +5625,7 @@
     {
       "id": 1778551455524,
       "title": "Transformers: Revenge of the Fallen",
-      "rating": null,
+      "rating": 8,
       "year": 2009,
       "genres": [
         "Shooter",
@@ -5704,7 +5650,7 @@
     {
       "id": 1778551455525,
       "title": "Mirror's Edge",
-      "rating": null,
+      "rating": 8,
       "year": 2008,
       "genres": [
         "Action"
@@ -5727,7 +5673,7 @@
     {
       "id": 1778551455528,
       "title": "Dead Island",
-      "rating": null,
+      "rating": 8,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -5752,7 +5698,7 @@
     {
       "id": 1778551455530,
       "title": "Sonic Unleashed",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Arcade",
@@ -5778,7 +5724,7 @@
     {
       "id": 1778551455531,
       "title": "Dead by Daylight",
-      "rating": null,
+      "rating": 4,
       "year": 2016,
       "genres": [
         "Action"
@@ -5803,7 +5749,7 @@
     {
       "id": 1778551455532,
       "title": "Prototype",
-      "rating": null,
+      "rating": 8,
       "year": 2009,
       "genres": [
         "Casual",
@@ -5831,7 +5777,7 @@
     {
       "id": 1778551455535,
       "title": "X-Men Origins: Wolverine",
-      "rating": null,
+      "rating": 4,
       "year": 2009,
       "genres": [
         "Action"
@@ -5855,7 +5801,7 @@
     {
       "id": 1778551455536,
       "title": "Call of Juarez: The Cartel",
-      "rating": null,
+      "rating": 8,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -5880,7 +5826,7 @@
     {
       "id": 1778551455537,
       "title": "Twelve Minutes",
-      "rating": null,
+      "rating": 8,
       "year": 2021,
       "genres": [
         "Indie",
@@ -5908,7 +5854,7 @@
     {
       "id": 1778551455539,
       "title": "Golf With Your Friends",
-      "rating": null,
+      "rating": 6,
       "year": 2016,
       "genres": [
         "Casual",
@@ -5935,7 +5881,7 @@
     {
       "id": 1778551455541,
       "title": "Far Cry 2",
-      "rating": null,
+      "rating": 8,
       "year": 2008,
       "genres": [
         "Shooter",
@@ -5960,7 +5906,7 @@
     {
       "id": 1778551455542,
       "title": "Battlefield 3",
-      "rating": null,
+      "rating": 2,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -5985,7 +5931,7 @@
     {
       "id": 1778551455543,
       "title": "Batman: Arkham Origins",
-      "rating": null,
+      "rating": 10,
       "year": 2013,
       "genres": [
         "Action"
@@ -6009,7 +5955,7 @@
     {
       "id": 1778551455545,
       "title": "Kinect Adventures!",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Simulation"
@@ -6030,7 +5976,7 @@
     {
       "id": 1778551455551,
       "title": "Atomic Heart",
-      "rating": null,
+      "rating": 6,
       "year": 2023,
       "genres": [
         "Shooter",
@@ -6057,7 +6003,7 @@
     {
       "id": 1778551455552,
       "title": "Life is Strange: Before The Storm",
-      "rating": null,
+      "rating": 6,
       "year": 2017,
       "genres": [
         "Adventure"
@@ -6083,7 +6029,7 @@
     {
       "id": 1778551455555,
       "title": "Call of Duty: Ghosts",
-      "rating": null,
+      "rating": 8,
       "year": 2013,
       "genres": [
         "Shooter",
@@ -6109,7 +6055,7 @@
     {
       "id": 1778551455556,
       "title": "Injustice: Gods Among Us",
-      "rating": null,
+      "rating": 4,
       "year": 2013,
       "genres": [
         "Card",
@@ -6138,7 +6084,7 @@
     {
       "id": 1778551455558,
       "title": "Halo 3: ODST",
-      "rating": null,
+      "rating": 4,
       "year": 2009,
       "genres": [
         "Shooter",
@@ -6162,7 +6108,7 @@
     {
       "id": 1778551455561,
       "title": "Max Payne 3",
-      "rating": null,
+      "rating": 8,
       "year": 2012,
       "genres": [
         "Shooter",
@@ -6187,7 +6133,7 @@
     {
       "id": 1778551455564,
       "title": "The Pedestrian",
-      "rating": null,
+      "rating": 8,
       "year": 2020,
       "genres": [
         "Indie",
@@ -6217,7 +6163,7 @@
     {
       "id": 1778551455565,
       "title": "Sleeping Dogs",
-      "rating": null,
+      "rating": 6,
       "year": 2012,
       "genres": [
         "Adventure",
@@ -6241,7 +6187,7 @@
     {
       "id": 1778551455566,
       "title": "Dead Space 3",
-      "rating": null,
+      "rating": 10,
       "year": 2013,
       "genres": [
         "Shooter",
@@ -6266,7 +6212,7 @@
     {
       "id": 1778551455569,
       "title": "Rise of the Tomb Raider",
-      "rating": null,
+      "rating": 4,
       "year": 2015,
       "genres": [
         "Action"
@@ -6290,7 +6236,7 @@
     {
       "id": 1778551455570,
       "title": "Dead Rising 2",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Action"
@@ -6315,7 +6261,7 @@
     {
       "id": 1778551455571,
       "title": "Surgeon Simulator 2",
-      "rating": null,
+      "rating": 4,
       "year": 2020,
       "genres": [
         "Casual",
@@ -6340,7 +6286,7 @@
     {
       "id": 1778551455573,
       "title": "Forza Motorsport 4",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Racing"
@@ -6361,7 +6307,7 @@
     {
       "id": 1778551455574,
       "title": "Human: Fall Flat",
-      "rating": null,
+      "rating": 6,
       "year": 2016,
       "genres": [
         "Indie",
@@ -6390,7 +6336,7 @@
     {
       "id": 1778551455576,
       "title": "Forza Horizon 4",
-      "rating": null,
+      "rating": 6,
       "year": 2018,
       "genres": [
         "Racing",
@@ -6414,7 +6360,7 @@
     {
       "id": 1778551455577,
       "title": "Left 4 Dead",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Shooter",
@@ -6438,7 +6384,7 @@
     {
       "id": 1778551455578,
       "title": "Maquette",
-      "rating": null,
+      "rating": 8,
       "year": 2021,
       "genres": [
         "Indie",
@@ -6465,7 +6411,7 @@
     {
       "id": 1778551455581,
       "title": "Alone in the Dark (2008)",
-      "rating": null,
+      "rating": 4,
       "year": 2008,
       "genres": [
         "Adventure",
@@ -6490,7 +6436,7 @@
     {
       "id": 1778551455583,
       "title": "Dante's Inferno",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Adventure",
@@ -6514,7 +6460,7 @@
     {
       "id": 1778551455584,
       "title": "Cut the Rope",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Casual",
@@ -6540,7 +6486,7 @@
     {
       "id": 1778551455588,
       "title": "Battlefield: Bad Company",
-      "rating": null,
+      "rating": 2,
       "year": 2008,
       "genres": [
         "Shooter",
@@ -6564,7 +6510,7 @@
     {
       "id": 1778551455589,
       "title": "Kinect Sports",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Family",
@@ -6586,7 +6532,7 @@
     {
       "id": 1778551455590,
       "title": "We Happy Few",
-      "rating": null,
+      "rating": 4,
       "year": 2018,
       "genres": [
         "Indie",
@@ -6611,7 +6557,7 @@
     {
       "id": 1778551455593,
       "title": "Harry Potter and the Deathly Hallows: Part 2",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -6635,7 +6581,7 @@
     {
       "id": 1778551455594,
       "title": "Star Wars: The Force Unleashed",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Adventure",
@@ -6661,7 +6607,7 @@
     {
       "id": 1778551455595,
       "title": "Call of Duty 4: Modern Warfare",
-      "rating": null,
+      "rating": 8,
       "year": 2007,
       "genres": [
         "Shooter",
@@ -6688,7 +6634,7 @@
     {
       "id": 1778551455598,
       "title": "Bridge Constructor Portal",
-      "rating": null,
+      "rating": 8,
       "year": 2017,
       "genres": [
         "Strategy",
@@ -6717,7 +6663,7 @@
     {
       "id": 1778551455599,
       "title": "Guitar Hero III: Legends of Rock",
-      "rating": null,
+      "rating": 8,
       "year": 2007,
       "genres": [
         "Arcade"
@@ -6742,7 +6688,7 @@
     {
       "id": 1778551455600,
       "title": "Medal of Honor",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Shooter"
@@ -6765,7 +6711,7 @@
     {
       "id": 1778551455601,
       "title": "Sea of Thieves",
-      "rating": null,
+      "rating": 4,
       "year": 2018,
       "genres": [
         "Massively Multiplayer",
@@ -6791,7 +6737,7 @@
     {
       "id": 1778551455602,
       "title": "Fable II",
-      "rating": null,
+      "rating": 8,
       "year": 2008,
       "genres": [
         "Adventure",
@@ -6815,7 +6761,7 @@
     {
       "id": 1778551455605,
       "title": "Aliens vs. Predator",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -6840,7 +6786,7 @@
     {
       "id": 1778551455607,
       "title": "Prince of Persia: The Forgotten Sands",
-      "rating": null,
+      "rating": 8,
       "year": 2010,
       "genres": [
         "Adventure",
@@ -6864,7 +6810,7 @@
     {
       "id": 1778551455608,
       "title": "DiRT 3",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Racing",
@@ -6889,7 +6835,7 @@
     {
       "id": 1778551455612,
       "title": "Hellblade: Senua's Sacrifice",
-      "rating": null,
+      "rating": 10,
       "year": 2017,
       "genres": [
         "Indie",
@@ -6915,7 +6861,7 @@
     {
       "id": 1778551455613,
       "title": "Halo Infinite",
-      "rating": null,
+      "rating": 4,
       "year": 2021,
       "genres": [
         "Shooter",
@@ -6940,7 +6886,7 @@
     {
       "id": 1778551455614,
       "title": "The Simpsons Game",
-      "rating": null,
+      "rating": 4,
       "year": 2007,
       "genres": [
         "Platformer",
@@ -6964,7 +6910,7 @@
     {
       "id": 1778551455617,
       "title": "Brink",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -6988,7 +6934,7 @@
     {
       "id": 1778551455619,
       "title": "skate.",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Action",
@@ -7013,7 +6959,7 @@
     {
       "id": 1778551455622,
       "title": "The Dark Pictures Anthology: Man of Medan",
-      "rating": null,
+      "rating": 8,
       "year": 2019,
       "genres": [
         "Adventure",
@@ -7038,7 +6984,7 @@
     {
       "id": 1778551455623,
       "title": "Grand Theft Auto: San Andreas",
-      "rating": null,
+      "rating": 8,
       "year": 2004,
       "genres": [
         "Action"
@@ -7067,7 +7013,7 @@
     {
       "id": 1778551455624,
       "title": "Alan Wake",
-      "rating": null,
+      "rating": 10,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -7092,7 +7038,7 @@
     {
       "id": 1778551455625,
       "title": "Gears of War 2",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Shooter"
@@ -7114,7 +7060,7 @@
     {
       "id": 1778551455626,
       "title": "Dead Rising",
-      "rating": null,
+      "rating": 6,
       "year": 2006,
       "genres": [
         "Action"
@@ -7138,7 +7084,7 @@
     {
       "id": 1778551455628,
       "title": "Tomb Raider",
-      "rating": null,
+      "rating": 8,
       "year": 1996,
       "genres": [
         "Action"
@@ -7162,7 +7108,7 @@
     {
       "id": 1778551455629,
       "title": "Left 4 Dead 2",
-      "rating": null,
+      "rating": 6,
       "year": 2009,
       "genres": [
         "Shooter",
@@ -7186,7 +7132,7 @@
     {
       "id": 1778551455630,
       "title": "Battlefield 4",
-      "rating": null,
+      "rating": 2,
       "year": 2013,
       "genres": [
         "Shooter"
@@ -7211,7 +7157,7 @@
     {
       "id": 1778551455631,
       "title": "Dead Space 2",
-      "rating": null,
+      "rating": 10,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -7236,7 +7182,7 @@
     {
       "id": 1778551455632,
       "title": "Red Dead Redemption",
-      "rating": null,
+      "rating": 8,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -7265,7 +7211,7 @@
     {
       "id": 1778551455633,
       "title": "Gears of War 4",
-      "rating": null,
+      "rating": 6,
       "year": 2016,
       "genres": [
         "Shooter",
@@ -7289,7 +7235,7 @@
     {
       "id": 1778551455634,
       "title": "Dragon Age: Inquisition",
-      "rating": null,
+      "rating": 6,
       "year": 2014,
       "genres": [
         "Strategy",
@@ -7316,7 +7262,7 @@
     {
       "id": 1778551455636,
       "title": "The Amazing Spider-Man",
-      "rating": null,
+      "rating": 4,
       "year": 2012,
       "genres": [
         "Adventure",
@@ -7342,7 +7288,7 @@
     {
       "id": 1778551455637,
       "title": "Tom Clancy's Rainbow Six Vegas",
-      "rating": null,
+      "rating": 8,
       "year": 2006,
       "genres": [
         "Shooter",
@@ -7367,7 +7313,7 @@
     {
       "id": 1778551455638,
       "title": "Call of Duty: Black Ops",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -7394,7 +7340,7 @@
     {
       "id": 1778551455639,
       "title": "Far Cry 3",
-      "rating": null,
+      "rating": 10,
       "year": 2012,
       "genres": [
         "Shooter",
@@ -7420,7 +7366,7 @@
     {
       "id": 1778551455642,
       "title": "Need for Speed: The Run",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Racing",
@@ -7444,7 +7390,7 @@
     {
       "id": 1778551578440,
       "title": "Call of Duty: Modern Warfare 2",
-      "rating": null,
+      "rating": 10,
       "year": 2009,
       "genres": [
         "Shooter"
@@ -7469,7 +7415,7 @@
     {
       "id": 1778551578441,
       "title": "The Amazing Spider-Man 2",
-      "rating": null,
+      "rating": 6,
       "year": 2014,
       "genres": [
         "Adventure",
@@ -7495,7 +7441,7 @@
     {
       "id": 1778551578442,
       "title": "Marvel vs. Capcom 3: Fate of Two Worlds",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Arcade",
@@ -7517,7 +7463,7 @@
     {
       "id": 1778551578443,
       "title": "Crysis 2",
-      "rating": null,
+      "rating": 6,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -7541,7 +7487,7 @@
     {
       "id": 1778551578444,
       "title": "Call of Duty: Modern Warfare 3",
-      "rating": null,
+      "rating": 8,
       "year": 2011,
       "genres": [
         "Shooter",
@@ -7568,7 +7514,7 @@
     {
       "id": 1778551578445,
       "title": "LEGO Batman",
-      "rating": null,
+      "rating": 6,
       "year": 2008,
       "genres": [
         "Family",
@@ -7595,7 +7541,7 @@
     {
       "id": 1778551578446,
       "title": "Prototype 2",
-      "rating": null,
+      "rating": 8,
       "year": 2012,
       "genres": [
         "Adventure",
@@ -7621,7 +7567,7 @@
     {
       "id": 1778551578449,
       "title": "James Cameron's AVATAR: The Game",
-      "rating": null,
+      "rating": 8,
       "year": 2009,
       "genres": [
         "Shooter",
@@ -7647,7 +7593,7 @@
     {
       "id": 1778551578450,
       "title": "Kane & Lynch 2: Dog Days",
-      "rating": null,
+      "rating": 8,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -7671,7 +7617,7 @@
     {
       "id": 1778551578452,
       "title": "Spider-Man: Shattered Dimensions",
-      "rating": null,
+      "rating": 6,
       "year": 2010,
       "genres": [
         "Action"
@@ -7694,7 +7640,7 @@
     {
       "id": 1778551578453,
       "title": "Shrek Forever After: The Game",
-      "rating": null,
+      "rating": 4,
       "year": 2010,
       "genres": [
         "Family",
@@ -7719,7 +7665,7 @@
     {
       "id": 1778551578455,
       "title": "Battlefield: Bad Company 2",
-      "rating": null,
+      "rating": 2,
       "year": 2010,
       "genres": [
         "Shooter",
@@ -7745,7 +7691,7 @@
       "id": 1778584142916,
       "title": "The Outer Worlds 2",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2025,
       "genres": [
         "Role-playing (RPG)",
@@ -7767,7 +7713,7 @@
       "id": 1778584161832,
       "title": "Clair Obscur: Expedition 33",
       "played": "yes",
-      "rating": null,
+      "rating": 10,
       "year": 2025,
       "genres": [
         "Role-playing (RPG)",
@@ -7790,7 +7736,7 @@
       "id": 1778584350549,
       "title": "Grand Theft Auto: Vice City",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2002,
       "genres": [
         "Shooter",
@@ -7816,7 +7762,7 @@
       "id": 1778584351732,
       "title": "Grand Theft Auto III",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2001,
       "genres": [
         "Shooter",
@@ -7844,7 +7790,7 @@
       "id": 1778584353697,
       "title": "Grand Theft Auto IV: The Ballad of Gay Tony",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2009,
       "genres": [
         "Shooter",
@@ -7867,7 +7813,7 @@
       "id": 1778584361548,
       "title": "Grand Theft Auto Online",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2014,
       "genres": [
         "Shooter",
@@ -7893,7 +7839,7 @@
       "id": 1778584366298,
       "title": "Grand Theft Auto Advance",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 2004,
       "genres": [
         "Shooter",
@@ -7914,7 +7860,7 @@
       "id": 1778584368464,
       "title": "Grand Theft Auto 2",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 1999,
       "genres": [
         "Shooter",
@@ -7935,7 +7881,7 @@
       "id": 1778584371948,
       "title": "Grand Theft Auto",
       "played": "yes",
-      "rating": null,
+      "rating": 8,
       "year": 1997,
       "genres": [
         "Shooter",
@@ -7953,6 +7899,38 @@
       "igdb_id": 980,
       "igdb_rating": 80,
       "playtime": "much"
+    },
+    {
+      "id": 1778450461128,
+      "title": "The Witcher 3: Wild Hunt",
+      "rating": 10,
+      "year": 2015,
+      "hours": null,
+      "genres": [
+        "RPG",
+        "Mundo Aberto"
+      ],
+      "platformPlayed": "PS4",
+      "availableOn": [
+        "PC",
+        "PS4",
+        "PS5",
+        "Switch",
+        "Xbox One",
+        "Xbox Series"
+      ],
+      "completed": "yes",
+      "notes": "Jogado no PS4 (21/79 troféus) e Xbox Series",
+      "_psn": {
+        "pct": 30,
+        "earned": 21,
+        "total": 79
+      },
+      "rawg_id": 3328,
+      "played": "yes",
+      "playtime": "completed",
+      "igdb_id": 1942,
+      "igdb_rating": 91.7
     }
   ],
   "profile": {
