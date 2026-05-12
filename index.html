@@ -231,8 +231,8 @@
         <option value="">Todas as plataformas</option>
       </select>
       <select class="filter-select" id="backlog-sort" onchange="renderBacklog()">
+        <option value="igdb_rating">Nota IGDB</option>
         <option value="metacritic">Metacritic</option>
-        <option value="rating">Nota RAWG</option>
         <option value="title">A-Z</option>
         <option value="released">Lançamento</option>
       </select>
@@ -1100,8 +1100,8 @@ function renderBacklog() {
     return true;
   });
 
-  if (sort === 'metacritic') list.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
-  else if (sort === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  if (sort === 'igdb_rating') list.sort((a, b) => (b.igdb_rating || 0) - (a.igdb_rating || 0));
+  else if (sort === 'metacritic') list.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
   else if (sort === 'title')  list.sort((a, b) => a.title.localeCompare(b.title));
   else if (sort === 'released') list.sort((a, b) => (b.released || '').localeCompare(a.released || ''));
 
