@@ -223,7 +223,7 @@
   <!-- Backlog -->
   <div id="page-backlog" class="page">
     <div class="catalog-toolbar">
-      <input class="search-box" id="backlog-search" placeholder="Buscar no backlog..." oninput="renderBacklog()">
+      <input class="search-box" id="backlog-search" placeholder="Buscar no backlog..." oninput="debouncedBacklog()">
       <select class="filter-select" id="backlog-genre" onchange="renderBacklog()">
         <option value="">Todos os gêneros</option>
       </select>
@@ -1079,9 +1079,63 @@ document.addEventListener('keydown', e => {
 
 // ─── Backlog ──────────────────────────────────────────────────────────────────
 let _backlog = [];
+let _backlogFiltered = [];   // resultado filtrado/ordenado atual
+let _backlogPage = 0;        // quantas páginas já foram renderizadas
+const BACKLOG_PAGE_SIZE = 80;
+let _backlogObserver = null; // IntersectionObserver do sentinel
+let _backlogDropdownsBuilt = false; // dropdowns só precisam ser construídos uma vez
+
+// Debounce da busca: só re-renderiza 300ms após parar de digitar
+let _backlogDebounceTimer = null;
+function debouncedBacklog() {
+  clearTimeout(_backlogDebounceTimer);
+  _backlogDebounceTimer = setTimeout(renderBacklog, 300);
+}
 
 function backlogCategories(g) {
   return [...new Set([...(g.genres || []), ...(g.subgenres || [])])];
+}
+
+function backlogCard(g) {
+  const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : g.igdb_rating >= 60 ? 'var(--yellow)' : 'var(--muted)';
+  const cats = backlogCategories(g);
+  return `<div class="game-card">
+    <div class="card-header">
+      <span class="game-title">${esc(g.title)}</span>
+      ${g.igdb_rating ? `<span class="game-rating" style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
+    </div>
+    <div class="tags">
+      ${cats.map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
+    </div>
+    <div class="tags">
+      ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
+    </div>
+    <div class="card-meta">
+      ${g.year ? `<span>📅 ${g.year}</span>` : ''}
+      ${g.community_rating ? `<span title="Rating da comunidade (IGDB)">👥 ${g.community_rating}</span>` : ''}
+    </div>
+    <div class="card-actions">
+      <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Já joguei</button>
+    </div>
+  </div>`;
+}
+
+function backlogAppendPage() {
+  const grid = document.getElementById('backlog-grid');
+  const sentinel = document.getElementById('backlog-sentinel');
+  const start = _backlogPage * BACKLOG_PAGE_SIZE;
+  const slice = _backlogFiltered.slice(start, start + BACKLOG_PAGE_SIZE);
+  if (!slice.length) return;
+
+  const frag = document.createDocumentFragment();
+  slice.forEach(g => {
+    const div = document.createElement('div');
+    div.innerHTML = backlogCard(g);
+    frag.appendChild(div.firstElementChild);
+  });
+  // inserir antes do sentinel
+  grid.insertBefore(frag, sentinel);
+  _backlogPage++;
 }
 
 function renderBacklog() {
@@ -1092,7 +1146,7 @@ function renderBacklog() {
 
   const playedIds = new Set(_games.map(g => g.igdb_id).filter(Boolean));
 
-  let list = _backlog.filter(g => {
+  _backlogFiltered = _backlog.filter(g => {
     if (playedIds.has(g.igdb_id)) return false;
     if (q && !g.title.toLowerCase().includes(q)) return false;
     if (category && !backlogCategories(g).includes(category)) return false;
@@ -1100,51 +1154,52 @@ function renderBacklog() {
     return true;
   });
 
-  if (sort === 'igdb_rating') list.sort((a, b) => (b.igdb_rating || 0) - (a.igdb_rating || 0));
-  else if (sort === 'metacritic') list.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
-  else if (sort === 'title')  list.sort((a, b) => a.title.localeCompare(b.title));
-  else if (sort === 'released') list.sort((a, b) => (b.released || '').localeCompare(a.released || ''));
+  if (sort === 'igdb_rating') _backlogFiltered.sort((a, b) => (b.igdb_rating || 0) - (a.igdb_rating || 0));
+  else if (sort === 'metacritic') _backlogFiltered.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
+  else if (sort === 'title')    _backlogFiltered.sort((a, b) => a.title.localeCompare(b.title));
+  else if (sort === 'released') _backlogFiltered.sort((a, b) => (b.year || 0) - (a.year || 0));
 
-  // Update filter dropdowns
-  const allCategories = [...new Set(_backlog.flatMap(g => backlogCategories(g)))].sort();
-  const allPlatforms  = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
-  const gSel = document.getElementById('backlog-genre');
-  const pSel = document.getElementById('backlog-platform');
-  const gCur = gSel.value, pCur = pSel.value;
-  gSel.innerHTML = '<option value="">Todos os gêneros / tags</option>' + allCategories.map(v => `<option value="${v}" ${v===gCur?'selected':''}>${v}</option>`).join('');
-  pSel.innerHTML = '<option value="">Todas as plataformas</option>'    + allPlatforms.map(v  => `<option value="${v}" ${v===pCur?'selected':''}>${v}</option>`).join('');
+  // Dropdowns: só constrói uma vez (dados não mudam)
+  if (!_backlogDropdownsBuilt) {
+    const allCategories = [...new Set(_backlog.flatMap(g => backlogCategories(g)))].sort();
+    const allPlatforms  = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
+    document.getElementById('backlog-genre').innerHTML =
+      '<option value="">Todos os gêneros / tags</option>' + allCategories.map(v => `<option value="${v}">${v}</option>`).join('');
+    document.getElementById('backlog-platform').innerHTML =
+      '<option value="">Todas as plataformas</option>' + allPlatforms.map(v => `<option value="${v}">${v}</option>`).join('');
+    _backlogDropdownsBuilt = true;
+  }
+  // Restaura seleção dos dropdowns após rebuild
+  document.getElementById('backlog-genre').value    = category;
+  document.getElementById('backlog-platform').value = platform;
 
-  document.getElementById('backlog-count').textContent = `${list.length} jogos`;
+  document.getElementById('backlog-count').textContent = `${_backlogFiltered.length} jogos`;
 
+  // Limpa grid e reseta paginação
   const grid = document.getElementById('backlog-grid');
-  if (!list.length) {
+  grid.innerHTML = '';
+  _backlogPage = 0;
+
+  if (!_backlogFiltered.length) {
     grid.innerHTML = `<div class="empty-state"><h3>Nenhum jogo encontrado</h3><p>Tente outros filtros.</p></div>`;
     return;
   }
 
-  grid.innerHTML = list.map(g => {
-    const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : g.igdb_rating >= 60 ? 'var(--yellow)' : 'var(--muted)';
-    const cats = backlogCategories(g);
-    return `<div class="game-card">
-      <div class="card-header">
-        <span class="game-title">${esc(g.title)}</span>
-        ${g.igdb_rating ? `<span class="game-rating" style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
-      </div>
-      <div class="tags">
-        ${cats.map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
-      </div>
-      <div class="tags">
-        ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
-      </div>
-      <div class="card-meta">
-        ${g.year ? `<span>📅 ${g.year}</span>` : ''}
-        ${g.community_rating ? `<span title="Rating da comunidade (IGDB)">👥 ${g.community_rating}</span>` : ''}
-      </div>
-      <div class="card-actions">
-        <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Já joguei</button>
-      </div>
-    </div>`;
-  }).join('');
+  // Sentinel para infinite scroll
+  const sentinel = document.createElement('div');
+  sentinel.id = 'backlog-sentinel';
+  sentinel.style.height = '1px';
+  grid.appendChild(sentinel);
+
+  // Renderiza primeira página
+  backlogAppendPage();
+
+  // Observer: carrega mais ao aproximar do fim
+  if (_backlogObserver) _backlogObserver.disconnect();
+  _backlogObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) backlogAppendPage();
+  }, { rootMargin: '400px' });
+  _backlogObserver.observe(sentinel);
 }
 
 function backlogMarkPlayed(igdbId) {
