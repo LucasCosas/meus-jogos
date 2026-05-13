@@ -5,6 +5,47 @@
 
 ---
 
+## 2026-05-13 — Motor de Recomendação v2 (Stage 1)
+**Arquivos:** `index.html`  **Commit:** `ec2944f`
+
+### Modelo de afinidade corrigido
+Afinidade agora usa `(rating - 5) / 5 → [-1, +1]`. Antes: avg bruto (1–10) / 10, nunca penalizava. Agora: nota 2 → -0.6, nota 5 → neutro, nota 9 → +0.8.
+
+### Subgêneros como cidadãos de primeira classe
+- `SUBGENRE_ALIASES` mapeia nomes do catálogo do usuário para subgêneros do backlog (`soulslike → Soulslike`, `metroidvania → Metroidvania`, etc.)
+- `computeUserProfile` agora rastreia `subgenreAffinity` separada de `genreAffinity`
+- Picker na UI usa `<optgroup>` separando Gêneros e Subgêneros
+- Backlog tem 4 subgêneros: Soulslike (80 jogos), Metroidvania (224), Roguelite (154), Roguelike (241)
+
+### Scorer multi-sinal com pesos ajustáveis
+5 sinais, todos normalizados para [0,1]:
+
+| Sinal | Função | Peso padrão |
+|-------|---------|-------------|
+| `genre_fit` | `genreFit(game, profile)` | 6 |
+| `subgenre_fit` | `subgenreFit(game, profile)` | 4 |
+| `igdb_score` | `igdbScore01(game)` — Bayesian, modificado por behavior | 5 |
+| `community_score` | `communityScore01(game)` | 2 |
+| `platform_fit` | `platformFit(game, userPlatforms)` | 3 |
+
+Score final: `Σ(sinal × peso) / Σ(pesos)`
+
+### Modos comportamentais
+- **Balanceado** — pesos padrão
+- **Hidden Gems** — `igdbScore01` aplica penalidade de popularidade: `base × (1 - min(1, count/500) × 0.45)`
+- **Top Rated** — filtra jogos com `igdb_rating_count < 100`
+
+### Modo "Parecido com X" reformulado
+Blend de 50% content-based + 50% similaridade Jaccard:
+`score = baseScore × 0.5 + (genSim × 0.6 + subSim × 0.4) × 0.5`
+
+### UI
+- Painel de pesos colapsável com sliders 0–10 e preview em tempo real
+- Filtro de plataforma + toggle "Excluir wishlist"
+- Cards mostram breakdown de sinais com chips coloridos (verde = positivo, vermelho = negativo)
+
+---
+
 ## 2026-05-13
 
 ### Motor de Recomendação v1 + Wishlist
