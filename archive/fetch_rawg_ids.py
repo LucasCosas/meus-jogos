@@ -2,7 +2,7 @@
 """Fetch RAWG IDs for games in games.json that don't have one."""
 import json, time, urllib.request, urllib.parse, difflib, sys
 
-API_KEY = '99b150baf5084316ad6b52204a4fb102'
+API_KEY = 'RAWG_API_KEY'  # set in .env
 DELAY   = 0.35  # seconds between requests
 
 

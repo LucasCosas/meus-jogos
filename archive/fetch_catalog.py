@@ -2,7 +2,7 @@
 """Fetch all RAWG games with a Metacritic score into catalog_rawg.json, including tags."""
 import json, time, urllib.request, urllib.parse, sys
 
-API_KEY   = '99b150baf5084316ad6b52204a4fb102'
+API_KEY   = 'RAWG_API_KEY'  # set in .env
 OUT_FILE  = 'catalog_rawg.json'
 PAGE_SIZE = 40
 DELAY     = 0.25
