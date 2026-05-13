@@ -232,7 +232,7 @@
       </select>
       <select class="filter-select" id="backlog-sort" onchange="renderBacklog()">
         <option value="igdb_rating">Nota IGDB</option>
-        <option value="metacritic">Metacritic</option>
+        <option value="community_rating">Nota comunidade</option>
         <option value="title">A-Z</option>
         <option value="released">Lançamento</option>
       </select>
@@ -1163,7 +1163,7 @@ function renderBacklog() {
       : 0;
     _backlogFiltered.sort((a, b) => score(b) - score(a));
   }
-  else if (sort === 'metacritic') _backlogFiltered.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
+  else if (sort === 'community_rating') _backlogFiltered.sort((a, b) => (b.community_rating || 0) - (a.community_rating || 0));
   else if (sort === 'title')    _backlogFiltered.sort((a, b) => a.title.localeCompare(b.title));
   else if (sort === 'released') _backlogFiltered.sort((a, b) => (b.year || 0) - (a.year || 0));
 
