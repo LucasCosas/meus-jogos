@@ -81,28 +81,37 @@
   .toolbar-count { font-size: 13px; font-weight: 600; color: var(--text); background: var(--surface2); border: 1px solid var(--border); padding: 6px 14px; border-radius: 40px; white-space: nowrap; }
 
   /* ─── Grid ────────────────────────────────────────────────── */
-  .catalog-grid { flex: 1; overflow-y: auto; padding: 20px 28px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; align-content: start; }
+  .catalog-grid { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 28px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; align-content: start; }
 
   /* ─── Game Card ───────────────────────────────────────────── */
-  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; }
-  .game-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-  .card-cover { height: 170px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
-  .card-cover-emoji { font-size: 64px; line-height: 1; user-select: none; filter: drop-shadow(0 2px 6px rgba(0,0,0,.12)); }
-  .card-badges-top { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
-  .card-plats { display: flex; gap: 4px; flex-wrap: wrap; }
-  .plat-badge { background: rgba(27,27,27,.72); color: #fff; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 20px; backdrop-filter: blur(4px); white-space: nowrap; letter-spacing: .02em; }
-  .playtime-badge { background: rgba(255,255,255,.88); color: var(--text); font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; backdrop-filter: blur(4px); white-space: nowrap; flex-shrink: 0; }
-  .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .game-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; line-height: 1.25; color: var(--text); }
-  .card-meta-line { font-size: 12px; color: var(--muted); }
+  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; }
+  .game-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.10); border-color: var(--border-dark); }
+
+  /* ─── Card cover (header colorido, sem emoji) ─────────────── */
+  .card-cover { height: 106px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 14px 10px; border-radius: 15px 15px 0 0; overflow: hidden; flex-shrink: 0; }
+  .card-cover-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; color: rgba(255,255,255,.96); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 0 1px 4px rgba(0,0,0,.18); }
+  .card-cover-year { font-size: 11px; color: rgba(255,255,255,.65); margin-top: 2px; }
+  .card-cover-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 6px; }
+  .card-plats { display: flex; gap: 3px; flex-wrap: wrap; }
+  .plat-badge { background: rgba(0,0,0,.30); color: rgba(255,255,255,.92); font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px; white-space: nowrap; letter-spacing: .04em; }
+  .playtime-badge { background: rgba(255,255,255,.92); color: var(--text); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+
+  /* ─── Card body ───────────────────────────────────────────── */
+  .card-body { padding: 13px 15px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .game-title { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; line-height: 1.25; color: var(--text); flex: 1; }
+  .card-year-badge { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
   .card-stars { display: flex; align-items: center; gap: 2px; }
   .star-filled { color: #E8960A; font-size: 14px; }
   .star-empty { color: var(--border-dark); font-size: 14px; }
-  .rating-num { font-size: 12px; font-weight: 600; color: var(--text); margin-left: 4px; }
+  .rating-num { font-size: 12px; font-weight: 700; color: var(--text); margin-left: 5px; }
   .card-genres { display: flex; flex-wrap: wrap; gap: 5px; }
   .genre-chip { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
   .genre-chip.subgenre { background: var(--accent-light); color: var(--accent); }
-  .card-actions { display: flex; gap: 7px; margin-top: auto; padding-top: 4px; }
+  .card-meta-row { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+  .card-meta-row span { display: flex; align-items: center; gap: 3px; }
+  .card-notes { font-size: 12px; color: var(--muted); line-height: 1.5; font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; border-left: 2px solid var(--border-dark); padding-left: 8px; }
+  .card-actions { display: flex; gap: 7px; margin-top: auto; padding-top: 6px; border-top: 1px solid var(--border); }
   .card-actions .btn { flex: 1; justify-content: center; font-size: 12px; padding: 7px 10px; }
 
   /* ─── Tags (compat) ───────────────────────────────────────── */
@@ -187,7 +196,7 @@
   .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; transition: border-color .15s, transform .1s; }
   .rec-card:hover { border-color: var(--border-dark); transform: translateX(2px); }
   .rec-rank { min-width: 30px; height: 30px; background: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
-  .rec-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .rec-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: rgba(255,255,255,.92); letter-spacing: .02em; flex-shrink: 0; text-shadow: 0 1px 3px rgba(0,0,0,.2); font-family: 'Fraunces', serif; }
   .rec-score { min-width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--accent); background: var(--accent-light); }
   .rec-info { flex: 1; min-width: 0; }
   .rec-info h4 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
@@ -221,7 +230,7 @@
   .wishlist-empty h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; }
   .wishlist-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border-color .15s; max-width: 760px; }
   .wishlist-item:hover { border-color: var(--border-dark); }
-  .wishlist-item-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .wishlist-item-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: rgba(255,255,255,.92); letter-spacing: .02em; flex-shrink: 0; text-shadow: 0 1px 3px rgba(0,0,0,.2); font-family: 'Fraunces', serif; }
   .wishlist-item-info { flex: 1; min-width: 0; }
   .wishlist-item-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; }
   .wishlist-item-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -378,6 +387,18 @@
       <div class="page-label">💾 Lista de Desejos</div>
       <h1>Wishlist</h1>
       <p>A fila de espera para entrar na estante.</p>
+    </div>
+    <div class="catalog-toolbar">
+      <div class="search-wrap">
+        <input class="search-box" id="wl-search" placeholder="Buscar na wishlist..." oninput="renderWishlist()">
+      </div>
+      <select class="filter-select" id="wl-genre" onchange="renderWishlist()">
+        <option value="">Todos os gêneros</option>
+      </select>
+      <select class="filter-select" id="wl-platform" onchange="renderWishlist()">
+        <option value="">Todas as plataformas</option>
+      </select>
+      <span id="wl-count" class="toolbar-count"></span>
     </div>
     <div class="wishlist-body" id="wishlist-body"></div>
   </div>
@@ -640,7 +661,7 @@ const CARD_COLORS = ['#F4A261','#89C4E1','#E88080','#F4B89A','#8FBF9F','#B89BC8'
 function cardBgColor(id) { return CARD_COLORS[(id || 0) % CARD_COLORS.length]; }
 
 function cardEmoji(genres) {
-  const g = (genres || []).map(x => x.toLowerCase()).join(' ');
+  const g = (genres || []).filter(x => typeof x === 'string').map(x => x.toLowerCase()).join(' ');
   if (g.includes('soulslike')) return '⚔️';
   if (g.includes('metroidvania')) return '🗺️';
   if (g.includes('roguelite') || g.includes('roguelike')) return '🎲';
@@ -660,6 +681,18 @@ function cardEmoji(genres) {
   if (g.includes('simulation') || g.includes('simulação')) return '🏙️';
   return '🎮';
 }
+
+function gameInitials(title) {
+  const clean = String(title || '').replace(/[^a-zA-ZÀ-ÖØ-öø-ÿ\s]/g, '').trim();
+  const words = clean.split(/\s+/).filter(Boolean);
+  if (!words.length) return '??';
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  // skip small words (the, of, a, de, da, do)
+  const skip = new Set(['the','of','a','an','de','da','do','dos','das','e','i']);
+  const main = words.filter(w => !skip.has(w.toLowerCase()));
+  return (main.length >= 2 ? main.slice(0,2) : words.slice(0,2)).map(w => w[0]).join('').toUpperCase();
+}
+
 
 const PLAT_SHORT = {
   'PlayStation 5':'PS5','PlayStation 4':'PS4','PlayStation 3':'PS3',
@@ -735,37 +768,47 @@ function renderCatalog() {
     return;
   }
 
-  grid.innerHTML = filtered.map(g => {
+  grid.innerHTML = filtered.map(g => { try {
     const playtimeMap = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🔥 Muito', completed: '🏆 Zerado' };
-    const allPlats = [g.platformPlayed, ...(g.availableOn||[])].filter(p => p && DEFAULT_PLATFORMS.includes(p));
-    const uniquePlats = [...new Set(allPlats)].slice(0, 3);
-    const platBadges = uniquePlats.map(p => `<span class="plat-badge">${esc(platShort(p))}</span>`).join('');
+    const platPlayed = g.platformPlayed && DEFAULT_PLATFORMS.includes(g.platformPlayed) ? g.platformPlayed : null;
+    const otherPlats = (g.availableOn||[]).filter(p => p && DEFAULT_PLATFORMS.includes(p) && p !== platPlayed);
+    const allPlats = [...(platPlayed ? [platPlayed] : []), ...otherPlats].slice(0, 3);
+    const platBadges = allPlats.map(p => `<span class="plat-badge">${esc(platShort(p))}</span>`).join('');
     const subgenreKeywords = ['Soulslike','Metroidvania','Roguelite','Roguelike'];
     const mainGenres = (g.genres||[]).filter(gn => !subgenreKeywords.includes(gn));
     const subgenres = (g.genres||[]).filter(gn => subgenreKeywords.includes(gn));
     const bgColor = cardBgColor(g.id);
+    const hrs = g.estimated_hours ? `⏱ ~${g.estimated_hours}h` : null;
+    const igdbScore = g.igdb_rating ? `IGDB ${Math.round(g.igdb_rating)}` : null;
     return `<div class="game-card">
       <div class="card-cover" style="background:${bgColor}">
-        <div class="card-badges-top">
+        <div>
+          <div class="card-cover-title">${esc(g.title)}</div>
+          ${g.year > 0 ? `<div class="card-cover-year">${g.year}</div>` : ''}
+        </div>
+        <div class="card-cover-bottom">
           <div class="card-plats">${platBadges}</div>
           ${g.playtime ? `<span class="playtime-badge">${playtimeMap[g.playtime]}</span>` : ''}
         </div>
-        <div class="card-cover-emoji">${cardEmoji(g.genres)}</div>
       </div>
       <div class="card-body">
-        <div class="game-title">${esc(g.title)}</div>
-        ${g.year ? `<div class="card-meta-line">${g.year}</div>` : ''}
         ${starsHTML(g.rating)}
         ${mainGenres.length || subgenres.length ? `<div class="card-genres">
           ${mainGenres.slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
           ${subgenres.map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
         </div>` : ''}
+        ${(hrs || igdbScore) ? `<div class="card-meta-row">
+          ${hrs ? `<span>${hrs}</span>` : ''}
+          ${igdbScore ? `<span>🌐 ${igdbScore}</span>` : ''}
+        </div>` : ''}
+        ${g.notes ? `<div class="card-notes">${esc(g.notes)}</div>` : ''}
         <div class="card-actions">
           <button class="btn btn-secondary btn-sm" onclick="editGame(${g.id})">✏️ Editar</button>
           <button class="btn btn-danger btn-sm" onclick="deleteGame(${g.id})">Remover</button>
         </div>
       </div>
     </div>`;
+  } catch(e) { console.error('renderCatalog card error', g?.id, g?.title, e); return ''; }
   }).join('');
 }
 
@@ -1297,7 +1340,7 @@ function runRecs() {
     const plats = (g.platforms||[]).slice(0,3).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('');
     return `<div class="rec-card">
       <div class="rec-rank">#${i+1}</div>
-      <div class="rec-icon" style="background:${bgColor}">${cardEmoji([...g.genres||[], ...g.subgenres||[]])}</div>
+      <div class="rec-icon" style="background:${bgColor}">${gameInitials(g.title)}</div>
       <div class="rec-info">
         <h4>${esc(g.title)}</h4>
         <div class="rec-plats">${plats}</div>
@@ -1352,23 +1395,59 @@ function renderWishlist() {
 
   if (!wl.length) {
     body.innerHTML = `<div class="wishlist-empty"><h3>Wishlist vazia</h3><p>Adicione jogos pela aba Recomendações.</p></div>`;
+    document.getElementById('wl-count').textContent = '';
     return;
   }
 
-  const games = wl.map(id => _backlog.find(g => g.igdb_id === id) || { igdb_id: id, _missing: true, title: `Jogo #${id}` });
+  const q        = (document.getElementById('wl-search')?.value || '').toLowerCase();
+  const genre    = document.getElementById('wl-genre')?.value  || '';
+  const platform = document.getElementById('wl-platform')?.value || '';
+
+  const allGames = wl.map(id => _backlog.find(g => g.igdb_id === id) || { igdb_id: id, _missing: true, title: `Jogo #${id}` });
+
+  // Rebuild dropdowns from current wishlist games (not missing ones)
+  const found = allGames.filter(g => !g._missing);
+  const allGenres    = [...new Set(found.flatMap(g => [...(g.genres||[]), ...(g.subgenres||[])]))].sort();
+  const allPlatforms = [...new Set(found.flatMap(g => g.platforms||[]))].sort();
+  const genEl  = document.getElementById('wl-genre');
+  const platEl = document.getElementById('wl-platform');
+  if (genEl) {
+    const curG = genEl.value;
+    genEl.innerHTML = '<option value="">Todos os gêneros</option>' + allGenres.map(v => `<option value="${v}"${v===curG?' selected':''}>${v}</option>`).join('');
+  }
+  if (platEl) {
+    const curP = platEl.value;
+    platEl.innerHTML = '<option value="">Todas as plataformas</option>' + allPlatforms.map(v => `<option value="${v}"${v===curP?' selected':''}>${esc(v)}</option>`).join('');
+  }
+
+  // Filter
+  const games = allGames.filter(g => {
+    if (g._missing) return true; // always show missing
+    if (q && !g.title.toLowerCase().includes(q)) return false;
+    if (genre && ![...(g.genres||[]), ...(g.subgenres||[])].includes(genre)) return false;
+    if (platform && !(g.platforms||[]).includes(platform)) return false;
+    return true;
+  });
+
+  const visibleCount = games.filter(g => !g._missing).length;
+  const countEl = document.getElementById('wl-count');
+  if (countEl) countEl.textContent = `${visibleCount} jogo${visibleCount !== 1 ? 's' : ''}`;
 
   body.innerHTML = games.map(g => {
     if (g._missing) return `<div class="wishlist-item" style="opacity:.5">
       <div class="wishlist-item-info"><div class="wishlist-item-title">${esc(g.title)}</div><div class="wishlist-item-sub">Não encontrado no backlog atual</div></div>
       <div class="wishlist-item-actions"><button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button></div>
     </div>`;
-    const bgColor = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
-    const allCats = [...(g.genres||[]), ...(g.subgenres||[])];
+    const bgColor  = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
+    const allCats  = [...(g.genres||[]), ...(g.subgenres||[])];
+    const yearStr  = g.year > 0 ? String(g.year) : '';
+    const scoreStr = g.igdb_rating ? `🌐 ${Math.round(g.igdb_rating)}` : '';
+    const sub      = [yearStr, scoreStr].filter(Boolean).join(' · ');
     return `<div class="wishlist-item">
-      <div class="wishlist-item-icon" style="background:${bgColor}">${cardEmoji(g.genres)}</div>
+      <div class="wishlist-item-icon" style="background:${bgColor}">${gameInitials(g.title)}</div>
       <div class="wishlist-item-info">
         <div class="wishlist-item-title">${esc(g.title)}</div>
-        <div class="wishlist-item-sub">${[g.year, g.igdb_rating ? `🎯 ${g.igdb_rating}` : ''].filter(Boolean).join(' · ')}</div>
+        ${sub ? `<div class="wishlist-item-sub">${sub}</div>` : ''}
         <div class="wishlist-item-genres">
           ${allCats.slice(0,4).map(c=>`<span class="genre-chip">${esc(c)}</span>`).join('')}
           ${(g.platforms||[]).slice(0,2).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('')}
@@ -1650,7 +1729,7 @@ function showRateCurrent() {
   document.getElementById('rate-progress').style.width = Math.round((_rateIdx / total) * 100) + '%';
 
   const parts = [];
-  if (g.year) parts.push(`${g.year}`);
+  if (g.year > 0) parts.push(`${g.year}`);
   if (g._psn?.pct) parts.push(`${g._psn.pct}% troféus`);
   if (g.rating) parts.push('★'.repeat(Math.round(g.rating / 2)));
   document.getElementById('rate-meta').textContent = parts.join('  ·  ');
@@ -1758,24 +1837,26 @@ function backlogCategories(g) {
   return [...new Set([...(g.genres || []), ...(g.subgenres || [])])];
 }
 
-function backlogCard(g) {
+function backlogCard(g) { try {
   const cats = backlogCategories(g);
   const mainCats = cats.filter(c => !['Soulslike','Metroidvania','Roguelite','Roguelike'].includes(c));
   const subCats  = cats.filter(c =>  ['Soulslike','Metroidvania','Roguelite','Roguelike'].includes(c));
   const inWl = loadWishlist().includes(g.igdb_id);
   const plats = (g.platforms || []).slice(0, 3);
   const bgColor = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
+  const igdbScore = g.igdb_rating ? Math.round(g.igdb_rating) : null;
   return `<div class="game-card" id="bcard-${g.igdb_id}">
     <div class="card-cover" style="background:${bgColor}">
-      <div class="card-badges-top">
-        <div class="card-plats">${plats.map(p=>`<span class="plat-badge">${esc(platShort(p))}</span>`).join('')}</div>
-        ${g.igdb_rating ? `<span class="playtime-badge">🎯 ${g.igdb_rating}</span>` : ''}
+      <div>
+        <div class="card-cover-title">${esc(g.title)}</div>
+        ${g.year ? `<div class="card-cover-year">${g.year}</div>` : ''}
       </div>
-      <div class="card-cover-emoji">${cardEmoji(cats)}</div>
+      <div class="card-cover-bottom">
+        <div class="card-plats">${plats.map(p=>`<span class="plat-badge">${esc(platShort(p))}</span>`).join('')}</div>
+        ${igdbScore ? `<span class="playtime-badge">🌐 ${igdbScore}</span>` : ''}
+      </div>
     </div>
     <div class="card-body">
-      <div class="game-title">${esc(g.title)}</div>
-      ${g.year ? `<div class="card-meta-line">${g.year}</div>` : ''}
       ${mainCats.length || subCats.length ? `<div class="card-genres">
         ${mainCats.slice(0,2).map(c=>`<span class="genre-chip">${esc(c)}</span>`).join('')}
         ${subCats.map(c=>`<span class="genre-chip subgenre">★ ${esc(c)}</span>`).join('')}
@@ -1785,11 +1866,12 @@ function backlogCard(g) {
         <button class="btn btn-secondary btn-sm ${inWl ? 'wl-active' : ''}" id="wlbtn-${g.igdb_id}"
           style="${inWl ? 'color:var(--accent);border-color:var(--accent)' : ''}"
           onclick="toggleBacklogWishlist(${g.igdb_id}, this)">
-          ${inWl ? '💾 WL' : '+ WL'}
+          ${inWl ? '💾 Na WL' : '+ Wishlist'}
         </button>
       </div>
     </div>
   </div>`;
+  } catch(e) { console.error('backlogCard error', g?.igdb_id, g?.title, e); return ''; }
 }
 
 function backlogAppendPage() {
