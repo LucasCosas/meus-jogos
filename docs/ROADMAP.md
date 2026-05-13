@@ -1,7 +1,7 @@
 # Product Roadmap — Gamelog
 
 > Documento de planejamento de produto. Atualizado conforme features são planejadas ou priorizadas.
-> Última atualização: 2026-05-13
+> Última atualização: 2026-05-13 (algoritmo v2 + roadmap GPU adicionados)
 
 ---
 
@@ -201,6 +201,105 @@ Hoje o app só roda localmente. Queremos um domínio público.
 | **Próximo a jogar** | Intersecção wishlist + recomendações + plataformas disponíveis, ordenada por score | Planejado |
 | **Hora de rejogar** | Jogos com nota ≥ 8, playtime = completed, jogados há 3+ anos | Planejado |
 | **PS Plus / Game Pass** | Filtrar recomendações por assinaturas ativas do usuário | Planejado — precisa de fonte de dados atualizada |
+
+---
+
+## Próximos passos: Motor de Recomendação v2.1 (sem GPU)
+
+Melhorias incrementais no Stage 1 atual, viáveis no browser:
+
+### A. Regressão linear nos pesos (maior impacto)
+Em vez de sliders ajustados manualmente, aprender os pesos que melhor explicam as próprias notas do usuário.
+
+Para cada jogo avaliado no catálogo, calcular os sinais como features e a nota como label. Gradiente descendente minimiza o erro de previsão.
+
+```
+nota_prevista = w1×genre_fit + w2×subgenre_fit + w3×igdb + w4×community + b
+minimizar:      Σ(nota_real - nota_prevista)²
+```
+
+330 amostras, 5 features — viável 100% no browser. Os sliders se tornam display dos pesos aprendidos, não input manual.
+
+### B. kNN baseado em similaridade de jogos
+Para cada jogo do backlog, achar os k jogos mais similares do catálogo e prever a nota como média ponderada pela similaridade. Captura padrões não-lineares: adorar Dark Souls (10) mas detestar The Surge (4) mesmo sendo ambos Soulslike.
+
+```
+score(jogo) = Σ( sim(jogo, jogo_seu) × sua_nota ) / Σ(sim)
+```
+
+### C. Decay temporal
+Jogos avaliados recentemente pesam mais no perfil. Gosto muda com o tempo.
+
+```
+peso = nota × e^(−λ × anos_desde_que_jogou)
+```
+Requer campo `year` preenchido (hoje ~70% dos jogos têm).
+
+### D. Histórico de recomendações mostradas
+Penalizar progressivamente jogos já exibidos para evitar repetição entre sessões. Persistir em localStorage.
+
+---
+
+## Motor de Recomendação v3 — Com GPU disponível
+
+> Se houver acesso a uma GPU (cloud ou local), a arquitetura muda completamente.
+
+### Por que GPU muda o jogo
+
+Sem GPU: Jaccard em vetores de gênero (máximo ~20 dimensões). Com GPU: embeddings densos de centenas de dimensões sobre texto rico — descrição, tags, mecânicas — capturando semântica que tags não capturam.
+
+Exemplo: "dark atmospheric narrative-driven games" como preferência, mesmo sem tag específica.
+
+---
+
+### Opção 1: Embeddings semânticos de jogos (recomendado)
+
+**Pipeline:**
+1. Buscar `summary` + `storyline` de cada jogo via IGDB API (~16k jogos)
+2. Codificar com modelo de embedding leve (ex: `all-MiniLM-L6-v2`, 80MB) rodando localmente via ONNX no browser ou num servidor Python simples
+3. Perfil do usuário = média ponderada pelos ratings dos embeddings dos jogos jogados
+4. Score de recomendação = cosine similarity entre perfil e cada jogo do backlog
+
+**O que isso captura que Jaccard não captura:**
+- "Jogos com atmosfera pesada e narrativa não-linear" → sem tag, mas similar semanticamente
+- Diferença entre RPG de ação rápida (Nier) e RPG tático lento (XCOM)
+- Humor, tom, ritmo de gameplay
+
+**Custo:** modelo de 80MB, inferência em ~100ms por batch de 1k jogos numa GPU simples. Embeddings pré-computados para os 16k jogos do backlog (roda uma vez, salva).
+
+---
+
+### Opção 2: LLM reranker local (substitui Stage 2 Claude API)
+
+Rodar **Llama 3.1 8B** ou **Mistral 7B** localmente para o reranker do Stage 2. Zero custo por chamada, latência aceitável (~2–5s numa GPU de consumidor).
+
+Vantagem sobre Claude API: sem custo recorrente, privacidade total, pode chamar em toda sessão de recomendação sem preocupação com saldo.
+
+---
+
+### Opção 3: Two-Tower Model (com múltiplos usuários)
+
+Requer dados de múltiplos usuários (pós AUTH-001). Aprende embeddings separados de usuário e de jogo em espaço compartilhado — o produto interno prevê o rating.
+
+```
+score(usuário, jogo) = embedding_usuário · embedding_jogo
+treinar com: ratings de todos os usuários
+```
+
+Isso é o que Netflix, Spotify e Steam fazem. Com GPU e ~100+ usuários ativos, torna-se viável. É o teto de qualidade desta arquitetura.
+
+---
+
+### Hardware mínimo para cada opção
+
+| Opção | GPU mínima | VRAM | Custo cloud (spot) |
+|-------|-----------|------|-------------------|
+| Embeddings (all-MiniLM) | Qualquer CUDA | 2GB | ~$0.10/hora |
+| LLM reranker (Mistral 7B) | RTX 3060 / T4 | 8GB | ~$0.30/hora |
+| LLM reranker (Llama 70B) | A100 | 40GB | ~$2/hora |
+| Two-Tower training | RTX 3080 / T4 | 10GB | ~$0.50/hora |
+
+Para o caso de uso atual (recomendação pessoal, 16k jogos), **Opção 1 + Opção 2** rodam numa GPU de consumidor comum ou numa instância spot barata. Não precisa de infraestrutura séria.
 
 ---
 
