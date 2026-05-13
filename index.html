@@ -157,6 +157,23 @@
   .autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
   .autocomplete-item:hover { background: var(--surface2); }
   .autocomplete-item .ac-sub { font-size: 11px; color: var(--muted); }
+
+  /* Recommendation engine v2 */
+  .recs-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; width: 100%; }
+  .recs-section-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .behavior-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .behavior-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .behavior-btn.active { background: rgba(124,92,252,.2); border-color: var(--accent); color: var(--accent2); }
+  .recs-weights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+  .weight-row { display: flex; flex-direction: column; gap: 5px; }
+  .weight-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+  .weight-label strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  input[type=range].weight-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .signal-bar { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 7px; }
+  .signal-chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); }
+  .signal-chip.pos { color: var(--green); border-color: rgba(74,222,128,.35); background: rgba(74,222,128,.08); }
+  .signal-chip.neg { color: var(--red); border-color: rgba(248,113,113,.35); background: rgba(248,113,113,.08); }
+  .tag.subgenre { color: #f9a8d4; border-color: rgba(249,168,212,.3); background: rgba(249,168,212,.08); }
   /* Wishlist */
   .wishlist-body { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
   .wishlist-empty { text-align: center; padding: 80px 40px; color: var(--muted); }
@@ -761,18 +778,20 @@ function deleteGame(id) {
   showToast('Jogo removido', 'success');
 }
 
-// ─── Recommendations ──────────────────────────────────────────────────────────
-let _recsMode = 'genre';
-let _recsRefGame = null; // jogo de referência para modo similar
+// ─── Recommendations v2 ───────────────────────────────────────────────────────
+let _recsMode    = 'genre';
+let _recsRefGame = null;
+let _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3 };
+let _recsBehavior = 'balanced'; // 'balanced' | 'hidden_gems' | 'top_rated'
 
-// Normaliza nomes de gênero do catálogo para nomes canônicos do IGDB/backlog
+// ── Genre normalization ───────────────────────────────────────────────────────
+// Maps user catalog genre names → canonical IGDB genre names (for genre affinity)
 const GENRE_ALIASES = {
   'aventura': 'Adventure', 'action-aventura': 'Adventure', 'sandbox': 'Adventure',
   'mundo aberto': 'Adventure', 'horror': 'Adventure', 'stealth': 'Adventure',
   'rpg': 'Role-playing (RPG)', 'action rpg': 'Role-playing (RPG)',
-  'soulslike': 'Role-playing (RPG)', 'roguelike': 'Role-playing (RPG)',
   'fps': 'Shooter',
-  'plataforma': 'Platform', 'platformer': 'Platform', 'metroidvania': 'Platform',
+  'plataforma': 'Platform', 'platformer': 'Platform',
   'estratégia': 'Strategy',
   'simulação': 'Simulator', 'simulation': 'Simulator',
   'esportes': 'Sport', 'sports': 'Sport',
@@ -780,110 +799,150 @@ const GENRE_ALIASES = {
   'card': 'Card & Board Game', 'card game': 'Card & Board Game',
   'massively multiplayer': 'Arcade',
 };
-function normalizeGenre(g) {
-  return GENRE_ALIASES[g.toLowerCase()] || g;
-}
+// Maps user catalog genre names → backlog subgenre names (for subgenre affinity)
+const SUBGENRE_ALIASES = {
+  'soulslike': 'Soulslike',
+  'metroidvania': 'Metroidvania',
+  'roguelike': 'Roguelike',
+  'roguelite': 'Roguelite',
+};
+const BACKLOG_SUBGENRES = ['Soulslike', 'Metroidvania', 'Roguelite', 'Roguelike'];
 
-// Computa perfil de afinidade do usuário a partir dos ratings
-// Normaliza gêneros do catálogo para nomes canônicos do backlog
+function normalizeGenre(g)    { return GENRE_ALIASES[g.toLowerCase()]    || g; }
+function normalizeSubgenre(g) { return SUBGENRE_ALIASES[g.toLowerCase()] || null; }
+
+// ── User profile ──────────────────────────────────────────────────────────────
+// Affinity range: [-1, +1]. nota 2 → -0.6, nota 5 → 0, nota 9 → +0.8
 function computeUserProfile() {
   const games = loadGames().filter(g => g.rating);
-  const genreData = {}; // {canonicalGenre: {sum, count}}
+  const gd = {}, sd = {};
 
   games.forEach(g => {
-    (g.genres || []).forEach(rawGenre => {
-      const genre = normalizeGenre(rawGenre);
-      if (!genreData[genre]) genreData[genre] = { sum: 0, count: 0 };
-      genreData[genre].sum   += g.rating;
-      genreData[genre].count += 1;
+    const aff = (g.rating - 5) / 5; // [-1, +1]
+    (g.genres || []).forEach(raw => {
+      const canon = normalizeGenre(raw);
+      if (!gd[canon]) gd[canon] = { sum: 0, count: 0 };
+      gd[canon].sum += aff; gd[canon].count++;
+
+      const sub = normalizeSubgenre(raw);
+      if (sub) {
+        if (!sd[sub]) sd[sub] = { sum: 0, count: 0 };
+        sd[sub].sum += aff; sd[sub].count++;
+      }
     });
   });
 
-  const genreAffinity = {}; // genre → avg rating (1–10)
-  Object.entries(genreData).forEach(([g, d]) => {
-    genreAffinity[g] = d.sum / d.count;
-  });
-
-  return { genreAffinity };
+  const genreAffinity    = Object.fromEntries(Object.entries(gd).map(([k,v]) => [k, v.sum/v.count]));
+  const subgenreAffinity = Object.fromEntries(Object.entries(sd).map(([k,v]) => [k, v.sum/v.count]));
+  return { genreAffinity, subgenreAffinity };
 }
 
-// Bayesian IGDB score normalizado 0–1
-function igdbBayesian01(g) {
+// ── Signal functions (all return [0, 1]) ─────────────────────────────────────
+function genreFit(game, profile) {
+  const genres = game.genres || [];
+  if (!genres.length) return 0.5;
+  const affs = genres.map(g => profile.genreAffinity[g] !== undefined ? profile.genreAffinity[g] : 0);
+  return (affs.reduce((s, v) => s + v, 0) / affs.length + 1) / 2;
+}
+
+function subgenreFit(game, profile) {
+  const subs = game.subgenres || [];
+  if (!subs.length) return 0.5;
+  const affs = subs.map(s => profile.subgenreAffinity[s] !== undefined ? profile.subgenreAffinity[s] : 0);
+  return (affs.reduce((s, v) => s + v, 0) / affs.length + 1) / 2;
+}
+
+function igdbScore01(game) {
   const C = 3, m = 75;
-  if (!g.igdb_rating) return 0.5;
-  const cnt = g.igdb_rating_count || 1;
-  return ((g.igdb_rating * cnt + m * C) / ((cnt + C))) / 100;
+  if (!game.igdb_rating) return 0.5;
+  const cnt = game.igdb_rating_count || 1;
+  let base = ((game.igdb_rating * cnt + m * C) / (cnt + C)) / 100;
+  if (_recsBehavior === 'hidden_gems') {
+    // Penaliza jogos muito populares, favorece gemas obscuras com boa nota
+    const pop = Math.min(1, cnt / 500);
+    base *= (1 - pop * 0.45);
+  }
+  return Math.max(0, Math.min(1, base));
 }
 
-// Jaccard similarity entre dois arrays
+function communityScore01(game) {
+  return game.community_rating ? Math.min(1, game.community_rating / 100) : 0.5;
+}
+
+function platformFit(game, userPlatforms) {
+  if (!userPlatforms.length) return 0.5; // neutro se não configurado
+  const gamePlats = game.platforms || [];
+  if (!gamePlats.length) return 0.5;
+  return gamePlats.some(p => userPlatforms.includes(p)) ? 1.0 : 0.0;
+}
+
+// ── Unified scorer ────────────────────────────────────────────────────────────
+function scoreGame(game, profile, userPlatforms) {
+  const gf = genreFit(game, profile);
+  const sf = subgenreFit(game, profile);
+  const is = igdbScore01(game);
+  const cs = communityScore01(game);
+  const pf = platformFit(game, userPlatforms);
+
+  const w = _recsWeights;
+  const total = w.genre_fit + w.subgenre_fit + w.igdb_score + w.community_score + w.platform_fit || 1;
+  const score = (gf * w.genre_fit + sf * w.subgenre_fit + is * w.igdb_score + cs * w.community_score + pf * w.platform_fit) / total;
+  return { score, signals: { gf, sf, is, cs, pf } };
+}
+
 function jaccard(a, b) {
-  const setA = new Set(a), setB = new Set(b);
-  const inter = [...setA].filter(x => setB.has(x)).length;
-  const union = new Set([...setA, ...setB]).size;
+  const A = new Set(a), B = new Set(b);
+  const inter = [...A].filter(x => B.has(x)).length;
+  const union = new Set([...A, ...B]).size;
   return union === 0 ? 0 : inter / union;
 }
 
-// Score de um jogo do backlog para modo "por gênero"
-function scoreByGenre(game, genre, profile) {
-  const gameGenres = game.genres || [];
-  if (!gameGenres.includes(genre)) return null;
+// ── Signal breakdown chips ────────────────────────────────────────────────────
+function buildSignalChips(game, signals, profile, extra) {
+  const chips = [];
+  const { gf, sf, is, cs, pf } = signals;
 
-  const { genreAffinity } = profile;
-  const igdb = igdbBayesian01(game);
-
-  // Afinidade média do usuário pelos gêneros do jogo
-  const affs = gameGenres.map(g => (genreAffinity[g] ?? 5) / 10);
-  const userFit = affs.length ? affs.reduce((s, v) => s + v, 0) / affs.length : 0.5;
-
-  const score = igdb * 0.6 + userFit * 0.4;
-
-  // Texto explicativo
-  const topGenres = gameGenres
-    .filter(g => genreAffinity[g])
-    .sort((a, b) => (genreAffinity[b] || 0) - (genreAffinity[a] || 0))
-    .slice(0, 2);
-
-  const reasons = [];
-  if (topGenres.length) {
-    reasons.push(`Você curte ${topGenres.map(g => `${g} (${(genreAffinity[g]||5).toFixed(1)}/10)`).join(' e ')}`);
+  // Top genre fit chip
+  const topGenre = (game.genres || [])
+    .filter(g => profile.genreAffinity[g] !== undefined)
+    .sort((a, b) => Math.abs(profile.genreAffinity[b]) - Math.abs(profile.genreAffinity[a]))[0];
+  if (topGenre) {
+    const aff = profile.genreAffinity[topGenre]; // [-1, +1]
+    const rating = (aff * 5 + 5).toFixed(1);
+    const cls = aff > 0.1 ? 'pos' : aff < -0.1 ? 'neg' : '';
+    chips.push(`<span class="signal-chip ${cls}">🎭 ${esc(topGenre)} ${rating}/10</span>`);
   }
-  if (game.igdb_rating) reasons.push(`Nota IGDB: ${game.igdb_rating}`);
-  if ((game.subgenres || []).length) reasons.push(game.subgenres.join(', '));
 
-  return { score, reason: reasons.join(' · ') };
+  // Subgenre chips
+  (game.subgenres || []).forEach(s => {
+    const aff = profile.subgenreAffinity?.[s];
+    const cls = aff !== undefined ? (aff > 0.1 ? 'pos' : aff < -0.1 ? 'neg' : '') : '';
+    const label = aff !== undefined ? `${esc(s)} ${(aff*5+5).toFixed(1)}/10` : esc(s);
+    chips.push(`<span class="signal-chip ${cls}">⚔ ${label}</span>`);
+  });
+
+  // IGDB
+  if (game.igdb_rating) {
+    const cls = is > 0.80 ? 'pos' : is > 0.65 ? '' : '';
+    chips.push(`<span class="signal-chip ${cls}">🎯 IGDB ${game.igdb_rating}</span>`);
+  }
+
+  // Similarity extras (mode similar)
+  if (extra?.genSim > 0) {
+    chips.push(`<span class="signal-chip pos">🔗 ${Math.round(extra.genSim*100)}% gênero sim.</span>`);
+  }
+  if (extra?.subSim > 0) {
+    chips.push(`<span class="signal-chip pos">⚔ ${Math.round(extra.subSim*100)}% subgênero sim.</span>`);
+  }
+
+  // Platform fit
+  if (pf === 1) chips.push(`<span class="signal-chip pos">🎮 Disponível</span>`);
+  if (pf === 0) chips.push(`<span class="signal-chip neg">🎮 Sem plataforma</span>`);
+
+  return chips.join('');
 }
 
-// Score de um jogo do backlog para modo "parecido com X"
-function scoreSimilarTo(game, refGame, profile) {
-  const refGenres    = refGame.genres    || [];
-  const refSubgenres = refGame.subgenres || [];
-  const gameGenres    = game.genres    || [];
-  const gameSubgenres = game.subgenres || [];
-
-  const genreSim    = jaccard(refGenres, gameGenres);
-  const subgenreSim = jaccard(refSubgenres, gameSubgenres);
-
-  if (genreSim === 0 && subgenreSim === 0) return null; // sem sobreposição alguma
-
-  const { genreAffinity } = profile;
-  const affs = gameGenres.map(g => (genreAffinity[g] ?? 5) / 10);
-  const userFit = affs.length ? affs.reduce((s, v) => s + v, 0) / affs.length : 0.5;
-  const igdb = igdbBayesian01(game);
-
-  const score = genreSim * 0.30 + subgenreSim * 0.30 + userFit * 0.20 + igdb * 0.20;
-
-  // Explicação
-  const sharedGenres = refGenres.filter(g => gameGenres.includes(g));
-  const sharedSub    = refSubgenres.filter(s => gameSubgenres.includes(s));
-  const reasons = [];
-  if (sharedSub.length)    reasons.push(`Compartilha ${sharedSub.join(', ')} com ${refGame.title}`);
-  else if (sharedGenres.length) reasons.push(`Compartilha ${sharedGenres.slice(0,2).join(', ')} com ${refGame.title}`);
-  if (userFit > 0.6)       reasons.push(`Você tende a gostar desses gêneros`);
-  if (game.igdb_rating)    reasons.push(`Nota IGDB: ${game.igdb_rating}`);
-
-  return { score, reason: reasons.join(' · ') };
-}
-
+// ── switchRecsMode ────────────────────────────────────────────────────────────
 function switchRecsMode(mode) {
   _recsMode = mode;
   _recsRefGame = null;
@@ -891,56 +950,120 @@ function switchRecsMode(mode) {
   document.getElementById('recs-tab-similar').classList.toggle('active', mode === 'similar');
 
   const profile = computeUserProfile();
-  // Usa gêneros reais do backlog (nomes IGDB) ordenados por afinidade do usuário
+
+  // Gêneros do backlog ordenados por afinidade do usuário
   const backlogGenres = [...new Set(_backlog.flatMap(g => g.genres || []))].sort();
   backlogGenres.sort((a, b) => (profile.genreAffinity[b] || 0) - (profile.genreAffinity[a] || 0));
 
+  // Plataformas disponíveis no backlog
+  const allPlats = [...new Set(_backlog.flatMap(g => g.platforms || []))].sort();
+
+  // Pesos
+  const wDefs = [
+    { key: 'genre_fit',      label: '🎭 Gênero' },
+    { key: 'subgenre_fit',   label: '⚔ Subgênero' },
+    { key: 'igdb_score',     label: '🎯 IGDB' },
+    { key: 'community_score',label: '👥 Comunidade' },
+    { key: 'platform_fit',   label: '🎮 Plataforma' },
+  ];
+
   const controls = document.getElementById('recs-controls');
-  if (mode === 'genre') {
-    controls.innerHTML = `
-      <select class="filter-select" id="recs-genre-select" style="min-width:200px">
-        ${backlogGenres.map(g => {
-          const aff = profile.genreAffinity[g];
-          const label = aff ? `${esc(g)} (${aff.toFixed(1)}/10)` : esc(g);
-          return `<option value="${esc(g)}">${label}</option>`;
-        }).join('')}
-      </select>
-      <button class="btn btn-primary" onclick="runRecs()">Recomendar</button>`;
-  } else {
-    controls.innerHTML = `
-      <div class="autocomplete-wrap">
-        <input class="search-box" id="recs-similar-input" placeholder="Buscar jogo de referência..." autocomplete="off"
-          oninput="recsAutocomplete(this.value)" style="width:100%">
-        <div class="autocomplete-list" id="recs-ac-list" style="display:none"></div>
+  controls.innerHTML = `
+    <div class="recs-row">
+      ${mode === 'genre' ? `
+        <select class="filter-select" id="recs-genre-select" style="min-width:230px">
+          <optgroup label="🎭 Gêneros">
+            ${backlogGenres.map(g => {
+              const aff = profile.genreAffinity[g];
+              const lbl = aff !== undefined ? `${esc(g)} (${(aff*5+5).toFixed(1)}/10)` : esc(g);
+              return `<option value="genre:${esc(g)}">${lbl}</option>`;
+            }).join('')}
+          </optgroup>
+          <optgroup label="⚔ Subgêneros">
+            ${BACKLOG_SUBGENRES.map(s => {
+              const aff = profile.subgenreAffinity?.[s];
+              const lbl = aff !== undefined ? `${esc(s)} (${(aff*5+5).toFixed(1)}/10)` : esc(s);
+              return `<option value="subgenre:${esc(s)}">${lbl}</option>`;
+            }).join('')}
+          </optgroup>
+        </select>
+      ` : `
+        <div class="autocomplete-wrap">
+          <input class="search-box" id="recs-similar-input" placeholder="Buscar jogo de referência..." autocomplete="off"
+            oninput="recsAutocomplete(this.value)" style="width:100%">
+          <div class="autocomplete-list" id="recs-ac-list" style="display:none"></div>
+        </div>
+        <span id="recs-ref-badge" style="font-size:13px;color:var(--accent2)"></span>
+      `}
+      <button class="btn btn-primary" onclick="runRecs()">Recomendar</button>
+    </div>
+
+    <div class="recs-row" style="margin-top:10px">
+      <div style="display:flex;gap:6px">
+        <button class="behavior-btn${_recsBehavior==='balanced'?' active':''}"     data-bv="balanced"     onclick="setRecsBehavior('balanced')">Balanceado</button>
+        <button class="behavior-btn${_recsBehavior==='hidden_gems'?' active':''}"  data-bv="hidden_gems"  onclick="setRecsBehavior('hidden_gems')">💎 Hidden Gems</button>
+        <button class="behavior-btn${_recsBehavior==='top_rated'?' active':''}"    data-bv="top_rated"    onclick="setRecsBehavior('top_rated')">🏆 Top Rated</button>
       </div>
-      <span id="recs-ref-badge" style="font-size:13px;color:var(--accent2)"></span>`;
-  }
+      <select class="filter-select" id="recs-filter-platform">
+        <option value="">Todas as plataformas</option>
+        ${allPlats.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+      </select>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
+        <input type="checkbox" id="recs-exclude-wl" checked style="accent-color:var(--accent)">
+        Excluir wishlist
+      </label>
+    </div>
+
+    <div style="margin-top:10px">
+      <button onclick="document.getElementById('recs-weights-panel').style.display=document.getElementById('recs-weights-panel').style.display==='none'?'block':'none'"
+        style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:2px 0">⚙ Ajustar pesos ▾</button>
+      <div id="recs-weights-panel" style="display:none;margin-top:12px">
+        <div class="recs-weights-grid">
+          ${wDefs.map(w => `
+            <div class="weight-row">
+              <div class="weight-label">${w.label} <strong id="wval-${w.key}">${_recsWeights[w.key]}</strong></div>
+              <input type="range" class="weight-slider" min="0" max="10" step="1" value="${_recsWeights[w.key]}"
+                oninput="_recsWeights['${w.key}']=+this.value;document.getElementById('wval-${w.key}').textContent=this.value">
+            </div>
+          `).join('')}
+        </div>
+        <button onclick="resetRecsWeights()"
+          style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 14px;border-radius:6px;cursor:pointer;font-size:12px">
+          ↺ Resetar pesos
+        </button>
+      </div>
+    </div>
+  `;
 
   document.getElementById('recs-body').innerHTML =
     `<div style="color:var(--muted);font-size:14px;text-align:center;padding:60px 0">
-      ${mode === 'genre' ? 'Selecione um gênero e clique em Recomendar.' : 'Busque um jogo de referência acima.'}
+      ${mode === 'genre' ? 'Selecione um gênero / subgênero e clique em Recomendar.' : 'Busque um jogo de referência acima.'}
     </div>`;
 }
 
+function setRecsBehavior(v) {
+  _recsBehavior = v;
+  document.querySelectorAll('.behavior-btn').forEach(b => b.classList.toggle('active', b.dataset.bv === v));
+}
+
+function resetRecsWeights() {
+  _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3 };
+  switchRecsMode(_recsMode);
+}
+
+// ── Autocomplete ──────────────────────────────────────────────────────────────
 function recsAutocomplete(q) {
   const list = document.getElementById('recs-ac-list');
   if (q.length < 2) { list.style.display = 'none'; return; }
   const ql = q.toLowerCase();
-
-  // Busca em played + backlog
-  const played  = _games.filter(g => g.title.toLowerCase().includes(ql)).slice(0, 4)
-    .map(g => ({ ...g, _src: 'jogado' }));
-  const backlog = _backlog.filter(g => g.title.toLowerCase().includes(ql)).slice(0, 4)
-    .map(g => ({ ...g, _src: 'backlog' }));
-
+  const played  = _games.filter(g => g.title.toLowerCase().includes(ql)).slice(0, 4).map(g => ({ ...g, _src: 'jogado' }));
+  const backlog = _backlog.filter(g => g.title.toLowerCase().includes(ql)).slice(0, 4).map(g => ({ ...g, _src: 'backlog' }));
   const combined = [...played, ...backlog].slice(0, 8);
   if (!combined.length) { list.style.display = 'none'; return; }
-
   list.style.display = 'block';
   list.innerHTML = combined.map((g, i) => `
     <div class="autocomplete-item" onclick="selectRecsRef(${i})">
-      <span>${esc(g.title)}</span>
-      <span class="ac-sub">${g._src}</span>
+      <span>${esc(g.title)}</span><span class="ac-sub">${g._src}</span>
     </div>`).join('');
   list._data = combined;
 }
@@ -954,29 +1077,54 @@ function selectRecsRef(idx) {
   runRecs();
 }
 
+// ── runRecs ───────────────────────────────────────────────────────────────────
 function runRecs() {
-  const profile = computeUserProfile();
-  const played  = new Set(_games.map(g => g.igdb_id).filter(Boolean));
-  const wl      = loadWishlist();
-  const body    = document.getElementById('recs-body');
+  const profile      = computeUserProfile();
+  const played       = new Set(_games.map(g => g.igdb_id).filter(Boolean));
+  const wl           = loadWishlist();
+  const body         = document.getElementById('recs-body');
+  const userPlatforms = _profile.platforms || [];
 
-  let scored = [];
+  const platformFilter = document.getElementById('recs-filter-platform')?.value || '';
+  const excludeWL      = document.getElementById('recs-exclude-wl')?.checked ?? true;
+
+  // Candidatos base: aplica filtros globais
+  let candidates = _backlog.filter(g => {
+    if (played.has(g.igdb_id)) return false;
+    if (excludeWL && wl.includes(g.igdb_id)) return false;
+    if (platformFilter && !(g.platforms || []).includes(platformFilter)) return false;
+    if (_recsBehavior === 'top_rated' && (g.igdb_rating_count || 0) < 100) return false;
+    return true;
+  });
+
+  const scored = [];
 
   if (_recsMode === 'genre') {
-    const genre = document.getElementById('recs-genre-select')?.value;
-    if (!genre) return;
-    _backlog.forEach(g => {
-      if (played.has(g.igdb_id)) return;
-      const result = scoreByGenre(g, genre, profile);
-      if (result) scored.push({ game: g, ...result });
+    const val = document.getElementById('recs-genre-select')?.value || '';
+    if (!val) return;
+    const [type, name] = val.split(':');
+    candidates = candidates.filter(g =>
+      type === 'genre' ? (g.genres || []).includes(name) : (g.subgenres || []).includes(name)
+    );
+    candidates.forEach(game => {
+      const { score, signals } = scoreGame(game, profile, userPlatforms);
+      scored.push({ game, score, signals, extra: null });
     });
+
   } else {
     if (!_recsRefGame) return;
-    _backlog.forEach(g => {
-      if (played.has(g.igdb_id)) return;
-      if (g.igdb_id === _recsRefGame.igdb_id) return;
-      const result = scoreSimilarTo(g, _recsRefGame, profile);
-      if (result) scored.push({ game: g, ...result });
+    const refGenres = _recsRefGame.genres    || [];
+    const refSubs   = _recsRefGame.subgenres || [];
+    candidates = candidates.filter(g => g.igdb_id !== _recsRefGame.igdb_id);
+    candidates.forEach(game => {
+      const genSim = jaccard(refGenres, game.genres    || []);
+      const subSim = jaccard(refSubs,   game.subgenres || []);
+      if (genSim === 0 && subSim === 0) return;
+      const { score: baseScore, signals } = scoreGame(game, profile, userPlatforms);
+      // Blend: 50% content-based + 50% similarity
+      const simScore = genSim * 0.6 + subSim * 0.4;
+      const score    = baseScore * 0.5 + simScore * 0.5;
+      scored.push({ game, score, signals, extra: { genSim, subSim } });
     });
   }
 
@@ -988,23 +1136,24 @@ function runRecs() {
     return;
   }
 
-  body.innerHTML = top.map(({ game: g, reason }, i) => {
+  body.innerHTML = top.map(({ game: g, signals, extra }, i) => {
     const inWl = wl.includes(g.igdb_id);
     const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : 'var(--yellow)';
+    const chips = buildSignalChips(g, signals, profile, extra);
     return `<div class="rec-card">
       <div class="rec-rank">#${i+1}</div>
       <div class="rec-info">
         <h4>${esc(g.title)}</h4>
         <div class="tags">
           ${(g.genres||[]).map(gn=>`<span class="tag genre">${esc(gn)}</span>`).join('')}
-          ${(g.subgenres||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}
+          ${(g.subgenres||[]).map(s=>`<span class="tag subgenre">${esc(s)}</span>`).join('')}
         </div>
         <div class="card-meta" style="margin-top:6px">
           ${g.year ? `<span>📅 ${g.year}</span>` : ''}
           ${g.igdb_rating ? `<span style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
           ${(g.platforms||[]).slice(0,3).map(p=>`<span>🎮 ${esc(p)}</span>`).join('')}
         </div>
-        <div class="rec-reason">💡 ${reason}</div>
+        <div class="signal-bar">${chips}</div>
       </div>
       <div class="rec-actions">
         <button class="btn btn-secondary btn-sm" style="${inWl?'color:var(--accent2);border-color:var(--accent)':''}"
