@@ -533,7 +533,7 @@ function renderCatalog() {
       <div class="card-meta">
         ${g.year ? `<span>📅 ${g.year}</span>` : ''}
         ${g.playtime ? `<span>${playtimeMap[g.playtime]}</span>` : ''}
-        ${g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
+        ${g.estimated_hours ? `<span title="Tempo estimado de jogo">⏱ ~${g.estimated_hours}h</span>` : g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
         ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
         ${g.rawg_id ? `<span style="color:var(--border)">RAWG #${g.rawg_id}</span>` : ''}
       </div>
@@ -798,11 +798,25 @@ function renderProfile() {
   const profile = loadProfile();
   const body = document.getElementById('profile-body');
 
-  const totalHours = games.reduce((s,g)=>s+(g.hours||0),0);
   const ratedGames = games.filter(g => g.rating);
   const avgRating = ratedGames.length ? (ratedGames.reduce((s,g)=>s+g.rating,0)/ratedGames.length).toFixed(1) : '—';
   const zeroed = games.filter(g=>g.completed==='yes').length;
   const allGenres = [...new Set(games.flatMap(g=>g.genres||[]))];
+  const totalEstHours = Math.round(games.reduce((s,g)=>s+(g.estimated_hours||0),0));
+  const totalDays = (totalEstHours / 24).toFixed(0);
+
+  // Top 5 jogos por tempo estimado
+  const topByTime = [...games].filter(g=>g.estimated_hours).sort((a,b)=>b.estimated_hours-a.estimated_hours).slice(0,5);
+
+  // Horas por plataforma
+  const hoursByPlat = {};
+  games.forEach(g => {
+    if (g.estimated_hours && g.platformPlayed) {
+      hoursByPlat[g.platformPlayed] = (hoursByPlat[g.platformPlayed]||0) + g.estimated_hours;
+    }
+  });
+  const topPlats = Object.entries(hoursByPlat).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxPlatHours = topPlats[0]?.[1] || 1;
 
   body.innerHTML = `
     <div class="profile-section">
@@ -810,10 +824,34 @@ function renderProfile() {
       <div class="stats-grid">
         <div class="stat-box"><div class="val">${games.length}</div><div class="lbl">Jogos catalogados</div></div>
         <div class="stat-box"><div class="val">${zeroed}</div><div class="lbl">Zerados</div></div>
-        <div class="stat-box"><div class="val">${totalHours}h</div><div class="lbl">Horas estimadas</div></div>
+        <div class="stat-box"><div class="val">${totalEstHours.toLocaleString('pt-BR')}h</div><div class="lbl">Horas estimadas</div></div>
+        <div class="stat-box"><div class="val">${totalDays} dias</div><div class="lbl">Em dias</div></div>
         <div class="stat-box"><div class="val">${avgRating}</div><div class="lbl">Nota média</div></div>
         <div class="stat-box"><div class="val">${allGenres.length}</div><div class="lbl">Gêneros diferentes</div></div>
       </div>
+    </div>
+    <div class="profile-section">
+      <h3>⏱ Tempo por Plataforma</h3>
+      <div class="genre-chart">
+        ${topPlats.map(([plat, hrs]) => `
+          <div class="genre-bar">
+            <span class="genre-bar-label">${esc(plat)}</span>
+            <div class="genre-bar-track"><div class="genre-bar-fill" style="width:${Math.round(hrs/maxPlatHours*100)}%"></div></div>
+            <span class="genre-bar-val">${Math.round(hrs)}h</span>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="profile-section">
+      <h3>🏆 Mais Tempo Investido</h3>
+      ${topByTime.map(g => `
+        <div class="rec-card">
+          <div class="rec-score" style="color:var(--accent2)">⏱</div>
+          <div class="rec-info">
+            <h4>${esc(g.title)}</h4>
+            <div class="tags">${(g.genres||[]).map(gn=>`<span class="tag genre">${esc(gn)}</span>`).join('')}</div>
+            <div class="rec-reason">~${g.estimated_hours}h estimadas · ${g.platformPlayed||'—'} · nota ${g.rating||'—'}/10</div>
+          </div>
+        </div>`).join('')}
     </div>
     <div class="profile-section">
       <h3>🎮 Minhas Plataformas</h3>
