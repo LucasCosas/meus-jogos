@@ -290,7 +290,39 @@ Isso é o que Netflix, Spotify e Steam fazem. Com GPU e ~100+ usuários ativos, 
 
 ---
 
-### Hardware mínimo para cada opção
+### Hardware disponível: avaliação
+
+**MacBook Air M4**
+- Chip M4 com Neural Engine (38 TOPS) e GPU unificada com a CPU
+- Memória unificada: GPU e CPU compartilham o mesmo pool (sem bottleneck de transferência)
+- Framework recomendado: **MLX** (Apple) — otimizado para Apple Silicon, roda Llama 3.1 8B suavemente com 16GB
+- Alternativa: **llama.cpp** / **Ollama** — suporte nativo a MPS (Metal Performance Shaders)
+- `sentence-transformers` roda via MPS sem modificação
+- **Ideal para:** desenvolvimento, inferência de modelos médios, geração de embeddings
+- **Limitação:** sem CUDA — alguns frameworks ML assumem CUDA e precisam de adaptação
+
+**Notebook RTX 3050**
+- CUDA nativo — funciona com toda a stack padrão de ML (PyTorch, HuggingFace, FAISS-GPU)
+- VRAM: 4GB (versão laptop mais comum) ou 8GB
+  - 4GB: roda `sentence-transformers` fácil, Mistral 7B só com quantização Q4 (GGUF)
+  - 8GB: Mistral 7B confortável em 4-bit, alguns modelos 13B quantizados
+- Encodificar os 16k jogos do backlog: **~1–2 minutos** (roda uma vez, salva)
+- **Ideal para:** gerar embeddings, FAISS-GPU, treinar LightGBM re-ranker
+- **Melhor máquina para a stack de ML padrão** (PyTorch + CUDA)
+
+### Divisão de trabalho recomendada
+
+| Tarefa | Máquina ideal | Por quê |
+|--------|--------------|---------|
+| Gerar embeddings dos 16k jogos (uma vez) | RTX 3050 | CUDA, stack padrão |
+| Servir LLM reranker (Mistral/Llama) | M4 ou RTX 3050 | Ollama roda em ambos |
+| FAISS ANN search em tempo real | Qualquer (CPU ok) | 16k vetores é pequeno |
+| Treinar re-ranker LightGBM | Qualquer (CPU ok) | 330 amostras, rápido |
+| Desenvolvimento / testes | M4 | Mais rápido no dia a dia |
+
+**Conclusão:** o setup é mais que suficiente. RTX 3050 cuida da parte CUDA (embeddings), M4 cuida do desenvolvimento e pode servir o LLM via Ollama. Não precisa de nenhum hardware adicional para implementar o SOTA descrito acima.
+
+### Hardware mínimo para cada opção (referência geral)
 
 | Opção | GPU mínima | VRAM | Custo cloud (spot) |
 |-------|-----------|------|-------------------|
@@ -298,8 +330,6 @@ Isso é o que Netflix, Spotify e Steam fazem. Com GPU e ~100+ usuários ativos, 
 | LLM reranker (Mistral 7B) | RTX 3060 / T4 | 8GB | ~$0.30/hora |
 | LLM reranker (Llama 70B) | A100 | 40GB | ~$2/hora |
 | Two-Tower training | RTX 3080 / T4 | 10GB | ~$0.50/hora |
-
-Para o caso de uso atual (recomendação pessoal, 16k jogos), **Opção 1 + Opção 2** rodam numa GPU de consumidor comum ou numa instância spot barata. Não precisa de infraestrutura séria.
 
 ---
 
