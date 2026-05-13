@@ -858,8 +858,8 @@ function igdbScore01(game) {
   const cnt = game.igdb_rating_count || 1;
   let base = ((game.igdb_rating * cnt + m * C) / (cnt + C)) / 100;
   if (_recsBehavior === 'hidden_gems') {
-    // Penaliza jogos muito populares, favorece gemas obscuras com boa nota
-    const pop = Math.min(1, cnt / 500);
+    // Penaliza jogos populares (escala real do backlog: max ~52 reviews)
+    const pop = Math.min(1, cnt / 30);
     base *= (1 - pop * 0.45);
   }
   return Math.max(0, Math.min(1, base));
@@ -1093,7 +1093,7 @@ function runRecs() {
     if (played.has(g.igdb_id)) return false;
     if (excludeWL && wl.includes(g.igdb_id)) return false;
     if (platformFilter && !(g.platforms || []).includes(platformFilter)) return false;
-    if (_recsBehavior === 'top_rated' && (g.igdb_rating_count || 0) < 100) return false;
+    if (_recsBehavior === 'top_rated' && (g.igdb_rating_count || 0) < 10) return false;
     return true;
   });
 
