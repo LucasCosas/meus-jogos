@@ -1629,7 +1629,8 @@ function backlogCategories(g) {
 function backlogCard(g) {
   const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : g.igdb_rating >= 60 ? 'var(--yellow)' : 'var(--muted)';
   const cats = backlogCategories(g);
-  return `<div class="game-card">
+  const inWl = loadWishlist().includes(g.igdb_id);
+  return `<div class="game-card" id="bcard-${g.igdb_id}">
     <div class="card-header">
       <span class="game-title">${esc(g.title)}</span>
       ${g.igdb_rating ? `<span class="game-rating" style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
@@ -1646,6 +1647,11 @@ function backlogCard(g) {
     </div>
     <div class="card-actions">
       <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Já joguei</button>
+      <button class="btn btn-secondary btn-sm ${inWl ? 'wl-active' : ''}" id="wlbtn-${g.igdb_id}"
+        style="${inWl ? 'color:var(--accent2);border-color:var(--accent)' : ''}"
+        onclick="toggleBacklogWishlist(${g.igdb_id}, this)">
+        ${inWl ? '💾 Wishlist' : '+ Wishlist'}
+      </button>
     </div>
   </div>`;
 }
@@ -1738,6 +1744,25 @@ function renderBacklog() {
     if (entries[0].isIntersecting) backlogAppendPage();
   }, { rootMargin: '400px' });
   _backlogObserver.observe(sentinel);
+}
+
+function toggleBacklogWishlist(igdbId, btn) {
+  const wl = loadWishlist();
+  const idx = wl.indexOf(igdbId);
+  if (idx === -1) {
+    wl.push(igdbId);
+    btn.textContent = '💾 Wishlist';
+    btn.style.color = 'var(--accent2)';
+    btn.style.borderColor = 'var(--accent)';
+    showToast('Adicionado à Wishlist', 'success');
+  } else {
+    wl.splice(idx, 1);
+    btn.textContent = '+ Wishlist';
+    btn.style.color = '';
+    btn.style.borderColor = '';
+    showToast('Removido da Wishlist', 'success');
+  }
+  saveWishlist(wl);
 }
 
 function backlogMarkPlayed(igdbId) {
