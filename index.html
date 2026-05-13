@@ -765,13 +765,34 @@ function deleteGame(id) {
 let _recsMode = 'genre';
 let _recsRefGame = null; // jogo de referência para modo similar
 
+// Normaliza nomes de gênero do catálogo para nomes canônicos do IGDB/backlog
+const GENRE_ALIASES = {
+  'aventura': 'Adventure', 'action-aventura': 'Adventure', 'sandbox': 'Adventure',
+  'mundo aberto': 'Adventure', 'horror': 'Adventure', 'stealth': 'Adventure',
+  'rpg': 'Role-playing (RPG)', 'action rpg': 'Role-playing (RPG)',
+  'soulslike': 'Role-playing (RPG)', 'roguelike': 'Role-playing (RPG)',
+  'fps': 'Shooter',
+  'plataforma': 'Platform', 'platformer': 'Platform', 'metroidvania': 'Platform',
+  'estratégia': 'Strategy',
+  'simulação': 'Simulator', 'simulation': 'Simulator',
+  'esportes': 'Sport', 'sports': 'Sport',
+  'luta': 'Fighting',
+  'card': 'Card & Board Game', 'card game': 'Card & Board Game',
+  'massively multiplayer': 'Arcade',
+};
+function normalizeGenre(g) {
+  return GENRE_ALIASES[g.toLowerCase()] || g;
+}
+
 // Computa perfil de afinidade do usuário a partir dos ratings
+// Normaliza gêneros do catálogo para nomes canônicos do backlog
 function computeUserProfile() {
   const games = loadGames().filter(g => g.rating);
-  const genreData = {}; // {genre: {sum, count}}
+  const genreData = {}; // {canonicalGenre: {sum, count}}
 
   games.forEach(g => {
-    (g.genres || []).forEach(genre => {
+    (g.genres || []).forEach(rawGenre => {
+      const genre = normalizeGenre(rawGenre);
       if (!genreData[genre]) genreData[genre] = { sum: 0, count: 0 };
       genreData[genre].sum   += g.rating;
       genreData[genre].count += 1;
@@ -870,15 +891,19 @@ function switchRecsMode(mode) {
   document.getElementById('recs-tab-similar').classList.toggle('active', mode === 'similar');
 
   const profile = computeUserProfile();
-  const allGenres = [...new Set(Object.keys(profile.genreAffinity))].sort((a,b) =>
-    (profile.genreAffinity[b]||0) - (profile.genreAffinity[a]||0)
-  );
+  // Usa gêneros reais do backlog (nomes IGDB) ordenados por afinidade do usuário
+  const backlogGenres = [...new Set(_backlog.flatMap(g => g.genres || []))].sort();
+  backlogGenres.sort((a, b) => (profile.genreAffinity[b] || 0) - (profile.genreAffinity[a] || 0));
 
   const controls = document.getElementById('recs-controls');
   if (mode === 'genre') {
     controls.innerHTML = `
       <select class="filter-select" id="recs-genre-select" style="min-width:200px">
-        ${allGenres.map(g => `<option value="${esc(g)}">${esc(g)} (${(profile.genreAffinity[g]||5).toFixed(1)}/10)</option>`).join('')}
+        ${backlogGenres.map(g => {
+          const aff = profile.genreAffinity[g];
+          const label = aff ? `${esc(g)} (${aff.toFixed(1)}/10)` : esc(g);
+          return `<option value="${esc(g)}">${label}</option>`;
+        }).join('')}
       </select>
       <button class="btn btn-primary" onclick="runRecs()">Recomendar</button>`;
   } else {
