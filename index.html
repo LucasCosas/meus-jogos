@@ -4,257 +4,331 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameLog — Catálogo & Recomendações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
 <style>
+  /* ─── Design Tokens ─────────────────────────────────────── */
   :root {
-    --bg: #0f0f13;
-    --surface: #1a1a24;
-    --surface2: #222230;
-    --border: #2e2e42;
-    --accent: #7c5cfc;
-    --accent2: #a78bfa;
-    --text: #e2e2f0;
-    --muted: #7070a0;
-    --green: #4ade80;
-    --yellow: #facc15;
-    --red: #f87171;
-    --orange: #fb923c;
+    --bg: #F9F8F2;
+    --surface: #FFFFFF;
+    --surface2: #F2EFE7;
+    --border: #E5E0D5;
+    --border-dark: #CEC7BA;
+    --accent: #F06B2A;
+    --accent2: #F06B2A;
+    --accent-hover: #D4581A;
+    --accent-light: rgba(240,107,42,.1);
+    --text: #1B1B1B;
+    --muted: #8C7B68;
+    --muted2: #B4A898;
+    --green: #2A9D5C;
+    --yellow: #D4A017;
+    --red: #C94040;
+    --orange: #F06B2A;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; }
 
-  /* Layout */
-  .app { display: grid; grid-template-rows: 56px 1fr; height: 100vh; }
-  .navbar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 32px; }
-  .navbar .logo { font-size: 18px; font-weight: 700; color: var(--accent2); letter-spacing: -0.5px; }
-  .navbar nav { display: flex; gap: 4px; }
-  .nav-btn { background: none; border: none; color: var(--muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all .15s; }
+  /* ─── Layout ─────────────────────────────────────────────── */
+  .app { display: grid; grid-template-rows: 68px 1fr; height: 100vh; }
+
+  /* ─── Navbar ─────────────────────────────────────────────── */
+  .navbar { background: var(--bg); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 28px; gap: 20px; }
+  .navbar-logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 38px; height: 38px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--text); }
+  .logo-sub { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 1px; }
+  .navbar nav { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--border); padding: 4px; border-radius: 40px; margin: 0 auto; }
+  .nav-btn { background: none; border: none; color: var(--muted); padding: 7px 16px; border-radius: 32px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; transition: all .15s; white-space: nowrap; }
   .nav-btn:hover { color: var(--text); background: var(--surface2); }
-  .nav-btn.active { color: var(--accent2); background: rgba(124,92,252,.15); }
-  .navbar-right { margin-left: auto; display: flex; gap: 8px; }
+  .nav-btn.active { background: var(--accent); color: #fff; font-weight: 600; }
+  .navbar-right { display: flex; gap: 8px; flex-shrink: 0; }
 
-  /* Tabs */
+  /* ─── Buttons ─────────────────────────────────────────────── */
+  .btn { padding: 8px 18px; border-radius: 40px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all .15s; display: inline-flex; align-items: center; gap: 5px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--border-dark); background: var(--surface2); }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+  .btn-danger { background: rgba(201,64,64,.08); color: var(--red); border: 1px solid rgba(201,64,64,.2); }
+  .btn-danger:hover { background: rgba(201,64,64,.15); }
+
+  /* ─── Pages ──────────────────────────────────────────────── */
   .page { display: none; height: 100%; overflow: hidden; }
   .page.active { display: flex; }
-
-  /* Catalog page */
   #page-catalog, #page-backlog { flex-direction: column; }
-  .catalog-toolbar { padding: 16px 24px; display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-  .search-box { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 8px; font-size: 14px; outline: none; }
-  .search-box:focus { border-color: var(--accent); }
-  .filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; outline: none; }
-  .btn { padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .15s; }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #6b4ee0; }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
-  .btn-sm { padding: 5px 12px; font-size: 12px; }
-  .btn-danger { background: rgba(248,113,113,.15); color: var(--red); border: 1px solid rgba(248,113,113,.3); }
-  .btn-danger:hover { background: rgba(248,113,113,.25); }
+  #page-recs, #page-wishlist { flex-direction: column; }
+  #page-profile { flex-direction: column; overflow-y: auto; }
 
-  .catalog-grid { flex: 1; overflow-y: auto; padding: 20px 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; align-content: start; }
+  /* ─── Page header ─────────────────────────────────────────── */
+  .page-header { padding: 18px 28px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .page-label { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 3px; }
+  .page-header h1 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 800; line-height: 1.1; color: var(--text); }
+  .page-header p { font-size: 13px; color: var(--muted); margin-top: 3px; }
 
-  /* Game card */
-  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: border-color .15s; }
-  .game-card:hover { border-color: var(--accent); }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-  .game-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
-  .game-rating { display: flex; align-items: center; gap: 4px; background: rgba(124,92,252,.2); padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* ─── Toolbar ─────────────────────────────────────────────── */
+  .catalog-toolbar { padding: 12px 28px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid var(--border); flex-wrap: wrap; background: var(--bg); flex-shrink: 0; }
+  .search-wrap { flex: 1; min-width: 200px; position: relative; }
+  .search-wrap::before { content: '🔍'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 13px; pointer-events: none; line-height: 1; }
+  .search-box { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 8px 14px 8px 36px; border-radius: 40px; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color .15s; }
+  .search-box:focus { border-color: var(--border-dark); }
+  .search-box::placeholder { color: var(--muted2); }
+  .filter-select { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 40px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; outline: none; }
+  .toolbar-count { font-size: 13px; font-weight: 600; color: var(--text); background: var(--surface2); border: 1px solid var(--border); padding: 6px 14px; border-radius: 40px; white-space: nowrap; }
+
+  /* ─── Grid ────────────────────────────────────────────────── */
+  .catalog-grid { flex: 1; overflow-y: auto; padding: 20px 28px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; align-content: start; }
+
+  /* ─── Game Card ───────────────────────────────────────────── */
+  .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; }
+  .game-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  .card-cover { height: 170px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+  .card-cover-emoji { font-size: 64px; line-height: 1; user-select: none; filter: drop-shadow(0 2px 6px rgba(0,0,0,.12)); }
+  .card-badges-top { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+  .card-plats { display: flex; gap: 4px; flex-wrap: wrap; }
+  .plat-badge { background: rgba(27,27,27,.72); color: #fff; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 20px; backdrop-filter: blur(4px); white-space: nowrap; letter-spacing: .02em; }
+  .playtime-badge { background: rgba(255,255,255,.88); color: var(--text); font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; backdrop-filter: blur(4px); white-space: nowrap; flex-shrink: 0; }
+  .card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .game-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; line-height: 1.25; color: var(--text); }
+  .card-meta-line { font-size: 12px; color: var(--muted); }
+  .card-stars { display: flex; align-items: center; gap: 2px; }
+  .star-filled { color: #E8960A; font-size: 14px; }
+  .star-empty { color: var(--border-dark); font-size: 14px; }
+  .rating-num { font-size: 12px; font-weight: 600; color: var(--text); margin-left: 4px; }
+  .card-genres { display: flex; flex-wrap: wrap; gap: 5px; }
+  .genre-chip { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+  .genre-chip.subgenre { background: var(--accent-light); color: var(--accent); }
+  .card-actions { display: flex; gap: 7px; margin-top: auto; padding-top: 4px; }
+  .card-actions .btn { flex: 1; justify-content: center; font-size: 12px; padding: 7px 10px; }
+
+  /* ─── Tags (compat) ───────────────────────────────────────── */
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tag { background: var(--surface2); border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; font-size: 11px; color: var(--muted); }
-  .tag.genre { color: #93c5fd; border-color: rgba(147,197,253,.3); background: rgba(147,197,253,.08); }
-  .tag.platform { color: var(--green); border-color: rgba(74,222,128,.3); background: rgba(74,222,128,.08); }
-  .tag.service { color: var(--orange); border-color: rgba(251,146,60,.3); background: rgba(251,146,60,.08); }
-  .tag.played { color: #a78bfa; border-color: rgba(167,139,250,.3); background: rgba(167,139,250,.08); }
-  .card-meta { display: flex; gap: 16px; font-size: 12px; color: var(--muted); }
+  .tag.genre { color: var(--text); background: var(--surface2); border-color: var(--border); }
+  .tag.platform { color: #fff; background: var(--text); border-color: var(--text); font-size: 10px; }
+  .tag.service { color: var(--accent); background: var(--accent-light); border-color: rgba(240,107,42,.25); }
+  .tag.played { color: var(--green); background: rgba(42,157,92,.1); border-color: rgba(42,157,92,.25); }
+  .tag.subgenre { color: var(--accent); background: var(--accent-light); border-color: rgba(240,107,42,.3); }
+  .card-meta { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }
   .card-meta span { display: flex; align-items: center; gap: 4px; }
-  .card-actions { display: flex; gap: 8px; margin-top: auto; }
+  .card-actions-old { display: flex; gap: 8px; margin-top: auto; }
 
-  /* Empty state */
+  /* ─── Empty state ─────────────────────────────────────────── */
   .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 40px; color: var(--muted); }
-  .empty-state h3 { font-size: 20px; color: var(--text); margin-bottom: 8px; }
+  .empty-state h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; }
   .empty-state p { font-size: 14px; margin-bottom: 24px; }
 
-  /* Modal */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  /* ─── Modal ───────────────────────────────────────────────── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(27,27,27,.45); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
-  .modal-header { padding: 20px 24px 0; display: flex; justify-content: space-between; align-items: center; }
-  .modal-header h2 { font-size: 18px; }
-  .modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; padding: 4px; border-radius: 6px; }
-  .modal-close:hover { color: var(--text); background: var(--surface2); }
-  .modal-body { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 16px; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.12); }
+  .modal-header { padding: 22px 26px 0; display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; }
+  .modal-close { background: var(--surface2); border: none; color: var(--muted); cursor: pointer; font-size: 15px; padding: 6px 9px; border-radius: 8px; transition: all .15s; }
+  .modal-close:hover { color: var(--text); background: var(--border); }
+  .modal-body { padding: 18px 26px 26px; display: flex; flex-direction: column; gap: 16px; }
 
-  /* Hours wizard */
-  .hours-wizard { max-width: 680px; }
-  .wizard-progress { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-  .wizard-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 20px; }
-  .wizard-progress-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s; }
-  .wizard-game { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-  .wizard-game-title { font-weight: 600; font-size: 15px; }
-  .wizard-game-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .wizard-hours-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-  .wizard-hour-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .15s; }
-  .wizard-hour-btn:hover { border-color: var(--accent); color: var(--accent2); }
-  .wizard-hour-btn.selected { background: rgba(124,92,252,.2); border-color: var(--accent); color: var(--accent2); }
-  .wizard-hour-btn.skip { color: var(--muted); font-weight: 400; }
-  .wizard-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; }
-  .wizard-counter { font-size: 13px; color: var(--muted); }
-
-  /* Form */
+  /* ─── Forms ───────────────────────────────────────────────── */
   .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group label { font-size: 13px; font-weight: 600; color: var(--muted); }
-  .form-control { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px; font-size: 14px; outline: none; width: 100%; }
+  .form-group label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .form-control { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; width: 100%; transition: border-color .15s; }
   .form-control:focus { border-color: var(--accent); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-  /* Rating input */
-  .rating-input { display: flex; gap: 6px; }
+  /* ─── Rating input ────────────────────────────────────────── */
+  .rating-input { display: flex; gap: 5px; flex-wrap: wrap; }
   .rating-input input[type=radio] { display: none; }
-  .rating-input label { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; transition: all .1s; }
+  .rating-input label { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; transition: all .1s; color: var(--muted); }
   .rating-input input:checked + label { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .rating-input label:hover { border-color: var(--accent); color: var(--accent2); }
+  .rating-input label:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Checkbox chips */
-  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  /* ─── Chip group ──────────────────────────────────────────── */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 7px; }
   .chip-group input[type=checkbox] { display: none; }
   .chip-group label { padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; cursor: pointer; transition: all .1s; color: var(--muted); }
-  .chip-group input:checked + label { background: rgba(124,92,252,.2); border-color: var(--accent); color: var(--accent2); }
-  .chip-group label:hover { border-color: var(--accent); }
-
-  /* Custom chip input */
+  .chip-group input:checked + label { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+  .chip-group label:hover { border-color: var(--border-dark); }
   .chip-input-wrap { display: flex; gap: 8px; }
   .chip-input-wrap input { flex: 1; }
   .chip-input-wrap button { flex-shrink: 0; }
 
-  /* Recommendations */
-  #page-recs, #page-wishlist { flex-direction: column; }
-  .recs-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-  .recs-header h2 { font-size: 20px; font-weight: 700; }
-  .recs-mode-tabs { display: flex; gap: 4px; background: var(--surface2); padding: 4px; border-radius: 10px; }
-  .recs-mode-btn { background: none; border: none; color: var(--muted); padding: 6px 16px; border-radius: 7px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .15s; }
-  .recs-mode-btn.active { background: var(--surface); color: var(--text); }
-  .recs-controls { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .recs-body { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
-  .recs-section h3 { font-size: 14px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
-  .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; gap: 16px; align-items: flex-start; transition: border-color .15s; }
-  .rec-card:hover { border-color: var(--accent); }
-  .rec-rank { min-width: 36px; height: 36px; background: rgba(124,92,252,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--accent2); flex-shrink: 0; }
-  .rec-score { min-width: 48px; height: 48px; background: rgba(124,92,252,.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--accent2); }
-  .rec-info { flex: 1; min-width: 0; }
-  .rec-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .rec-info .rec-reason { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
-  .rec-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
-  .genre-chart { display: flex; flex-direction: column; gap: 10px; }
-  .genre-bar { display: flex; align-items: center; gap: 12px; }
-  .genre-bar-label { min-width: 120px; font-size: 13px; color: var(--text); }
-  .genre-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-  .genre-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s; }
-  .genre-bar-val { min-width: 32px; font-size: 12px; color: var(--muted); text-align: right; }
-  /* Autocomplete */
-  .autocomplete-wrap { position: relative; flex: 1; min-width: 240px; }
-  .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; z-index: 50; margin-top: 4px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
-  .autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
-  .autocomplete-item:hover { background: var(--surface2); }
-  .autocomplete-item .ac-sub { font-size: 11px; color: var(--muted); }
+  /* ─── Hours wizard ────────────────────────────────────────── */
+  .hours-wizard { max-width: 680px; }
+  .wizard-progress { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .wizard-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 20px; }
+  .wizard-progress-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s; }
+  .wizard-game { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .wizard-game-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; }
+  .wizard-game-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .wizard-hours-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .wizard-hour-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 40px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all .15s; }
+  .wizard-hour-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .wizard-hour-btn.selected { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+  .wizard-hour-btn.skip { color: var(--muted); font-weight: 400; }
+  .wizard-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; }
+  .wizard-counter { font-size: 13px; color: var(--muted); }
 
-  /* Recommendation engine v2 */
-  .recs-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; width: 100%; }
+  /* ─── Recommendations ─────────────────────────────────────── */
+  .recs-header { padding: 12px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; flex-shrink: 0; }
+  .recs-header h2 { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; }
+  .recs-mode-tabs { display: flex; gap: 3px; background: var(--surface2); padding: 3px; border-radius: 40px; border: 1px solid var(--border); }
+  .recs-mode-btn { background: none; border: none; color: var(--muted); padding: 6px 18px; border-radius: 32px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all .15s; }
+  .recs-mode-btn.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .recs-controls { padding: 12px 28px; border-bottom: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-start; flex-direction: column; flex-shrink: 0; }
+  .recs-body { flex: 1; overflow-y: auto; padding: 16px 28px; display: flex; flex-direction: column; gap: 8px; }
+  .recs-section h3 { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+
+  /* ─── Rec card ────────────────────────────────────────────── */
+  .rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; transition: border-color .15s, transform .1s; }
+  .rec-card:hover { border-color: var(--border-dark); transform: translateX(2px); }
+  .rec-rank { min-width: 30px; height: 30px; background: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .rec-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .rec-score { min-width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--accent); background: var(--accent-light); }
+  .rec-info { flex: 1; min-width: 0; }
+  .rec-info h4 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .rec-plats { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 5px; }
+  .rec-info .rec-reason { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+  .rec-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; align-self: center; }
+
+  /* ─── Signal chips ────────────────────────────────────────── */
+  .signal-bar { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .signal-chip { display: inline-flex; align-items: center; gap: 3px; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; background: var(--surface2); color: var(--muted); }
+  .signal-chip.pos { color: var(--green); background: rgba(42,157,92,.1); }
+  .signal-chip.neg { color: var(--red); background: rgba(201,64,64,.1); }
+
+  /* ─── Behavior buttons ────────────────────────────────────── */
+  .recs-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; width: 100%; }
   .recs-section-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-  .behavior-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
-  .behavior-btn:hover { border-color: var(--accent); color: var(--accent2); }
-  .behavior-btn.active { background: rgba(124,92,252,.2); border-color: var(--accent); color: var(--accent2); }
+  .behavior-btn { padding: 6px 16px; border-radius: 40px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .behavior-btn:hover { border-color: var(--border-dark); color: var(--text); }
+  .behavior-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ─── Weight sliders ──────────────────────────────────────── */
   .recs-weights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
   .weight-row { display: flex; flex-direction: column; gap: 5px; }
   .weight-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
   .weight-label strong { color: var(--text); font-variant-numeric: tabular-nums; }
   input[type=range].weight-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
-  .signal-bar { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 7px; }
-  .signal-chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); }
-  .signal-chip.pos { color: var(--green); border-color: rgba(74,222,128,.35); background: rgba(74,222,128,.08); }
-  .signal-chip.neg { color: var(--red); border-color: rgba(248,113,113,.35); background: rgba(248,113,113,.08); }
-  .tag.subgenre { color: #f9a8d4; border-color: rgba(249,168,212,.3); background: rgba(249,168,212,.08); }
-  /* Wishlist */
-  .wishlist-body { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+
+  /* ─── Wishlist ────────────────────────────────────────────── */
+  .wishlist-body { flex: 1; overflow-y: auto; padding: 20px 28px; display: flex; flex-direction: column; gap: 10px; }
   .wishlist-empty { text-align: center; padding: 80px 40px; color: var(--muted); }
-  .wishlist-empty h3 { font-size: 20px; color: var(--text); margin-bottom: 8px; }
+  .wishlist-empty h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; }
+  .wishlist-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border-color .15s; max-width: 760px; }
+  .wishlist-item:hover { border-color: var(--border-dark); }
+  .wishlist-item-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .wishlist-item-info { flex: 1; min-width: 0; }
+  .wishlist-item-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; }
+  .wishlist-item-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .wishlist-item-genres { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+  .wishlist-item-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 
-  /* Profile page */
-  #page-profile { flex-direction: column; overflow-y: auto; }
-  .profile-body { padding: 24px; display: flex; flex-direction: column; gap: 24px; max-width: 700px; }
-  .profile-section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-  .profile-section h3 { font-size: 16px; font-weight: 700; }
+  /* ─── Profile ─────────────────────────────────────────────── */
+  .profile-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 18px; max-width: 740px; }
+  .profile-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .profile-section h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; }
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
-  .stat-box { background: var(--surface2); border-radius: 10px; padding: 14px; text-align: center; }
-  .stat-box .val { font-size: 28px; font-weight: 800; color: var(--accent2); }
-  .stat-box .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .stat-box { background: var(--surface2); border-radius: 12px; padding: 16px; text-align: center; }
+  .stat-box .val { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 800; color: var(--accent); }
+  .stat-box .lbl { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .genre-chart { display: flex; flex-direction: column; gap: 10px; }
+  .genre-bar { display: flex; align-items: center; gap: 12px; }
+  .genre-bar-label { min-width: 120px; font-size: 13px; }
+  .genre-bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .genre-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width .5s; }
+  .genre-bar-val { min-width: 36px; font-size: 12px; color: var(--muted); text-align: right; }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* ─── Autocomplete ────────────────────────────────────────── */
+  .autocomplete-wrap { position: relative; flex: 1; min-width: 240px; }
+  .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; z-index: 50; margin-top: 6px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+  .autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .autocomplete-item:hover { background: var(--surface2); }
+  .autocomplete-item .ac-sub { font-size: 11px; color: var(--muted); }
 
-  /* Toast */
-  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border); padding: 12px 20px; border-radius: 10px; font-size: 14px; z-index: 200; animation: slideIn .2s ease; }
-  .toast.success { border-color: rgba(74,222,128,.5); color: var(--green); }
-  .toast.error { border-color: rgba(248,113,113,.5); color: var(--red); }
-  @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-  textarea.form-control { resize: vertical; min-height: 80px; }
-
-  .replay-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-  .replay-ok { background: rgba(74,222,128,.15); color: var(--green); }
-  .replay-soon { background: rgba(250,204,21,.12); color: var(--yellow); }
-  .replay-recent { background: rgba(248,113,113,.12); color: var(--red); }
-
-  /* Quick-rate overlay */
+  /* ─── Quick-rate overlay ──────────────────────────────────── */
   .rate-overlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 0; }
   .rate-overlay.open { display: flex; }
   .rate-progress-bar { position: absolute; top: 0; left: 0; height: 3px; background: var(--accent); transition: width .3s; }
   .rate-header { position: absolute; top: 20px; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 28px; }
   .rate-counter { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .rate-close { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; }
-  .rate-close:hover { color: var(--text); border-color: var(--muted); }
-  .rate-body { display: flex; flex-direction: column; align-items: center; gap: 32px; max-width: 560px; width: 100%; padding: 0 24px; }
-  .rate-platform { font-size: 12px; color: var(--muted); background: var(--surface2); padding: 3px 12px; border-radius: 20px; border: 1px solid var(--border); }
-  .rate-title { font-size: clamp(22px, 4vw, 36px); font-weight: 800; text-align: center; line-height: 1.2; color: var(--text); }
+  .rate-close { background: var(--surface); border: 1px solid var(--border); color: var(--muted); padding: 7px 16px; border-radius: 40px; cursor: pointer; font-size: 13px; }
+  .rate-close:hover { color: var(--text); border-color: var(--border-dark); }
+  .rate-body { display: flex; flex-direction: column; align-items: center; gap: 28px; max-width: 560px; width: 100%; padding: 0 24px; }
+  .rate-platform { font-size: 12px; color: var(--muted); background: var(--surface); padding: 4px 14px; border-radius: 20px; border: 1px solid var(--border); }
+  .rate-title { font-family: 'Fraunces', serif; font-size: clamp(24px, 4vw, 40px); font-weight: 800; text-align: center; line-height: 1.2; }
   .rate-meta { font-size: 13px; color: var(--muted); }
   .rate-stars { display: flex; gap: 10px; }
-  .rate-star { font-size: 52px; cursor: pointer; color: var(--border); transition: color .1s, transform .1s; line-height: 1; user-select: none; }
+  .rate-star { font-size: 52px; cursor: pointer; color: var(--border-dark); transition: color .1s, transform .1s; line-height: 1; user-select: none; }
   .rate-star:hover, .rate-star.hov { color: var(--yellow); transform: scale(1.15); }
-  .rate-star.hov ~ .rate-star { color: var(--border) !important; transform: scale(1) !important; }
+  .rate-star.hov ~ .rate-star { color: var(--border-dark) !important; transform: scale(1) !important; }
   .rate-actions { display: flex; gap: 12px; }
-  .rate-skip { background: none; border: 1px solid var(--border); color: var(--muted); padding: 10px 24px; border-radius: 10px; cursor: pointer; font-size: 14px; }
-  .rate-skip:hover { border-color: var(--muted); color: var(--text); }
-  .rate-done-msg { font-size: 22px; font-weight: 700; color: var(--green); text-align: center; }
+  .rate-skip { background: none; border: 1px solid var(--border); color: var(--muted); padding: 10px 24px; border-radius: 40px; cursor: pointer; font-size: 14px; }
+  .rate-skip:hover { border-color: var(--border-dark); color: var(--text); }
+  .rate-done-msg { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--green); text-align: center; }
   .rate-only-unrated { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-  .playtime-btn { width: 100%; padding: 18px 24px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font-size: 20px; font-weight: 700; cursor: pointer; transition: all .12s; text-align: left; }
-  .playtime-btn:hover { border-color: var(--accent); background: rgba(124,92,252,.12); transform: translateX(6px); }
+  .playtime-btn { width: 100%; padding: 18px 24px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; cursor: pointer; transition: all .12s; text-align: left; }
+  .playtime-btn:hover { border-color: var(--accent); background: var(--accent-light); transform: translateX(6px); }
+
+  /* ─── Toast ───────────────────────────────────────────────── */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 12px 22px; border-radius: 40px; font-size: 13px; font-weight: 500; z-index: 200; animation: slideIn .2s ease; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--red); }
+  @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* ─── Replay badge ────────────────────────────────────────── */
+  textarea.form-control { resize: vertical; min-height: 80px; }
+  .replay-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .replay-ok { background: rgba(42,157,92,.12); color: var(--green); }
+  .replay-soon { background: rgba(212,160,23,.12); color: var(--yellow); }
+  .replay-recent { background: rgba(201,64,64,.12); color: var(--red); }
+
+  /* ─── Scrollbar ───────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 3px; }
 </style>
 </head>
 <body>
 <div class="app">
   <!-- Navbar -->
   <header class="navbar">
-    <span class="logo">🎮 GameLog</span>
+    <div class="navbar-logo">
+      <div class="logo-icon">🎮</div>
+      <div class="logo-text">
+        <span class="logo-name">GameLog</span>
+        <span class="logo-sub">Sua Estante</span>
+      </div>
+    </div>
     <nav>
-      <button class="nav-btn active" onclick="switchPage('catalog',event)">Catálogo</button>
-      <button class="nav-btn" onclick="switchPage('backlog',event)">Backlog</button>
-      <button class="nav-btn" onclick="switchPage('wishlist',event)">Wishlist</button>
-      <button class="nav-btn" onclick="switchPage('recs',event)">Recomendações</button>
-      <button class="nav-btn" onclick="switchPage('profile',event)">Perfil & Stats</button>
+      <button class="nav-btn active" onclick="switchPage('catalog',event)">📚 Catálogo</button>
+      <button class="nav-btn" onclick="switchPage('backlog',event)">🎯 Backlog</button>
+      <button class="nav-btn" onclick="switchPage('wishlist',event)">💾 Wishlist</button>
+      <button class="nav-btn" onclick="switchPage('recs',event)">✨ Recomendações</button>
+      <button class="nav-btn" onclick="switchPage('profile',event)">👤 Perfil</button>
     </nav>
     <div class="navbar-right">
-      <button class="btn btn-secondary" onclick="openRateMode('stars')">⭐ Avaliar Jogos</button>
-      <button class="btn btn-secondary" onclick="openRateMode('playtime')">🕹 Quanto Joguei</button>
-      <button class="btn btn-primary" onclick="openModal()">+ Adicionar Jogo</button>
+      <button class="btn btn-secondary btn-sm" onclick="openRateMode('stars')">⭐ Avaliar</button>
+      <button class="btn btn-secondary btn-sm" onclick="openRateMode('playtime')">🕹 Playtime</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal()">+ Adicionar</button>
     </div>
   </header>
 
   <!-- Catalog -->
   <div id="page-catalog" class="page active">
+    <div class="page-header">
+      <div class="page-label">📚 Sua Coleção</div>
+      <h1>Catálogo</h1>
+      <p>Os jogos que já passaram pelas suas mãos — com notas, tempo e amor.</p>
+    </div>
     <div class="catalog-toolbar">
-      <input class="search-box" id="search" placeholder="Buscar jogo..." oninput="renderCatalog()">
+      <div class="search-wrap">
+        <input class="search-box" id="search" placeholder="Buscar na sua estante..." oninput="renderCatalog()">
+      </div>
       <select class="filter-select" id="filter-genre" onchange="renderCatalog()">
         <option value="">Todos os gêneros</option>
       </select>
@@ -272,8 +346,15 @@
 
   <!-- Backlog -->
   <div id="page-backlog" class="page">
+    <div class="page-header">
+      <div class="page-label">🎯 Próximos da Fila</div>
+      <h1>Backlog</h1>
+      <p>Promete jogar um por mês — você consegue. (Talvez.)</p>
+    </div>
     <div class="catalog-toolbar">
-      <input class="search-box" id="backlog-search" placeholder="Buscar no backlog..." oninput="debouncedBacklog()">
+      <div class="search-wrap">
+        <input class="search-box" id="backlog-search" placeholder="Buscar no backlog..." oninput="debouncedBacklog()">
+      </div>
       <select class="filter-select" id="backlog-genre" onchange="renderBacklog()">
         <option value="">Todos os gêneros</option>
       </select>
@@ -286,21 +367,29 @@
         <option value="title">A-Z</option>
         <option value="released">Lançamento</option>
       </select>
-      <span id="backlog-count" style="font-size:13px;color:var(--muted);white-space:nowrap"></span>
+      <span id="backlog-count" class="toolbar-count"></span>
     </div>
     <div class="catalog-grid" id="backlog-grid"></div>
   </div>
 
   <!-- Wishlist -->
   <div id="page-wishlist" class="page">
-    <div class="recs-header"><h2>💾 Wishlist</h2></div>
+    <div class="page-header">
+      <div class="page-label">💾 Lista de Desejos</div>
+      <h1>Wishlist</h1>
+      <p>A fila de espera para entrar na estante.</p>
+    </div>
     <div class="wishlist-body" id="wishlist-body"></div>
   </div>
 
   <!-- Recommendations -->
   <div id="page-recs" class="page">
+    <div class="page-header">
+      <div class="page-label">✨ Feito Pra Você</div>
+      <h1>Recomendações</h1>
+      <p>Sugestões com base na sua estante, gostos e raridades escondidas.</p>
+    </div>
     <div class="recs-header">
-      <h2>Recomendações</h2>
       <div class="recs-mode-tabs">
         <button class="recs-mode-btn active" id="recs-tab-genre" onclick="switchRecsMode('genre')">Por Gênero</button>
         <button class="recs-mode-btn" id="recs-tab-similar" onclick="switchRecsMode('similar')">Parecido com...</button>
@@ -316,6 +405,11 @@
 
   <!-- Profile -->
   <div id="page-profile" class="page">
+    <div class="page-header">
+      <div class="page-label">👤 Sua Conta</div>
+      <h1>Perfil & Stats</h1>
+      <p>Uma vida em jogos, em números.</p>
+    </div>
     <div class="profile-body" id="profile-body"></div>
   </div>
 </div>
@@ -541,6 +635,49 @@ function switchPage(name, ev) {
 }
 
 // ─── Catalog ─────────────────────────────────────────────────────────────────
+// ─── Card design helpers ──────────────────────────────────────────────────────
+const CARD_COLORS = ['#F4A261','#89C4E1','#E88080','#F4B89A','#8FBF9F','#B89BC8','#D4B480','#F0C06A'];
+function cardBgColor(id) { return CARD_COLORS[(id || 0) % CARD_COLORS.length]; }
+
+function cardEmoji(genres) {
+  const g = (genres || []).map(x => x.toLowerCase()).join(' ');
+  if (g.includes('soulslike')) return '⚔️';
+  if (g.includes('metroidvania')) return '🗺️';
+  if (g.includes('roguelite') || g.includes('roguelike')) return '🎲';
+  if (g.includes('horror')) return '👾';
+  if (g.includes('platformer') || g.includes('plataforma')) return '🎯';
+  if (g.includes('puzzle')) return '🧩';
+  if (g.includes('strategy') || g.includes('estratégia')) return '♟️';
+  if (g.includes('fighting') || g.includes('luta')) return '🥊';
+  if (g.includes('racing') || g.includes('corrida')) return '🏎️';
+  if (g.includes('sport') || g.includes('esporte')) return '⚽';
+  if (g.includes('visual novel')) return '📖';
+  if (g.includes('rpg') || g.includes('role')) return '🗡️';
+  if (g.includes('action')) return '🗡️';
+  if (g.includes('adventure') || g.includes('aventura')) return '🧭';
+  if (g.includes('indie')) return '🌿';
+  if (g.includes('shooter') || g.includes('fps') || g.includes('tps')) return '🎯';
+  if (g.includes('simulation') || g.includes('simulação')) return '🏙️';
+  return '🎮';
+}
+
+const PLAT_SHORT = {
+  'PlayStation 5':'PS5','PlayStation 4':'PS4','PlayStation 3':'PS3',
+  'Xbox Series X|S':'XSX','Xbox One':'XB1','Xbox 360':'X360',
+  'Nintendo Switch':'NSW','PC (Microsoft Windows)':'PC',
+  'Mac':'Mac','iOS':'iOS','Android':'And',
+};
+function platShort(p) { return PLAT_SHORT[p] || p; }
+
+function starsHTML(rating) {
+  if (!rating) return `<span style="font-size:12px;color:var(--muted2)">Ainda sem nota</span>`;
+  const half = Math.round(rating / 2);
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += `<span class="${i<=half?'star-filled':'star-empty'}">★</span>`;
+  return `<div class="card-stars">${s}<span class="rating-num">${rating}/10</span></div>`;
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function replayStatus(year) {
   if (!year) return null;
   const diff = new Date().getFullYear() - year;
@@ -551,10 +688,10 @@ function replayStatus(year) {
 
 function ratingColor(r) {
   if (!r) return 'var(--muted)';
-  if (r >= 9) return '#4ade80';
-  if (r >= 7) return '#a78bfa';
-  if (r >= 5) return '#facc15';
-  return '#f87171';
+  if (r >= 9) return 'var(--green)';
+  if (r >= 7) return 'var(--accent)';
+  if (r >= 5) return 'var(--yellow)';
+  return 'var(--red)';
 }
 
 function starsDisplay(r) {
@@ -599,35 +736,34 @@ function renderCatalog() {
   }
 
   grid.innerHTML = filtered.map(g => {
-    const replay = replayStatus(g.year);
-    const services = (g.availableOn || []).filter(a => DEFAULT_SERVICES.includes(a) || !DEFAULT_PLATFORMS.includes(a));
-    const platforms = (g.availableOn || []).filter(a => DEFAULT_PLATFORMS.includes(a));
-    const playtimeMap = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🏆 Muito', completed: '✅ Zerado' };
+    const playtimeMap = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🔥 Muito', completed: '🏆 Zerado' };
+    const allPlats = [g.platformPlayed, ...(g.availableOn||[])].filter(p => p && DEFAULT_PLATFORMS.includes(p));
+    const uniquePlats = [...new Set(allPlats)].slice(0, 3);
+    const platBadges = uniquePlats.map(p => `<span class="plat-badge">${esc(platShort(p))}</span>`).join('');
+    const subgenreKeywords = ['Soulslike','Metroidvania','Roguelite','Roguelike'];
+    const mainGenres = (g.genres||[]).filter(gn => !subgenreKeywords.includes(gn));
+    const subgenres = (g.genres||[]).filter(gn => subgenreKeywords.includes(gn));
+    const bgColor = cardBgColor(g.id);
     return `<div class="game-card">
-      <div class="card-header">
-        <span class="game-title">${esc(g.title)}</span>
-        <span class="game-rating" style="color:${ratingColor(g.rating)}">${starsDisplay(g.rating)}</span>
+      <div class="card-cover" style="background:${bgColor}">
+        <div class="card-badges-top">
+          <div class="card-plats">${platBadges}</div>
+          ${g.playtime ? `<span class="playtime-badge">${playtimeMap[g.playtime]}</span>` : ''}
+        </div>
+        <div class="card-cover-emoji">${cardEmoji(g.genres)}</div>
       </div>
-      <div class="tags">
-        ${g.played === 'yes' ? '<span class="tag played">✅ Jogado</span>' : ''}
-        ${(g.genres||[]).map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
-      </div>
-      <div class="tags">
-        ${g.platformPlayed ? `<span class="tag platform">🎮 ${esc(g.platformPlayed)}</span>` : ''}
-        ${platforms.map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
-        ${services.map(s => `<span class="tag service">${esc(s)}</span>`).join('')}
-      </div>
-      <div class="card-meta">
-        ${g.year ? `<span>📅 ${g.year}</span>` : ''}
-        ${g.playtime ? `<span>${playtimeMap[g.playtime]}</span>` : ''}
-        ${g.estimated_hours ? `<span title="Tempo estimado de jogo">⏱ ~${g.estimated_hours}h</span>` : g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
-        ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
-      </div>
-      ${replay ? `<div><span class="replay-badge ${replay.cls}">${replay.label}</span></div>` : ''}
-      ${g.notes ? `<div style="font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:10px">${esc(g.notes)}</div>` : ''}
-      <div class="card-actions">
-        <button class="btn btn-secondary btn-sm" onclick="editGame(${g.id})">Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteGame(${g.id})">Remover</button>
+      <div class="card-body">
+        <div class="game-title">${esc(g.title)}</div>
+        ${g.year ? `<div class="card-meta-line">${g.year}</div>` : ''}
+        ${starsHTML(g.rating)}
+        ${mainGenres.length || subgenres.length ? `<div class="card-genres">
+          ${mainGenres.slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
+          ${subgenres.map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
+        </div>` : ''}
+        <div class="card-actions">
+          <button class="btn btn-secondary btn-sm" onclick="editGame(${g.id})">✏️ Editar</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteGame(${g.id})">Remover</button>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -1156,25 +1292,23 @@ function runRecs() {
 
   body.innerHTML = top.map(({ game: g, signals, extra }, i) => {
     const inWl = wl.includes(g.igdb_id);
-    const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : 'var(--yellow)';
     const chips = buildSignalChips(g, signals, profile, extra);
+    const bgColor = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
+    const plats = (g.platforms||[]).slice(0,3).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('');
     return `<div class="rec-card">
       <div class="rec-rank">#${i+1}</div>
+      <div class="rec-icon" style="background:${bgColor}">${cardEmoji([...g.genres||[], ...g.subgenres||[]])}</div>
       <div class="rec-info">
         <h4>${esc(g.title)}</h4>
-        <div class="tags">
-          ${(g.genres||[]).map(gn=>`<span class="tag genre">${esc(gn)}</span>`).join('')}
-          ${(g.subgenres||[]).map(s=>`<span class="tag subgenre">${esc(s)}</span>`).join('')}
-        </div>
-        <div class="card-meta" style="margin-top:6px">
-          ${g.year ? `<span>📅 ${g.year}</span>` : ''}
-          ${g.igdb_rating ? `<span style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
-          ${(g.platforms||[]).slice(0,3).map(p=>`<span>🎮 ${esc(p)}</span>`).join('')}
+        <div class="rec-plats">${plats}</div>
+        <div class="card-genres">
+          ${(g.genres||[]).slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
+          ${(g.subgenres||[]).map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
         </div>
         <div class="signal-bar">${chips}</div>
       </div>
       <div class="rec-actions">
-        <button class="btn btn-secondary btn-sm" style="${inWl?'color:var(--accent2);border-color:var(--accent)':''}"
+        <button class="btn btn-secondary btn-sm" style="${inWl?'color:var(--accent);border-color:var(--accent)':''}"
           onclick="toggleWishlist(${g.igdb_id}, this)">
           ${inWl ? '💾 Na WL' : '+ Wishlist'}
         </button>
@@ -1198,7 +1332,7 @@ function toggleWishlist(igdbId, btn) {
   if (idx === -1) {
     wl.push(igdbId);
     btn.textContent = '💾 Na WL';
-    btn.style.color = 'var(--accent2)';
+    btn.style.color = 'var(--accent)';
     btn.style.borderColor = 'var(--accent)';
     showToast('Adicionado à Wishlist', 'success');
   } else {
@@ -1224,27 +1358,25 @@ function renderWishlist() {
   const games = wl.map(id => _backlog.find(g => g.igdb_id === id) || { igdb_id: id, _missing: true, title: `Jogo #${id}` });
 
   body.innerHTML = games.map(g => {
-    if (g._missing) return `<div class="rec-card" style="opacity:.5">
-      <div class="rec-info"><h4>${esc(g.title)}</h4><div style="color:var(--muted);font-size:13px">Não encontrado no backlog atual</div></div>
-      <div class="rec-actions"><button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button></div>
+    if (g._missing) return `<div class="wishlist-item" style="opacity:.5">
+      <div class="wishlist-item-info"><div class="wishlist-item-title">${esc(g.title)}</div><div class="wishlist-item-sub">Não encontrado no backlog atual</div></div>
+      <div class="wishlist-item-actions"><button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button></div>
     </div>`;
-    const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : 'var(--yellow)';
-    return `<div class="rec-card">
-      <div class="rec-info">
-        <h4>${esc(g.title)}</h4>
-        <div class="tags">
-          ${(g.genres||[]).map(gn=>`<span class="tag genre">${esc(gn)}</span>`).join('')}
-          ${(g.subgenres||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}
-        </div>
-        <div class="card-meta" style="margin-top:6px">
-          ${g.year ? `<span>📅 ${g.year}</span>` : ''}
-          ${g.igdb_rating ? `<span style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
-          ${(g.platforms||[]).slice(0,3).map(p=>`<span>🎮 ${esc(p)}</span>`).join('')}
+    const bgColor = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
+    const allCats = [...(g.genres||[]), ...(g.subgenres||[])];
+    return `<div class="wishlist-item">
+      <div class="wishlist-item-icon" style="background:${bgColor}">${cardEmoji(g.genres)}</div>
+      <div class="wishlist-item-info">
+        <div class="wishlist-item-title">${esc(g.title)}</div>
+        <div class="wishlist-item-sub">${[g.year, g.igdb_rating ? `🎯 ${g.igdb_rating}` : ''].filter(Boolean).join(' · ')}</div>
+        <div class="wishlist-item-genres">
+          ${allCats.slice(0,4).map(c=>`<span class="genre-chip">${esc(c)}</span>`).join('')}
+          ${(g.platforms||[]).slice(0,2).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('')}
         </div>
       </div>
-      <div class="rec-actions">
+      <div class="wishlist-item-actions">
         <button class="btn btn-primary btn-sm" onclick="startPlayingWishlist(${g.igdb_id})">▶ Comecei</button>
-        <button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button>
+        <button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})" style="padding:6px 10px">✕</button>
       </div>
     </div>`;
   }).join('');
@@ -1532,7 +1664,7 @@ function showRateCurrent() {
     const cur = g.playtime;
     document.querySelectorAll('.playtime-btn').forEach(b => {
       b.style.borderColor = b.dataset.v === cur ? 'var(--accent)' : 'var(--border)';
-      b.style.background  = b.dataset.v === cur ? 'rgba(124,92,252,.15)' : 'var(--surface)';
+      b.style.background  = b.dataset.v === cur ? 'var(--accent-light)' : 'var(--surface)';
     });
   }
 }
@@ -1627,31 +1759,35 @@ function backlogCategories(g) {
 }
 
 function backlogCard(g) {
-  const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : g.igdb_rating >= 60 ? 'var(--yellow)' : 'var(--muted)';
   const cats = backlogCategories(g);
+  const mainCats = cats.filter(c => !['Soulslike','Metroidvania','Roguelite','Roguelike'].includes(c));
+  const subCats  = cats.filter(c =>  ['Soulslike','Metroidvania','Roguelite','Roguelike'].includes(c));
   const inWl = loadWishlist().includes(g.igdb_id);
+  const plats = (g.platforms || []).slice(0, 3);
+  const bgColor = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
   return `<div class="game-card" id="bcard-${g.igdb_id}">
-    <div class="card-header">
-      <span class="game-title">${esc(g.title)}</span>
-      ${g.igdb_rating ? `<span class="game-rating" style="color:${igdbColor}">🎯 ${g.igdb_rating}</span>` : ''}
+    <div class="card-cover" style="background:${bgColor}">
+      <div class="card-badges-top">
+        <div class="card-plats">${plats.map(p=>`<span class="plat-badge">${esc(platShort(p))}</span>`).join('')}</div>
+        ${g.igdb_rating ? `<span class="playtime-badge">🎯 ${g.igdb_rating}</span>` : ''}
+      </div>
+      <div class="card-cover-emoji">${cardEmoji(cats)}</div>
     </div>
-    <div class="tags">
-      ${cats.map(gn => `<span class="tag genre">${esc(gn)}</span>`).join('')}
-    </div>
-    <div class="tags">
-      ${(g.platforms || []).map(p => `<span class="tag platform">${esc(p)}</span>`).join('')}
-    </div>
-    <div class="card-meta">
-      ${g.year ? `<span>📅 ${g.year}</span>` : ''}
-      ${g.community_rating ? `<span title="Rating da comunidade (IGDB)">👥 ${g.community_rating}</span>` : ''}
-    </div>
-    <div class="card-actions">
-      <button class="btn btn-secondary btn-sm" style="color:var(--green);border-color:rgba(74,222,128,.3)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Já joguei</button>
-      <button class="btn btn-secondary btn-sm ${inWl ? 'wl-active' : ''}" id="wlbtn-${g.igdb_id}"
-        style="${inWl ? 'color:var(--accent2);border-color:var(--accent)' : ''}"
-        onclick="toggleBacklogWishlist(${g.igdb_id}, this)">
-        ${inWl ? '💾 Wishlist' : '+ Wishlist'}
-      </button>
+    <div class="card-body">
+      <div class="game-title">${esc(g.title)}</div>
+      ${g.year ? `<div class="card-meta-line">${g.year}</div>` : ''}
+      ${mainCats.length || subCats.length ? `<div class="card-genres">
+        ${mainCats.slice(0,2).map(c=>`<span class="genre-chip">${esc(c)}</span>`).join('')}
+        ${subCats.map(c=>`<span class="genre-chip subgenre">★ ${esc(c)}</span>`).join('')}
+      </div>` : ''}
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" style="color:var(--green)" onclick="backlogMarkPlayed(${g.igdb_id})">✅ Joguei</button>
+        <button class="btn btn-secondary btn-sm ${inWl ? 'wl-active' : ''}" id="wlbtn-${g.igdb_id}"
+          style="${inWl ? 'color:var(--accent);border-color:var(--accent)' : ''}"
+          onclick="toggleBacklogWishlist(${g.igdb_id}, this)">
+          ${inWl ? '💾 WL' : '+ WL'}
+        </button>
+      </div>
     </div>
   </div>`;
 }
@@ -1751,8 +1887,8 @@ function toggleBacklogWishlist(igdbId, btn) {
   const idx = wl.indexOf(igdbId);
   if (idx === -1) {
     wl.push(igdbId);
-    btn.textContent = '💾 Wishlist';
-    btn.style.color = 'var(--accent2)';
+    btn.textContent = '💾 WL';
+    btn.style.color = 'var(--accent)';
     btn.style.borderColor = 'var(--accent)';
     showToast('Adicionado à Wishlist', 'success');
   } else {
