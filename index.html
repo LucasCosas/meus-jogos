@@ -504,7 +504,7 @@
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const DEFAULT_GENRES = ['RPG','Action RPG','FPS','TPS','Aventura','Plataforma','Estratégia','Simulação','Esportes','Luta','Corrida','Horror','Puzzle','Metroidvania','Roguelike','MOBA','Battle Royale','Mundo Aberto','Soulslike','Visual Novel'];
-const DEFAULT_PLATFORMS = ['PS5','PS4','Xbox Series','Xbox One','Nintendo Switch','PC','Mobile'];
+const DEFAULT_PLATFORMS = ['PlayStation 5','PlayStation 4','PlayStation 3','Xbox Series X|S','Xbox One','Xbox 360','Nintendo Switch','PC (Microsoft Windows)','Mac','iOS','Android'];
 const DEFAULT_SERVICES = ['Game Pass','PS Plus','EA Play','Nintendo Online','Prime Gaming','GeForce Now'];
 
 let _games = [];
@@ -635,28 +635,9 @@ function renderCatalog() {
 
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// Resolve nomes abreviados do perfil para nomes canônicos do backlog (IGDB)
-const PROFILE_PLATFORM_MAP = {
-  'PS5':          'PlayStation 5',
-  'PS4':          'PlayStation 4',
-  'PS3':          'PlayStation 3',
-  'PS2':          'PlayStation 2',
-  'PS1':          'PlayStation',
-  'Xbox Series':  'Xbox Series X|S',
-  'Xbox One':     'Xbox One',
-  'Xbox 360':     'Xbox 360',
-  'PC':           'PC (Microsoft Windows)',
-  'Switch':       'Nintendo Switch',
-  'Mac':          'Mac',
-  'iOS':          'iOS',
-  'Android':      'Android',
-};
-function resolveProfilePlatform(p) { return PROFILE_PLATFORM_MAP[p] || p; }
-
 // Gera HTML de opções de plataforma colocando as do usuário primeiro
 function buildPlatformOptions(allPlats, userPlatforms, selected='') {
-  // Resolve nomes abreviados do perfil para os nomes exatos do backlog
-  const mine = userPlatforms.map(resolveProfilePlatform).filter(p => allPlats.includes(p));
+  const mine = userPlatforms.filter(p => allPlats.includes(p));
   const rest  = allPlats.filter(p => !mine.includes(p));
   const opt = p => `<option value="${esc(p)}"${p===selected?' selected':''}>${esc(p)}</option>`;
   let html = `<option value="">Todas as plataformas</option>`;
@@ -906,8 +887,7 @@ function platformFit(game, userPlatforms) {
   if (!userPlatforms.length) return 0.5; // neutro se não configurado
   const gamePlats = game.platforms || [];
   if (!gamePlats.length) return 0.5;
-  const resolved = userPlatforms.map(resolveProfilePlatform);
-  return gamePlats.some(p => resolved.includes(p)) ? 1.0 : 0.0;
+  return gamePlats.some(p => userPlatforms.includes(p)) ? 1.0 : 0.0;
 }
 
 // ── Unified scorer ────────────────────────────────────────────────────────────
