@@ -1113,8 +1113,13 @@ function runRecs() {
 
   } else {
     if (!_recsRefGame) return;
-    const refGenres = _recsRefGame.genres    || [];
-    const refSubs   = _recsRefGame.subgenres || [];
+    // Normaliza gêneros do jogo de referência para nomes IGDB
+    // (necessário quando o ref vem do catálogo do usuário com nomes próprios)
+    const refGenres = [...new Set(((_recsRefGame.genres || []).map(normalizeGenre)))];
+    // Subgêneros: usa os do backlog + mapeia gêneros do catálogo para subgêneros
+    const refSubsFromGenres = (_recsRefGame.genres || []).map(normalizeSubgenre).filter(Boolean);
+    const refSubs = [...new Set([...(_recsRefGame.subgenres || []), ...refSubsFromGenres])];
+
     candidates = candidates.filter(g => g.igdb_id !== _recsRefGame.igdb_id);
     candidates.forEach(game => {
       const genSim = jaccard(refGenres, game.genres    || []);
