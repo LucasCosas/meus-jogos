@@ -584,13 +584,13 @@ function renderCatalog() {
   // Update filter dropdowns
   const allGenres = [...new Set(games.flatMap(g => g.genres || []))].sort();
   const allPlatforms = [...new Set(games.flatMap(g => [g.platformPlayed, ...(g.availableOn || [])]).filter(Boolean))].sort();
-  ['filter-genre','filter-platform'].forEach(id => {
-    const sel = document.getElementById(id);
-    const cur = sel.value;
-    const arr = id === 'filter-genre' ? allGenres : allPlatforms;
-    const placeholder = id === 'filter-genre' ? 'Todos os gêneros' : 'Todas as plataformas';
-    sel.innerHTML = `<option value="">${placeholder}</option>` + arr.map(v => `<option value="${v}" ${v===cur?'selected':''}>${v}</option>`).join('');
-  });
+  const genSel = document.getElementById('filter-genre');
+  const genCur = genSel.value;
+  genSel.innerHTML = `<option value="">Todos os gêneros</option>` + allGenres.map(v => `<option value="${v}"${v===genCur?' selected':''}>${v}</option>`).join('');
+
+  const platSel = document.getElementById('filter-platform');
+  const platCur = platSel.value;
+  platSel.innerHTML = buildPlatformOptions(allPlatforms, _profile.platforms || [], platCur);
 
   const grid = document.getElementById('catalog-grid');
   if (!filtered.length) {
@@ -634,6 +634,20 @@ function renderCatalog() {
 }
 
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Gera HTML de opções de plataforma colocando as do usuário primeiro
+function buildPlatformOptions(allPlats, userPlatforms, selected='') {
+  const mine = userPlatforms.filter(p => allPlats.includes(p));
+  const rest  = allPlats.filter(p => !mine.includes(p));
+  const opt = p => `<option value="${esc(p)}"${p===selected?' selected':''}>${esc(p)}</option>`;
+  let html = `<option value="">Todas as plataformas</option>`;
+  if (mine.length) {
+    html += `<optgroup label="Minhas plataformas">${mine.map(opt).join('')}</optgroup>`;
+    html += `<optgroup label="──────────────"></optgroup>`;
+  }
+  html += rest.map(opt).join('');
+  return html;
+}
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
 let editingId = null;
@@ -1005,8 +1019,7 @@ function switchRecsMode(mode) {
         <button class="behavior-btn${_recsBehavior==='top_rated'?' active':''}"    data-bv="top_rated"    onclick="setRecsBehavior('top_rated')">🏆 Top Rated</button>
       </div>
       <select class="filter-select" id="recs-filter-platform">
-        <option value="">Todas as plataformas</option>
-        ${allPlats.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+        ${buildPlatformOptions(allPlats, _profile.platforms || [])}
       </select>
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
         <input type="checkbox" id="recs-exclude-wl" checked style="accent-color:var(--accent)">
@@ -1691,7 +1704,7 @@ function renderBacklog() {
     document.getElementById('backlog-genre').innerHTML =
       '<option value="">Todos os gêneros / tags</option>' + allCategories.map(v => `<option value="${v}">${v}</option>`).join('');
     document.getElementById('backlog-platform').innerHTML =
-      '<option value="">Todas as plataformas</option>' + allPlatforms.map(v => `<option value="${v}">${v}</option>`).join('');
+      buildPlatformOptions(allPlatforms, _profile.platforms || []);
     _backlogDropdownsBuilt = true;
   }
   // Restaura seleção dos dropdowns após rebuild
