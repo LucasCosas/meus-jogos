@@ -8433,8 +8433,14 @@
   "profile": {
     "platforms": [
       "PlayStation 5",
-      "Nintendo Switch"
+      "Nintendo Switch",
+      "Mac",
+      "iOS"
     ],
-    "subscriptions": []
+    "subscriptions": [
+      "Game Pass",
+      "PS Plus",
+      "EA Play"
+    ]
   }
 }
