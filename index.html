@@ -84,6 +84,22 @@
   .modal-close:hover { color: var(--text); background: var(--surface2); }
   .modal-body { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 16px; }
 
+  /* Hours wizard */
+  .hours-wizard { max-width: 680px; }
+  .wizard-progress { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .wizard-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 20px; }
+  .wizard-progress-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s; }
+  .wizard-game { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .wizard-game-title { font-weight: 600; font-size: 15px; }
+  .wizard-game-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .wizard-hours-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .wizard-hour-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .15s; }
+  .wizard-hour-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .wizard-hour-btn.selected { background: rgba(124,92,252,.2); border-color: var(--accent); color: var(--accent2); }
+  .wizard-hour-btn.skip { color: var(--muted); font-weight: 400; }
+  .wizard-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; }
+  .wizard-counter { font-size: 13px; color: var(--muted); }
+
   /* Form */
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group label { font-size: 13px; font-weight: 600; color: var(--muted); }
@@ -410,6 +426,28 @@
       <div style="display:flex;justify-content:flex-end;gap:10px">
         <button class="btn btn-secondary" onclick="document.getElementById('modal-profile').classList.remove('open')">Cancelar</button>
         <button class="btn btn-primary" onclick="saveProfileSettings()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hours Wizard -->
+<div class="modal-overlay" id="modal-hours-wizard">
+  <div class="modal hours-wizard">
+    <div class="modal-header">
+      <h2>⏱ Quanto você jogou?</h2>
+      <button class="modal-close" onclick="closeHoursWizard()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted)">Esses jogos não têm estimativa de tempo. Selecione uma opção para cada um — aparece só uma vez!</p>
+      <div class="wizard-progress-bar"><div class="wizard-progress-bar-fill" id="wizard-bar"></div></div>
+      <div id="wizard-games-list" style="display:flex;flex-direction:column;gap:10px;max-height:55vh;overflow-y:auto;padding-right:4px"></div>
+      <div class="wizard-footer">
+        <span class="wizard-counter" id="wizard-counter"></span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary" onclick="closeHoursWizard()">Depois</button>
+          <button class="btn btn-primary" onclick="saveHoursWizard()">Salvar seleções</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1295,8 +1333,93 @@ async function init() {
     _backlog = backlogRes.value;
 
   renderCatalog();
+
+  // Mostra wizard de horas se nunca foi completado e há jogos sem estimativa
+  if (!localStorage.getItem('gamelog_hours_wizard_done')) {
+    const missing = _games.filter(g => !g.estimated_hours);
+    if (missing.length) setTimeout(() => openHoursWizard(missing), 800);
+  }
 }
 init();
+
+// ─── Hours Wizard ─────────────────────────────────────────────────────────────
+const HOUR_OPTIONS = [1, 5, 10, 25, 50, 100, 300];
+let _wizardSelections = {}; // { game_id: hours }
+let _wizardGames = [];
+
+function openHoursWizard(games) {
+  _wizardGames = games;
+  _wizardSelections = {};
+
+  const playtimeLabel = { little: '🕹 Pouco', medium: '🎮 Médio', much: '🏆 Muito', completed: '✅ Zerado' };
+  const list = document.getElementById('wizard-games-list');
+
+  list.innerHTML = games.map(g => `
+    <div class="wizard-game" id="wizard-game-${g.id}">
+      <div class="wizard-game-title">${esc(g.title)}</div>
+      <div class="wizard-game-meta">
+        ${g.playtime ? `<span class="tag">${playtimeLabel[g.playtime] || g.playtime}</span>` : ''}
+        ${g.platformPlayed ? `<span class="tag platform">🎮 ${esc(g.platformPlayed)}</span>` : ''}
+      </div>
+      <div class="wizard-hours-btns">
+        ${HOUR_OPTIONS.map(h => `
+          <button class="wizard-hour-btn" onclick="selectWizardHours(${g.id}, ${h}, this)">~${h}h</button>
+        `).join('')}
+        <button class="wizard-hour-btn skip" onclick="selectWizardHours(${g.id}, null, this)">Pular</button>
+      </div>
+    </div>
+  `).join('');
+
+  updateWizardCounter();
+  document.getElementById('modal-hours-wizard').classList.add('open');
+}
+
+function selectWizardHours(gameId, hours, btn) {
+  // Desmarca botões anteriores do mesmo jogo
+  const card = document.getElementById(`wizard-game-${gameId}`);
+  card.querySelectorAll('.wizard-hour-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  if (hours === null) {
+    delete _wizardSelections[gameId];
+  } else {
+    _wizardSelections[gameId] = hours;
+  }
+  updateWizardCounter();
+}
+
+function updateWizardCounter() {
+  const total = _wizardGames.length;
+  const selected = Object.keys(_wizardSelections).length;
+  const pct = Math.round(selected / total * 100);
+  document.getElementById('wizard-counter').textContent = `${selected} de ${total} preenchidos`;
+  document.getElementById('wizard-bar').style.width = pct + '%';
+}
+
+async function saveHoursWizard() {
+  const count = Object.keys(_wizardSelections).length;
+  if (!count) { closeHoursWizard(); return; }
+
+  const games = loadGames();
+  games.forEach(g => {
+    if (_wizardSelections[g.id] !== undefined) {
+      g.estimated_hours = _wizardSelections[g.id];
+    }
+  });
+  await saveGames(games);
+  localStorage.setItem('gamelog_hours_wizard_done', '1');
+  closeHoursWizard();
+  showToast(`${count} jogos atualizados com tempo estimado!`, 'success');
+  renderCatalog();
+  renderProfile();
+}
+
+function closeHoursWizard() {
+  document.getElementById('modal-hours-wizard').classList.remove('open');
+  // Se fechou sem salvar, marca como feito só se já havia selecionado algo antes
+  // (não força a fechar sem terminar)
+  localStorage.setItem('gamelog_hours_wizard_done', '1');
+}
 </script>
 </body>
 </html>
