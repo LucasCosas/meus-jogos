@@ -1154,7 +1154,15 @@ function renderBacklog() {
     return true;
   });
 
-  if (sort === 'igdb_rating') _backlogFiltered.sort((a, b) => (b.igdb_rating || 0) - (a.igdb_rating || 0));
+  if (sort === 'igdb_rating') {
+    // Bayesian weighted score: penaliza notas com poucos reviews
+    // score = (rating × count + prior_mean × prior_count) / (count + prior_count)
+    const C = 3, m = 75;
+    const score = g => g.igdb_rating
+      ? (g.igdb_rating * (g.igdb_rating_count || 1) + m * C) / ((g.igdb_rating_count || 1) + C)
+      : 0;
+    _backlogFiltered.sort((a, b) => score(b) - score(a));
+  }
   else if (sort === 'metacritic') _backlogFiltered.sort((a, b) => (b.metacritic || 0) - (a.metacritic || 0));
   else if (sort === 'title')    _backlogFiltered.sort((a, b) => a.title.localeCompare(b.title));
   else if (sort === 'released') _backlogFiltered.sort((a, b) => (b.year || 0) - (a.year || 0));
