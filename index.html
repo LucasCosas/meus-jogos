@@ -221,11 +221,11 @@
   <header class="navbar">
     <span class="logo">🎮 GameLog</span>
     <nav>
-      <button class="nav-btn active" onclick="switchPage('catalog')">Catálogo</button>
-      <button class="nav-btn" onclick="switchPage('backlog')">Backlog</button>
-      <button class="nav-btn" onclick="switchPage('wishlist')">Wishlist</button>
-      <button class="nav-btn" onclick="switchPage('recs')">Recomendações</button>
-      <button class="nav-btn" onclick="switchPage('profile')">Perfil & Stats</button>
+      <button class="nav-btn active" onclick="switchPage('catalog',event)">Catálogo</button>
+      <button class="nav-btn" onclick="switchPage('backlog',event)">Backlog</button>
+      <button class="nav-btn" onclick="switchPage('wishlist',event)">Wishlist</button>
+      <button class="nav-btn" onclick="switchPage('recs',event)">Recomendações</button>
+      <button class="nav-btn" onclick="switchPage('profile',event)">Perfil & Stats</button>
     </nav>
     <div class="navbar-right">
       <button class="btn btn-secondary" onclick="openRateMode('stars')">⭐ Avaliar Jogos</button>
@@ -512,11 +512,11 @@ function _persistToDisk() {
 }
 
 // ─── Page switching ───────────────────────────────────────────────────────────
-function switchPage(name) {
+function switchPage(name, ev) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  event.target.classList.add('active');
+  if (ev && ev.currentTarget) ev.currentTarget.classList.add('active');
   if (name === 'backlog') renderBacklog();
   if (name === 'recs') { switchRecsMode(_recsMode || 'genre'); }
   if (name === 'wishlist') renderWishlist();
@@ -605,7 +605,6 @@ function renderCatalog() {
         ${g.playtime ? `<span>${playtimeMap[g.playtime]}</span>` : ''}
         ${g.estimated_hours ? `<span title="Tempo estimado de jogo">⏱ ~${g.estimated_hours}h</span>` : g.hours ? `<span>⏱ ~${g.hours}h</span>` : ''}
         ${g.igdb_rating ? `<span title="Média de críticas (IGDB)">🎯 ${g.igdb_rating}</span>` : ''}
-        ${g.rawg_id ? `<span style="color:var(--border)">RAWG #${g.rawg_id}</span>` : ''}
       </div>
       ${replay ? `<div><span class="replay-badge ${replay.cls}">${replay.label}</span></div>` : ''}
       ${g.notes ? `<div style="font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--border);padding-top:10px">${esc(g.notes)}</div>` : ''}
@@ -635,9 +634,12 @@ function buildGenreChips(selected=[]) {
   const allGenres = [...new Set([...DEFAULT_GENRES, ...profile.customGenres||[], ...selected])].sort();
   selectedGenres = new Set(selected);
   document.getElementById('genres-chips').innerHTML = allGenres.map((g,i) =>
-    `<input type="checkbox" id="gc${i}" value="${g}" ${selectedGenres.has(g)?'checked':''} onchange="toggleGenre('${g}',this.checked)">
-     <label for="gc${i}">${g}</label>`
+    `<input type="checkbox" id="gc${i}" value="${esc(g)}" data-genre="${esc(g)}" ${selectedGenres.has(g)?'checked':''}>
+     <label for="gc${i}">${esc(g)}</label>`
   ).join('');
+  document.getElementById('genres-chips').querySelectorAll('input[type=checkbox]').forEach(el => {
+    el.addEventListener('change', function() { toggleGenre(this.dataset.genre, this.checked); });
+  });
 }
 
 function toggleGenre(g, checked) { if (checked) selectedGenres.add(g); else selectedGenres.delete(g); }
@@ -690,7 +692,7 @@ function openModal(game=null) {
     document.getElementById('modal-title').textContent = 'Editar Jogo';
     document.getElementById('game-title').value = game.title || '';
     document.getElementById('game-year').value = game.year || '';
-    document.getElementById('game-hours').value = game.hours || '';
+    document.getElementById('game-hours').value = game.estimated_hours || game.hours || '';
     document.getElementById('game-notes').value = game.notes || '';
     document.getElementById('game-playtime').value = game.playtime || '';
     document.getElementById('game-played').value = game.played || '';
@@ -721,11 +723,13 @@ function saveGame() {
   const prev = loadGames().find(g => g.id === editingId) || {};
   const game = {
     ...prev,
+    igdb_id: prev.igdb_id || window._pendingIgdbId || null,
     id: editingId || Date.now(),
     title,
     rating: ratingEl ? parseInt(ratingEl.value) : (prev.rating || null),
     year: parseInt(document.getElementById('game-year').value) || null,
-    hours: parseInt(document.getElementById('game-hours').value) || null,
+    estimated_hours: parseInt(document.getElementById('game-hours').value) || prev.estimated_hours || null,
+    hours: prev.hours || null,
     genres: [...selectedGenres],
     platformPlayed: document.getElementById('game-platform-played').value || null,
     playtime: document.getElementById('game-playtime').value || null,
@@ -745,6 +749,7 @@ function saveGame() {
     showToast('Jogo adicionado!', 'success');
   }
   saveGames(games);
+  window._pendingIgdbId = null;
   closeModal();
   renderCatalog();
 }
@@ -1024,9 +1029,13 @@ function renderWishlist() {
     return;
   }
 
-  const games = wl.map(id => _backlog.find(g => g.igdb_id === id)).filter(Boolean);
+  const games = wl.map(id => _backlog.find(g => g.igdb_id === id) || { igdb_id: id, _missing: true, title: `Jogo #${id}` });
 
   body.innerHTML = games.map(g => {
+    if (g._missing) return `<div class="rec-card" style="opacity:.5">
+      <div class="rec-info"><h4>${esc(g.title)}</h4><div style="color:var(--muted);font-size:13px">Não encontrado no backlog atual</div></div>
+      <div class="rec-actions"><button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button></div>
+    </div>`;
     const igdbColor = g.igdb_rating >= 90 ? 'var(--green)' : g.igdb_rating >= 75 ? 'var(--accent2)' : 'var(--yellow)';
     return `<div class="rec-card">
       <div class="rec-info">
@@ -1064,9 +1073,13 @@ function startPlayingWishlist(igdbId) {
   setTimeout(() => {
     document.getElementById('modal-title').textContent = 'Adicionar Jogo';
     document.getElementById('game-title').value = g.title;
-    // Pré-preenche gêneros
-    const genreInput = document.getElementById('game-genres');
-    if (genreInput) genreInput.value = (g.genres||[]).join(', ');
+    document.getElementById('game-year').value = g.year || '';
+    buildGenreChips(g.genres || []);
+    if (g.igdb_id) {
+      const prev = loadGames().find(x => x.id === editingId) || {};
+      // store igdb_id for new game
+      window._pendingIgdbId = g.igdb_id;
+    }
   }, 50);
 }
 
@@ -1078,7 +1091,7 @@ function renderProfile() {
 
   const ratedGames = games.filter(g => g.rating);
   const avgRating = ratedGames.length ? (ratedGames.reduce((s,g)=>s+g.rating,0)/ratedGames.length).toFixed(1) : '—';
-  const zeroed = games.filter(g=>g.completed==='yes').length;
+  const zeroed = games.filter(g=>g.completed==='yes' || g.playtime==='completed').length;
   const allGenres = [...new Set(games.flatMap(g=>g.genres||[]))];
   const totalEstHours = Math.round(games.reduce((s,g)=>s+(g.estimated_hours||0),0));
   const totalDays = (totalEstHours / 24).toFixed(0);
@@ -1243,6 +1256,15 @@ document.addEventListener('keydown', e => {
 document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
 document.getElementById('modal-profile').addEventListener('click', e => { if (e.target.id === 'modal-profile') document.getElementById('modal-profile').classList.remove('open'); });
 
+// ─── Close autocomplete on outside click ─────────────────────────────────────
+document.addEventListener('click', e => {
+  const input = document.getElementById('recs-similar-input');
+  const list  = document.getElementById('recs-ac-list');
+  if (list && !list.contains(e.target) && e.target !== input) {
+    list.style.display = 'none';
+  }
+});
+
 // ─── Quick Rate Mode ──────────────────────────────────────────────────────────
 let _rateQueue = [];
 let _rateIdx = 0;
@@ -1299,7 +1321,7 @@ function showRateCurrent() {
   const g = _rateQueue[_rateIdx];
   const total = _rateQueue.length;
   document.getElementById('rate-title').textContent    = g.title;
-  document.getElementById('rate-platform').textContent = g.platformPlayed || 'PSN';
+  document.getElementById('rate-platform').textContent = g.platformPlayed || '';
   document.getElementById('rate-counter').textContent  = `${_rateIdx + 1} / ${total}`;
   document.getElementById('rate-progress').style.width = Math.round((_rateIdx / total) * 100) + '%';
 
@@ -1529,23 +1551,20 @@ function renderBacklog() {
 function backlogMarkPlayed(igdbId) {
   const g = _backlog.find(x => x.igdb_id === igdbId);
   if (!g) return;
-  const games = loadGames();
-  games.push({
-    id:          Date.now(),
-    title:       g.title,
-    played:      'yes',
-    rating:      null,
-    year:        g.year || null,
-    genres:      g.genres || [],
-    platformPlayed: null,
-    availableOn: g.platforms || [],
-    notes:       '',
-    igdb_id:     g.igdb_id,
-    igdb_rating: g.igdb_rating || null,
-  });
-  saveGames(games);
-  showToast(`${g.title} adicionado ao catálogo!`, 'success');
-  renderBacklog();
+  // Abre modal pré-preenchido para o usuário informar rating, playtime, etc.
+  // Ativa a aba Catálogo manualmente (sem event)
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-catalog').classList.add('active');
+  document.querySelector('.nav-btn[onclick*="catalog"]').classList.add('active');
+  openModal();
+  setTimeout(() => {
+    document.getElementById('modal-title').textContent = 'Adicionar Jogo';
+    document.getElementById('game-title').value = g.title;
+    document.getElementById('game-year').value = g.year || '';
+    buildGenreChips(g.genres || []);
+    window._pendingIgdbId = g.igdb_id;
+  }, 50);
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -1656,9 +1675,8 @@ async function saveHoursWizard() {
 
 function closeHoursWizard() {
   document.getElementById('modal-hours-wizard').classList.remove('open');
-  // Se fechou sem salvar, marca como feito só se já havia selecionado algo antes
-  // (não força a fechar sem terminar)
-  localStorage.setItem('gamelog_hours_wizard_done', '1');
+  // NÃO marca como concluído aqui — só saveHoursWizard() faz isso.
+  // Assim o wizard volta na próxima sessão se o usuário fechar sem salvar.
 }
 </script>
 </body>
