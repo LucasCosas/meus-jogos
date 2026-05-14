@@ -2725,6 +2725,15 @@ function mlBuildControls() {
         <option value="">Todas as plataformas</option>
         ${allPlats.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
       </select>
+      <select class="filter-select" id="ml-filter-minyear" onchange="mlApplyFilters()">
+        <option value="0">Qualquer ano</option>
+        <option value="2010">A partir de 2010</option>
+        <option value="2015">A partir de 2015</option>
+        <option value="2018">A partir de 2018</option>
+        <option value="2020">A partir de 2020</option>
+        <option value="2022">A partir de 2022</option>
+        <option value="2024">A partir de 2024</option>
+      </select>
       <select class="filter-select" id="ml-filter-minrating" onchange="mlApplyFilters()">
         <option value="0">Qualquer IGDB</option>
         <option value="70">IGDB ≥ 70</option>
@@ -2747,6 +2756,7 @@ function mlBuildControls() {
 // ── Apply filters to candidates ───────────────────────────────────────────────
 function mlApplyFilters() {
   const platform  = document.getElementById('ml-filter-platform')?.value  || '';
+  const minYear   = parseInt(document.getElementById('ml-filter-minyear')?.value  || '0');
   const minRating = parseFloat(document.getElementById('ml-filter-minrating')?.value || '0');
   const coopOnly  = document.getElementById('ml-filter-coop')?.checked    || false;
   const exclWl    = document.getElementById('ml-filter-excl-wl')?.checked ?? true;
@@ -2757,6 +2767,7 @@ function mlApplyFilters() {
     if (!g) return false;
     if (exclWl && wl.includes(r.igdbId)) return false;
     if (platform && !(g.platforms || []).includes(platform)) return false;
+    if (minYear   && (g.year || 0) < minYear) return false;
     if (minRating && (g.igdb_rating || 0) < minRating) return false;
     if (coopOnly && !g.coop) return false;
     return true;
