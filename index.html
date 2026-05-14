@@ -2505,7 +2505,8 @@ function mlBuildSubgenrePills() {
     const active = _mlActiveSubgenres.has(sub);
     return `<button class="cluster-pill ${active ? 'active' : ''}"
       style="min-width:0;padding:6px 12px;flex-direction:row;align-items:center;gap:6px"
-      onclick="mlToggleSubgenre(${JSON.stringify(sub)})">
+      data-sub="${esc(sub)}"
+      onclick="mlToggleSubgenre(this.dataset.sub)">
       <span class="cluster-pill-label" style="font-size:12px">${esc(sub)}</span>
     </button>`;
   }).join('');
