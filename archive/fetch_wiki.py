@@ -20,8 +20,8 @@ BASE    = os.path.dirname(os.path.abspath(__file__))
 BACKLOG = os.path.join(BASE, '..', 'backlog.json')
 OUT     = os.path.join(BASE, '..', 'wiki_summaries.json')
 
-WORKERS    = 6
-DELAY      = 0.5     # per worker — ~12 req/s total, safe for Wikipedia
+WORKERS    = 3
+DELAY      = 1.0     # per worker — ~3 req/s total, conservative for Wikipedia
 SAVE_EVERY = 500
 UA         = 'GameRecommender/1.0 (personal project; contact: none)'
 

@@ -66,7 +66,11 @@ def build_prompt(game, meta, steam_tags, wiki):
     )
 
 def has_enough_data(game, meta, steam_tags, wiki):
-    """Skip games with basically no data — they'd produce garbage descriptions."""
+    """Skip games with basically no data or very low quality."""
+    # Only enrich games with IGDB rating ≥ 70 or no rating (unknown/new)
+    rating = game.get('igdb_rating') or 0
+    if rating > 0 and rating < 70:
+        return False
     has_summary = bool((meta.get('summary') or '').strip())
     has_steam   = bool(steam_tags)
     has_wiki    = bool((wiki or '').strip())
@@ -75,7 +79,8 @@ def has_enough_data(game, meta, steam_tags, wiki):
 
 def ollama_generate(prompt, model):
     body = json.dumps({'model': model, 'prompt': prompt, 'stream': False,
-                       'options': {'temperature': 0.3, 'num_predict': 120}}).encode()
+                       'think': False,
+                       'options': {'temperature': 0.3, 'num_predict': 150}}).encode()
     req  = urllib.request.Request(OLLAMA_URL, data=body,
                                   headers={'Content-Type': 'application/json'})
     with urllib.request.urlopen(req, timeout=120) as r:
@@ -133,7 +138,7 @@ def main():
         print('All done!')
         return
 
-    print(f'\nGenerating descriptions... (~{total * 3 // 60} min estimated at 3s/game)')
+    print(f'\nGenerating descriptions... (~{total * 22 // 600} min estimated at 2.2s/game)')
 
     done     = 0
     save_ctr = 0
