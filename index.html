@@ -2835,14 +2835,16 @@ async function mlRunRecs() {
   mlStepRunning('ml-step-engine', 'Calculando perfil...');
   await new Promise(r => setTimeout(r, 30));
 
-  const ratedGames = loadGames().filter(g => g.rating && g.igdb_id);
+  const allMyGames  = loadGames().filter(g => g.igdb_id);
+  const ratedGames  = allMyGames.filter(g => g.rating);
   if (ratedGames.length < 3) {
     mlStepPending('ml-step-engine', 'Avalie pelo menos 3 jogos primeiro');
     return;
   }
 
-  _mlIdMap     = new Map(_backlog.map(g => [g.igdb_id, g]));
-  _mlExcludeIds = ratedGames.map(g => g.igdb_id);
+  _mlIdMap      = new Map(_backlog.map(g => [g.igdb_id, g]));
+  // Exclude every game in the user's library, not just rated ones
+  _mlExcludeIds = allMyGames.map(g => g.igdb_id);
 
   _mlProfileVec = ML.buildProfileVector(ratedGames);
   if (!_mlProfileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
