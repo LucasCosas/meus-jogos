@@ -723,6 +723,7 @@ function switchPage(name, ev) {
   if (name === 'recs') { switchRecsMode(_recsMode || 'genre'); }
   if (name === 'wishlist') renderWishlist();
   if (name === 'profile') renderProfile();
+  if (name === 'ml') mlInit();
 }
 
 // ─── Catalog ─────────────────────────────────────────────────────────────────
@@ -2199,6 +2200,204 @@ function closeHoursWizard() {
   document.getElementById('modal-hours-wizard').classList.remove('open');
   // NÃO marca como concluído aqui — só saveHoursWizard() faz isso.
   // Assim o wizard volta na próxima sessão se o usuário fechar sem salvar.
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ML — Vector Recommendations
+// ═══════════════════════════════════════════════════════════════════════════
+
+const ML = {
+  // State
+  embeddings: null,   // Float32Array — flat [igdb_id_0, v0_0..v0_383, igdb_id_1, ...]
+  nGames:     0,
+  DIMS:       384,
+  loaded:     false,
+  loading:    false,
+
+  // Per-game stride: 1 id + 384 floats
+  get STRIDE() { return 1 + this.DIMS; },
+
+  igdbIdAt(i)  { return this.embeddings[i * this.STRIDE]; },
+  vectorAt(i)  { const s = i * this.STRIDE + 1; return this.embeddings.subarray(s, s + this.DIMS); },
+
+  // Dot product of two unit-norm vectors = cosine similarity
+  dot(a, b) {
+    let s = 0;
+    for (let i = 0; i < a.length; i++) s += a[i] * b[i];
+    return s;
+  },
+
+  // Weighted average of game vectors from the user's catalog
+  buildProfileVector(ratedGames) {
+    const vec = new Float32Array(this.DIMS);
+    let totalW = 0;
+    const idMap = new Map();
+    for (let i = 0; i < this.nGames; i++) idMap.set(this.igdbIdAt(i), i);
+
+    for (const g of ratedGames) {
+      if (!g.igdb_id || !g.rating) continue;
+      const idx = idMap.get(g.igdb_id);
+      if (idx === undefined) continue;
+      const w = (g.rating - 5) / 5;   // [-1, +1]  nota 5 = neutro
+      if (Math.abs(w) < 0.05) continue; // ignora jogos neutros
+      const gv = this.vectorAt(idx);
+      for (let d = 0; d < this.DIMS; d++) vec[d] += gv[d] * w;
+      totalW += Math.abs(w);
+    }
+    if (totalW === 0) return null;
+    // Normalize
+    let norm = 0;
+    for (let d = 0; d < this.DIMS; d++) norm += vec[d] * vec[d];
+    norm = Math.sqrt(norm);
+    for (let d = 0; d < this.DIMS; d++) vec[d] /= norm;
+    return vec;
+  },
+
+  // Top-N most similar games (excludes already played)
+  recommend(profileVec, excludeIds, n = 30) {
+    const exclude = new Set(excludeIds);
+    const scores  = [];
+    for (let i = 0; i < this.nGames; i++) {
+      const igdbId = this.igdbIdAt(i);
+      if (exclude.has(igdbId)) continue;
+      const sim = this.dot(profileVec, this.vectorAt(i));
+      scores.push({ igdbId, sim });
+    }
+    scores.sort((a, b) => b.sim - a.sim);
+    return scores.slice(0, n);
+  },
+};
+
+// ── Step status helpers ───────────────────────────────────────────────────────
+function mlStepDone(stepId, msg)    { _mlSetStep(stepId, 'done',    msg || '✓ Concluído'); }
+function mlStepRunning(stepId, msg) { _mlSetStep(stepId, 'running', msg || 'Carregando...'); }
+function mlStepPending(stepId, msg) { _mlSetStep(stepId, 'pending', msg || 'Pendente'); }
+function _mlSetStep(stepId, cls, msg) {
+  const el = document.getElementById(stepId);
+  if (!el) return;
+  el.classList.remove('done', 'running');
+  if (cls !== 'pending') el.classList.add(cls);
+  const st = document.getElementById(stepId.replace('ml-step-', 'ml-status-'));
+  if (st) st.textContent = msg;
+}
+
+// ── Load embeddings.bin ───────────────────────────────────────────────────────
+async function mlLoadEmbeddings() {
+  if (ML.loaded) return true;
+  if (ML.loading) return false;
+  ML.loading = true;
+  mlStepRunning('ml-step-embeddings', 'Carregando embeddings.bin...');
+
+  try {
+    const resp = await fetch('embeddings.bin');
+    if (!resp.ok) {
+      mlStepPending('ml-step-embeddings', 'Arquivo não encontrado');
+      ML.loading = false;
+      return false;
+    }
+    const buf  = await resp.arrayBuffer();
+    const view = new DataView(buf);
+    const n    = view.getUint32(0, true);  // little-endian
+    // Parse: skip 4-byte header, then [uint32 igdb_id + 384 float32] per game
+    const stride  = 1 + ML.DIMS;           // in floats
+    const flat    = new Float32Array(n * stride);
+    let byteOff   = 4;
+    for (let i = 0; i < n; i++) {
+      flat[i * stride] = view.getUint32(byteOff, true);
+      byteOff += 4;
+      const vec = new Float32Array(buf, byteOff, ML.DIMS);
+      flat.set(vec, i * stride + 1);
+      byteOff += ML.DIMS * 4;
+    }
+    ML.embeddings = flat;
+    ML.nGames     = n;
+    ML.loaded     = true;
+    ML.loading    = false;
+    mlStepDone('ml-step-embeddings', `✓ ${n.toLocaleString()} jogos · ${(buf.byteLength/1024/1024).toFixed(1)} MB`);
+    return true;
+  } catch(e) {
+    mlStepPending('ml-step-embeddings', 'Erro: ' + e.message);
+    ML.loading = false;
+    return false;
+  }
+}
+
+// ── Render results ────────────────────────────────────────────────────────────
+function mlRenderResults(results) {
+  const backlog = _backlog; // catalog loaded by main app
+  const idMap   = new Map(backlog.map(g => [g.igdb_id, g]));
+  const played  = new Set(loadGames().map(g => g.igdb_id).filter(Boolean));
+
+  const cards = results.map((r, i) => {
+    const g = idMap.get(r.igdbId);
+    if (!g) return '';
+    const pct   = Math.round(r.sim * 100);
+    const color = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
+    const plats = (g.platforms || []).filter(p => DEFAULT_PLATFORMS.includes(p)).slice(0,3).join(' · ');
+    const score = g.igdb_rating ? `🎯 IGDB ${Math.round(g.igdb_rating)}` : '';
+    return `
+      <div class="rec-card">
+        <div class="rec-rank">#${i+1}</div>
+        <div class="rec-icon" style="background:${color}">${gameInitials(g.title)}</div>
+        <div class="rec-info">
+          <h4>${esc(g.title)}</h4>
+          <div class="rec-plats">${esc(plats)}</div>
+          <div class="card-genres">
+            ${(g.genres||[]).slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
+            ${(g.subgenres||[]).map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
+            ${g.coop ? `<span class="genre-chip subgenre">🤝 Co-op</span>` : ''}
+          </div>
+          <div class="signal-bar">
+            <span class="signal-chip pos">🧠 ${pct}% similar</span>
+            ${score ? `<span class="signal-chip">${score}</span>` : ''}
+          </div>
+        </div>
+        <div class="rec-actions">
+          <button class="btn btn-secondary btn-sm" onclick="toggleWishlist(${g.igdb_id}, this)">+ Wishlist</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('ml-results').innerHTML = `
+    <h3 style="font-family:'Fraunces',serif;font-size:18px;margin:0 0 16px;color:var(--text)">
+      Recomendações por Vetor
+    </h3>
+    <div class="recs-body">${cards || '<p style="color:var(--muted)">Nenhum resultado.</p>'}</div>`;
+  document.getElementById('ml-results').style.display = 'block';
+  document.getElementById('ml-empty').style.display   = 'none';
+  mlStepDone('ml-step-engine', `✓ ${results.length} recomendações geradas`);
+}
+
+// ── Main entry point ──────────────────────────────────────────────────────────
+async function mlInit() {
+  // Step 1 always done (data already fetched)
+  mlStepDone('ml-step-summaries', '✓ 15.993 jogos com metadata');
+
+  if (ML.loaded) { mlRunRecs(); return; }
+
+  const ok = await mlLoadEmbeddings();
+  if (!ok) return;
+
+  mlRunRecs();
+}
+
+async function mlRunRecs() {
+  mlStepRunning('ml-step-engine', 'Calculando perfil...');
+  // Small delay so UI updates
+  await new Promise(r => setTimeout(r, 30));
+
+  const ratedGames = loadGames().filter(g => g.rating && g.igdb_id);
+  if (ratedGames.length < 3) {
+    mlStepPending('ml-step-engine', 'Avalie pelo menos 3 jogos primeiro');
+    return;
+  }
+
+  const profileVec = ML.buildProfileVector(ratedGames);
+  if (!profileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
+
+  const playedIds = ratedGames.map(g => g.igdb_id);
+  const results   = ML.recommend(profileVec, playedIds, 30);
+  mlRenderResults(results);
 }
 </script>
 </body>
