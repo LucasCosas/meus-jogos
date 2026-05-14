@@ -61,7 +61,7 @@
   .page { display: none; height: 100%; overflow: hidden; }
   .page.active { display: flex; }
   #page-catalog, #page-backlog { flex-direction: column; }
-  #page-recs, #page-wishlist { flex-direction: column; }
+  #page-recs, #page-wishlist, #page-ml { flex-direction: column; }
   #page-profile { flex-direction: column; overflow-y: auto; }
 
   /* ─── Page header ─────────────────────────────────────────── */
@@ -296,6 +296,20 @@
   .replay-soon { background: rgba(212,160,23,.12); color: var(--yellow); }
   .replay-recent { background: rgba(201,64,64,.12); color: var(--red); }
 
+  /* ─── ML Pipeline ─────────────────────────────────────────── */
+  .ml-step { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+  .ml-step-header { display: flex; align-items: flex-start; gap: 14px; }
+  .ml-step-badge { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .ml-step-badge.pending  { background: var(--surface2); color: var(--muted); }
+  .ml-step-badge.done     { background: rgba(42,157,92,.15); color: var(--green); }
+  .ml-step-badge.running  { background: rgba(240,107,42,.12); color: var(--accent); }
+  .ml-step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .ml-step-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .ml-step-desc code { background: var(--surface2); padding: 1px 5px; border-radius: 4px; font-size: 11px; }
+  .ml-step-status { margin-left: auto; font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 3px; flex-shrink: 0; }
+  .ml-step.done .ml-step-status   { color: var(--green); font-weight: 600; }
+  .ml-step.running .ml-step-status { color: var(--accent); font-weight: 600; }
+
   /* ─── Scrollbar ───────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -318,6 +332,7 @@
       <button class="nav-btn" onclick="switchPage('backlog',event)">🎯 Backlog</button>
       <button class="nav-btn" onclick="switchPage('wishlist',event)">💾 Wishlist</button>
       <button class="nav-btn" onclick="switchPage('recs',event)">✨ Recomendações</button>
+      <button class="nav-btn" onclick="switchPage('ml',event)">🧠 ML</button>
       <button class="nav-btn" onclick="switchPage('profile',event)">👤 Perfil</button>
     </nav>
     <div class="navbar-right">
@@ -421,6 +436,69 @@
     </div>
     <div class="recs-body" id="recs-body">
       <div style="color:var(--muted);font-size:14px;text-align:center;padding:60px 0">Selecione um gênero ou busque um jogo de referência para começar.</div>
+    </div>
+  </div>
+
+  <!-- ML / Vector Recs -->
+  <div id="page-ml" class="page">
+    <div class="page-header">
+      <div class="page-label">🧠 Experimental</div>
+      <h1>Recomendações por Vetor</h1>
+      <p>Motor baseado em embeddings semânticos — mais preciso que pesos manuais.</p>
+    </div>
+
+    <div id="ml-body" style="padding: 0 20px 40px">
+
+      <!-- Pipeline status -->
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:600px;margin:0 auto 32px">
+
+        <div class="ml-step" id="ml-step-summaries">
+          <div class="ml-step-header">
+            <span class="ml-step-badge pending">1</span>
+            <div>
+              <div class="ml-step-title">Buscar descrições e tags via IGDB</div>
+              <div class="ml-step-desc">Campos: <code>summary</code>, <code>themes</code>, <code>keywords</code>, <code>player_perspectives</code> — para os 16k jogos do catálogo</div>
+            </div>
+            <span class="ml-step-status" id="ml-status-summaries">Pendente</span>
+          </div>
+        </div>
+
+        <div class="ml-step" id="ml-step-embeddings">
+          <div class="ml-step-header">
+            <span class="ml-step-badge pending">2</span>
+            <div>
+              <div class="ml-step-title">Gerar embeddings localmente</div>
+              <div class="ml-step-desc">Modelo <code>all-MiniLM-L6-v2</code> via sentence-transformers — 384 dims, ~3 min no M4, roda offline</div>
+            </div>
+            <span class="ml-step-status" id="ml-status-embeddings">Aguardando etapa 1</span>
+          </div>
+        </div>
+
+        <div class="ml-step" id="ml-step-engine">
+          <div class="ml-step-header">
+            <span class="ml-step-badge pending">3</span>
+            <div>
+              <div class="ml-step-title">Motor de cosine similarity no browser</div>
+              <div class="ml-step-desc">Carrega <code>embeddings.bin</code> (~25MB), computa vetor do perfil ponderado pelas suas notas, busca os mais próximos</div>
+            </div>
+            <span class="ml-step-status" id="ml-status-engine">Aguardando etapa 2</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Resultado virá aqui -->
+      <div id="ml-results" style="display:none"></div>
+
+      <!-- Empty state -->
+      <div id="ml-empty" style="text-align:center;padding:48px 0;color:var(--muted)">
+        <div style="font-size:48px;margin-bottom:16px">🧠</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px">Pipeline ainda não rodado</div>
+        <div style="font-size:13px;line-height:1.6;max-width:360px;margin:0 auto">
+          Execute as etapas acima na ordem. Quando <code>embeddings.bin</code> estiver na pasta do projeto, o motor carrega automaticamente aqui.
+        </div>
+      </div>
+
     </div>
   </div>
 
