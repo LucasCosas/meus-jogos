@@ -2799,12 +2799,31 @@ function mlRenderCards(results) {
         <div class="rec-actions">
           <button class="btn btn-secondary btn-sm" style="${inWl?'color:var(--accent);border-color:var(--accent)':''}"
             onclick="toggleWishlist(${g.igdb_id}, this)">${inWl ? '💾 Na WL' : '+ Wishlist'}</button>
+          <button class="btn btn-secondary btn-sm" style="margin-top:6px"
+            onclick="mlMarkPlayed(${g.igdb_id}, this)">✓ Já joguei</button>
         </div>
       </div>`;
   }).join('');
 
   const body = document.getElementById('ml-cards-body');
   if (body) body.innerHTML = cards || '<p style="color:var(--muted);text-align:center;padding:32px">Nenhum resultado com esses filtros.</p>';
+}
+
+function mlMarkPlayed(igdbId, btn) {
+  const g = _mlIdMap.get(igdbId);
+  if (!g) return;
+  const games = loadGames();
+  if (!games.some(x => x.igdb_id === igdbId)) {
+    games.push({ id: Date.now(), igdb_id: igdbId, title: g.title, year: g.year || null, rating: null });
+    saveGames(games);
+    _mlExcludeIds = loadGames().filter(x => x.igdb_id).map(x => x.igdb_id);
+    showToast(`"${g.title}" marcado como jogado`, 'success');
+  }
+  // Remove card immediately from view
+  btn.closest('.rec-card')?.remove();
+  const remaining = document.querySelectorAll('#ml-cards-body .rec-card').length;
+  const countEl = document.getElementById('ml-count');
+  if (countEl) countEl.textContent = `${remaining} jogos`;
 }
 
 // ── Render full results section ───────────────────────────────────────────────
