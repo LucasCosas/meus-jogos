@@ -2411,6 +2411,8 @@ let _mlActiveSubgenres = new Set(); // multi-select subgenre names
 // Search/query mode
 let _mlQueryMode  = 'profile';  // 'profile' | 'similar_to' | 'tag'
 let _mlQueryGame  = null;        // {igdbId, title} in similar_to mode
+// Persistent filter state — survives control re-renders
+let _mlFilters = { platform: '', minYear: 0, minRating: 0, coop: false, exclWl: true };
 let _mlQueryTag   = '';          // keyword/tag in tag mode
 
 // ── Run filtered recs (profile mode) — combines cluster + subgenre selections ──
@@ -2723,30 +2725,22 @@ function mlBuildControls() {
     <div class="recs-row" style="margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <select class="filter-select" id="ml-filter-platform" onchange="mlApplyFilters()">
         <option value="">Todas as plataformas</option>
-        ${allPlats.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+        ${allPlats.map(p => `<option value="${esc(p)}" ${_mlFilters.platform===p?'selected':''}>${esc(p)}</option>`).join('')}
       </select>
       <select class="filter-select" id="ml-filter-minyear" onchange="mlApplyFilters()">
-        <option value="0">Qualquer ano</option>
-        <option value="2010">A partir de 2010</option>
-        <option value="2015">A partir de 2015</option>
-        <option value="2018">A partir de 2018</option>
-        <option value="2020">A partir de 2020</option>
-        <option value="2022">A partir de 2022</option>
-        <option value="2024">A partir de 2024</option>
+        ${[[0,'Qualquer ano'],[2010,'A partir de 2010'],[2015,'A partir de 2015'],[2018,'A partir de 2018'],[2020,'A partir de 2020'],[2022,'A partir de 2022'],[2024,'A partir de 2024']]
+          .map(([v,l])=>`<option value="${v}" ${_mlFilters.minYear==v?'selected':''}>${l}</option>`).join('')}
       </select>
       <select class="filter-select" id="ml-filter-minrating" onchange="mlApplyFilters()">
-        <option value="0">Qualquer IGDB</option>
-        <option value="70">IGDB ≥ 70</option>
-        <option value="80">IGDB ≥ 80</option>
-        <option value="85">IGDB ≥ 85</option>
-        <option value="90">IGDB ≥ 90</option>
+        ${[[0,'Qualquer IGDB'],[70,'IGDB ≥ 70'],[80,'IGDB ≥ 80'],[85,'IGDB ≥ 85'],[90,'IGDB ≥ 90']]
+          .map(([v,l])=>`<option value="${v}" ${_mlFilters.minRating==v?'selected':''}>${l}</option>`).join('')}
       </select>
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
-        <input type="checkbox" id="ml-filter-coop" onchange="mlApplyFilters()" style="accent-color:var(--accent)">
+        <input type="checkbox" id="ml-filter-coop" onchange="mlApplyFilters()" style="accent-color:var(--accent)" ${_mlFilters.coop?'checked':''}>
         🤝 Só co-op
       </label>
       <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
-        <input type="checkbox" id="ml-filter-excl-wl" checked onchange="mlApplyFilters()" style="accent-color:var(--accent)">
+        <input type="checkbox" id="ml-filter-excl-wl" onchange="mlApplyFilters()" style="accent-color:var(--accent)" ${_mlFilters.exclWl?'checked':''}>
         Excluir wishlist
       </label>
       <span id="ml-count" style="font-size:12px;color:var(--muted);margin-left:auto;align-self:center"></span>
@@ -2755,12 +2749,15 @@ function mlBuildControls() {
 
 // ── Apply filters to candidates ───────────────────────────────────────────────
 function mlApplyFilters() {
-  const platform  = document.getElementById('ml-filter-platform')?.value  || '';
-  const minYear   = parseInt(document.getElementById('ml-filter-minyear')?.value  || '0');
-  const minRating = parseFloat(document.getElementById('ml-filter-minrating')?.value || '0');
-  const coopOnly  = document.getElementById('ml-filter-coop')?.checked    || false;
-  const exclWl    = document.getElementById('ml-filter-excl-wl')?.checked ?? true;
-  const wl        = loadWishlist();
+  // Read from DOM and persist — so re-renders can restore the values
+  _mlFilters.platform  = document.getElementById('ml-filter-platform')?.value  ?? _mlFilters.platform;
+  _mlFilters.minYear   = parseInt(document.getElementById('ml-filter-minyear')?.value  ?? _mlFilters.minYear);
+  _mlFilters.minRating = parseFloat(document.getElementById('ml-filter-minrating')?.value ?? _mlFilters.minRating);
+  _mlFilters.coop      = document.getElementById('ml-filter-coop')?.checked    ?? _mlFilters.coop;
+  _mlFilters.exclWl    = document.getElementById('ml-filter-excl-wl')?.checked ?? _mlFilters.exclWl;
+
+  const { platform, minYear, minRating, coop: coopOnly, exclWl } = _mlFilters;
+  const wl = loadWishlist();
 
   const filtered = _mlCandidates.filter(r => {
     const g = _mlIdMap.get(r.igdbId);
