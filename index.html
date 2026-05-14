@@ -530,14 +530,6 @@
             <option value="no">❌ Não</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Zerado?</label>
-          <select class="form-control" id="game-completed">
-            <option value="">Não definido</option>
-            <option value="yes">✅ Sim</option>
-            <option value="no">❌ Não</option>
-          </select>
-        </div>
       </div>
 
       <div class="form-group">
@@ -893,7 +885,6 @@ function openModal(game=null) {
   document.getElementById('game-notes').value = '';
   document.getElementById('game-playtime').value = '';
   document.getElementById('game-played').value = '';
-  document.getElementById('game-completed').value = '';
   buildRatingInput();
   buildGenreChips();
   buildPlatformPlayed();
@@ -906,7 +897,6 @@ function openModal(game=null) {
     document.getElementById('game-notes').value = game.notes || '';
     document.getElementById('game-playtime').value = game.playtime || '';
     document.getElementById('game-played').value = game.played || '';
-    document.getElementById('game-completed').value = game.completed || '';
     if (game.rating) {
       const radio = document.querySelector(`#rating-input input[value="${game.rating}"]`);
       if (radio) radio.checked = true;
@@ -939,14 +929,10 @@ function saveGame() {
     rating: ratingEl ? parseInt(ratingEl.value) : (prev.rating || null),
     year: parseInt(document.getElementById('game-year').value) || null,
     estimated_hours: parseInt(document.getElementById('game-hours').value) || prev.estimated_hours || null,
-    hours: prev.hours || null,
     genres: [...selectedGenres],
     platformPlayed: document.getElementById('game-platform-played').value || null,
     playtime: document.getElementById('game-playtime').value || null,
     played: document.getElementById('game-played').value || null,
-    completed: document.getElementById('game-playtime').value === 'completed'
-      ? 'yes'
-      : (document.getElementById('game-completed').value || null),
     notes: document.getElementById('game-notes').value.trim(),
   };
 
@@ -1764,7 +1750,6 @@ function playtimeAndNext(val) {
   const idx = games.findIndex(x => x.id === _rateQueue[_rateIdx].id);
   if (idx >= 0) {
     games[idx].playtime = val;
-    if (val === 'completed') games[idx].completed = 'yes';
   }
   saveGames(games);
   _rateIdx++;
