@@ -4,7 +4,7 @@
       "id": 1778517158198,
       "title": "A Way Out",
       "rating": 8,
-      "year": null,
+      "year": 2018,
       "genres": [
         "Co-op",
         "Aventura"
@@ -215,7 +215,7 @@
       "id": 1778517014499,
       "title": "Astro Bot",
       "rating": 6,
-      "year": null,
+      "year": 2024,
       "genres": [
         "Plataforma",
         "Aventura"
@@ -263,7 +263,7 @@
       "id": 1778517109815,
       "title": "Baba Is You",
       "rating": 6,
-      "year": null,
+      "year": 2019,
       "genres": [
         "Puzzle"
       ],
@@ -310,7 +310,7 @@
       "id": 1778450460976,
       "title": "Bad North",
       "rating": 2,
-      "year": null,
+      "year": 2018,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -335,7 +335,7 @@
       "id": 1778450460952,
       "title": "Balatro",
       "rating": 8,
-      "year": null,
+      "year": 2024,
       "hours": null,
       "genres": [
         "Roguelike",
@@ -363,7 +363,7 @@
       "id": 1778516913216,
       "title": "Baldur's Gate 3",
       "rating": 10,
-      "year": null,
+      "year": 2023,
       "genres": [
         "RPG",
         "Co-op"
@@ -387,7 +387,7 @@
       "id": 1778516988917,
       "title": "Batman: Arkham City",
       "rating": 10,
-      "year": null,
+      "year": 2011,
       "genres": [
         "Action-Aventura"
       ],
@@ -464,7 +464,7 @@
       "id": 1778450460989,
       "title": "Battlefield 2042",
       "rating": 2,
-      "year": null,
+      "year": 2021,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -489,7 +489,7 @@
       "id": 1778517032266,
       "title": "Bioshock 2",
       "rating": 6,
-      "year": null,
+      "year": 2010,
       "genres": [
         "FPS",
         "RPG",
@@ -617,7 +617,7 @@
       "id": 1778450461089,
       "title": "Call of Duty: Black Ops III",
       "rating": 6,
-      "year": null,
+      "year": 2015,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -642,7 +642,7 @@
       "id": 1778450461076,
       "title": "Call of Duty: Modern Warfare",
       "rating": 6,
-      "year": null,
+      "year": 2019,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -667,7 +667,7 @@
       "id": 1778450460954,
       "title": "Celeste",
       "rating": 8,
-      "year": null,
+      "year": 2018,
       "hours": null,
       "genres": [
         "Plataforma",
@@ -695,7 +695,7 @@
       "id": 1778517121516,
       "title": "Civilization VI",
       "rating": 8,
-      "year": null,
+      "year": 2016,
       "genres": [
         "Estratégia"
       ],
@@ -719,7 +719,7 @@
       "id": 1778450460953,
       "title": "Cocoon",
       "rating": 4,
-      "year": null,
+      "year": 2023,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -934,7 +934,7 @@
       "id": 1778517093132,
       "title": "Dead Space",
       "rating": 8,
-      "year": null,
+      "year": 2011,
       "genres": [
         "Horror",
         "Action-Aventura"
@@ -1040,7 +1040,7 @@
       "id": 1778517045016,
       "title": "Deep Rock Galactic",
       "rating": 8,
-      "year": null,
+      "year": 2020,
       "genres": [
         "FPS",
         "Co-op"
@@ -1491,7 +1491,7 @@
       "id": 1778517153615,
       "title": "Firewatch",
       "rating": 8,
-      "year": null,
+      "year": 2016,
       "genres": [
         "Aventura"
       ],
@@ -1515,7 +1515,7 @@
       "id": 1778450460988,
       "title": "Fortnite",
       "rating": 8,
-      "year": null,
+      "year": 2018,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -1781,7 +1781,7 @@
       "id": 1778517075015,
       "title": "Hades II",
       "rating": 10,
-      "year": null,
+      "year": 2025,
       "genres": [
         "Roguelike",
         "Action RPG"
@@ -1804,7 +1804,7 @@
       "id": 1778517138115,
       "title": "Hearthstone",
       "rating": 6,
-      "year": null,
+      "year": 2014,
       "genres": [
         "Card Game"
       ],
@@ -2198,7 +2198,7 @@
       "id": 1778517157065,
       "title": "It Takes Two",
       "rating": 10,
-      "year": null,
+      "year": 2021,
       "genres": [
         "Co-op",
         "Aventura"
@@ -2273,7 +2273,7 @@
       "id": 1778517190266,
       "title": "Katana ZERO",
       "rating": 8,
-      "year": null,
+      "year": 2019,
       "genres": [
         "Action-Aventura",
         "Plataforma",
@@ -2374,7 +2374,7 @@
       "id": 1778450461105,
       "title": "Let It Die",
       "rating": 6,
-      "year": null,
+      "year": 2024,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -2427,7 +2427,7 @@
       "id": 1778517140165,
       "title": "Life is Strange",
       "rating": 10,
-      "year": null,
+      "year": 2015,
       "genres": [
         "Aventura"
       ],
@@ -2451,7 +2451,7 @@
       "id": 1778517141115,
       "title": "Life is Strange 2",
       "rating": 8,
-      "year": null,
+      "year": 2018,
       "genres": [
         "Aventura"
       ],
@@ -2473,7 +2473,7 @@
       "id": 1778450460974,
       "title": "Like a Dragon Gaiden: The Man Who Erased His Name",
       "rating": 2,
-      "year": null,
+      "year": 2023,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -2527,7 +2527,7 @@
       "id": 1778450461098,
       "title": "LittleBigPlanet 3",
       "rating": 6,
-      "year": null,
+      "year": 2014,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -2552,7 +2552,7 @@
       "id": 1778517192332,
       "title": "Luigi's Mansion 3",
       "rating": 8,
-      "year": null,
+      "year": 2019,
       "genres": [
         "Aventura",
         "Puzzle",
@@ -2576,7 +2576,7 @@
       "id": 1778517166648,
       "title": "Mario Kart 8 Deluxe",
       "rating": 6,
-      "year": null,
+      "year": 2017,
       "genres": [
         "Esportes",
         "Co-op"
@@ -2598,7 +2598,7 @@
       "id": 1778517139165,
       "title": "Marvel Snap",
       "rating": 8,
-      "year": null,
+      "year": 2022,
       "genres": [
         "Card Game"
       ],
@@ -2747,7 +2747,7 @@
       "id": 1778517177998,
       "title": "Minecraft",
       "rating": 6,
-      "year": null,
+      "year": 2016,
       "genres": [
         "Sandbox",
         "Co-op"
@@ -2797,7 +2797,7 @@
       "id": 1778517004466,
       "title": "Monster Hunter World",
       "rating": 2,
-      "year": null,
+      "year": 2018,
       "genres": [
         "Action RPG",
         "Co-op"
@@ -2848,7 +2848,7 @@
       "id": 1778450461024,
       "title": "Mortal Kombat 11",
       "rating": 4,
-      "year": null,
+      "year": 2019,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -2926,7 +2926,7 @@
       "id": 1778517050632,
       "title": "New Super Mario Bros. U Deluxe",
       "rating": 10,
-      "year": null,
+      "year": 2019,
       "genres": [
         "Plataforma",
         "Co-op"
@@ -3024,7 +3024,7 @@
       "id": 1778517057332,
       "title": "Ori and the Blind Forest",
       "rating": 8,
-      "year": null,
+      "year": 2015,
       "genres": [
         "Metroidvania",
         "Plataforma"
@@ -3048,7 +3048,7 @@
       "id": 1778517341381,
       "title": "Ori and the Will of the Wisps",
       "rating": 8,
-      "year": null,
+      "year": 2020,
       "genres": [
         "Metroidvania",
         "Plataforma"
@@ -3072,7 +3072,7 @@
       "id": 1778450461055,
       "title": "Outer Wilds",
       "rating": 8,
-      "year": null,
+      "year": 2019,
       "hours": null,
       "genres": [
         "Aventura",
@@ -3181,7 +3181,7 @@
       "id": 1778450460996,
       "title": "Persona 5",
       "rating": 6,
-      "year": null,
+      "year": 2016,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 4",
@@ -3206,7 +3206,7 @@
       "id": 1778516926000,
       "title": "Persona 5 Royal",
       "rating": 6,
-      "year": null,
+      "year": 2019,
       "genres": [
         "RPG"
       ],
@@ -3254,7 +3254,7 @@
       "id": 1778517195131,
       "title": "Pokémon Legends: Arceus",
       "rating": 4,
-      "year": null,
+      "year": 2022,
       "genres": [
         "RPG",
         "Action RPG",
@@ -3277,7 +3277,7 @@
       "id": 1778517021949,
       "title": "Portal",
       "rating": 10,
-      "year": null,
+      "year": 2021,
       "genres": [
         "Puzzle",
         "FPS"
@@ -3300,7 +3300,7 @@
       "id": 1778517021383,
       "title": "Portal 2",
       "rating": 10,
-      "year": null,
+      "year": 2011,
       "genres": [
         "Puzzle",
         "Co-op",
@@ -3402,7 +3402,7 @@
       "id": 1778450461035,
       "title": "Ratchet & Clank: Rift Apart",
       "rating": 4,
-      "year": null,
+      "year": 2021,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -3455,7 +3455,7 @@
       "id": 1778517090882,
       "title": "Resident Evil Village",
       "rating": 4,
-      "year": null,
+      "year": 2021,
       "genres": [
         "Horror",
         "FPS"
@@ -3564,7 +3564,7 @@
       "id": 1778450460970,
       "title": "Roguebook",
       "rating": 4,
-      "year": null,
+      "year": 2021,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -3775,7 +3775,7 @@
       "id": 1778450460998,
       "title": "Star Wars Jedi: Survivor",
       "rating": 6,
-      "year": null,
+      "year": 2023,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -3825,7 +3825,7 @@
       "id": 1778517180698,
       "title": "Subnautica",
       "rating": 2,
-      "year": null,
+      "year": 2018,
       "genres": [
         "Aventura",
         "Puzzle"
@@ -3899,7 +3899,7 @@
       "id": 1778517046350,
       "title": "Super Mario Bros. Wonder",
       "rating": 10,
-      "year": null,
+      "year": 2023,
       "genres": [
         "Plataforma",
         "Co-op"
@@ -3922,7 +3922,7 @@
       "id": 1778517045766,
       "title": "Super Mario Odyssey",
       "rating": 10,
-      "year": null,
+      "year": 2023,
       "genres": [
         "Plataforma"
       ],
@@ -3944,7 +3944,7 @@
       "id": 1778517193148,
       "title": "Super Mario RPG",
       "rating": 8,
-      "year": null,
+      "year": 2023,
       "genres": [
         "RPG",
         "Plataforma"
@@ -3966,7 +3966,7 @@
       "id": 1778517175099,
       "title": "Super Smash Bros. Ultimate",
       "rating": 10,
-      "year": null,
+      "year": 2018,
       "genres": [
         "Luta",
         "Plataforma",
@@ -3989,7 +3989,7 @@
       "id": 1778517114499,
       "title": "Superliminal",
       "rating": 10,
-      "year": null,
+      "year": 2019,
       "genres": [
         "Puzzle"
       ],
@@ -4063,7 +4063,7 @@
       "id": 1778450460963,
       "title": "The Elder Scrolls V: Skyrim",
       "rating": 10,
-      "year": null,
+      "year": 2011,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -4113,7 +4113,7 @@
       "id": 1778450460980,
       "title": "The Gardens Between",
       "rating": 4,
-      "year": null,
+      "year": 2018,
       "hours": null,
       "genres": [],
       "platformPlayed": "PlayStation 5",
@@ -4219,7 +4219,7 @@
       "id": 1778517047699,
       "title": "The Legend of Zelda: Breath of the Wild",
       "rating": 10,
-      "year": null,
+      "year": 2017,
       "genres": [
         "Action-Aventura",
         "Mundo Aberto",
@@ -4297,7 +4297,7 @@
       "id": 1778517117332,
       "title": "The Stanley Parable: Ultra Deluxe",
       "rating": 10,
-      "year": null,
+      "year": 2022,
       "genres": [
         "Aventura",
         "Puzzle"
@@ -4323,7 +4323,7 @@
       "id": 1778517110765,
       "title": "The Talos Principle",
       "rating": 10,
-      "year": null,
+      "year": 2014,
       "genres": [
         "Puzzle"
       ],
@@ -4654,7 +4654,7 @@
       "id": 1778517044100,
       "title": "Valorant",
       "rating": 8,
-      "year": null,
+      "year": 2020,
       "genres": [
         "FPS"
       ],
@@ -4834,7 +4834,7 @@
       "id": 1778516941417,
       "title": "Yakuza: Like a Dragon",
       "rating": 2,
-      "year": null,
+      "year": 2020,
       "genres": [
         "RPG"
       ],
