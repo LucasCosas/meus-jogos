@@ -55,18 +55,30 @@ def find_game(name, id_map, igdb_ids, title_to_idx, user_games, meta, model):
     """
     name_lower = name.lower()
 
-    # 1. Try backlog catalog first (exact/fuzzy)
-    matches = difflib.get_close_matches(name_lower, title_to_idx.keys(), n=1, cutoff=0.6)
-    if not matches:
-        matches = [t for t in title_to_idx.keys() if name_lower in t]
+    all_titles = list(title_to_idx.keys())
+
+    # 1. Exact match
+    if name_lower in title_to_idx:
+        idx = title_to_idx[name_lower]
+        igdb_id = int(igdb_ids[idx])
+        return vectors[idx], id_map[igdb_id]['title'], igdb_id
+
+    # 2. Starts-with match
+    sw = [t for t in all_titles if t.startswith(name_lower)]
+    if sw:
+        idx = title_to_idx[sw[0]]
+        igdb_id = int(igdb_ids[idx])
+        return vectors[idx], id_map[igdb_id]['title'], igdb_id
+
+    # 3. Fuzzy match (higher cutoff to avoid wrong games)
+    matches = difflib.get_close_matches(name_lower, all_titles, n=1, cutoff=0.75)
     if matches:
         idx = title_to_idx[matches[0]]
         igdb_id = int(igdb_ids[idx])
-        g = id_map[igdb_id]
-        return vectors[idx], g['title'], igdb_id
+        return vectors[idx], id_map[igdb_id]['title'], igdb_id
 
-    # 2. Try user's own games.json
-    user_matches = difflib.get_close_matches(name_lower, [g['title'].lower() for g in user_games], n=1, cutoff=0.6)
+    # 4. Try user's own games.json
+    user_matches = difflib.get_close_matches(name_lower, [g['title'].lower() for g in user_games], n=1, cutoff=0.75)
     if not user_matches:
         user_matches = [g['title'].lower() for g in user_games if name_lower in g['title'].lower()]
     if user_matches:
