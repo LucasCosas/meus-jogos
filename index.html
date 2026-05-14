@@ -727,6 +727,8 @@ function switchPage(name, ev) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   if (ev && ev.currentTarget) ev.currentTarget.classList.add('active');
+  else document.querySelector(`.nav-btn[onclick*="'${name}'"]`)?.classList.add('active');
+  localStorage.setItem('gamelog_activePage', name);
   if (name === 'backlog') renderBacklog();
   if (name === 'recs') { switchRecsMode(_recsMode || 'genre'); }
   if (name === 'wishlist') renderWishlist();
@@ -2164,6 +2166,10 @@ async function init() {
     _backlog = backlogRes.value;
 
   renderCatalog();
+
+  // Restore last active tab
+  const lastPage = localStorage.getItem('gamelog_activePage');
+  if (lastPage && document.getElementById('page-' + lastPage)) switchPage(lastPage);
 
   // Mostra wizard de horas se nunca foi completado e há jogos sem estimativa
   if (!localStorage.getItem('gamelog_hours_wizard_done')) {
