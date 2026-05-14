@@ -226,6 +226,8 @@
 
   /* ─── Wishlist ────────────────────────────────────────────── */
   .wishlist-body { flex: 1; overflow-y: auto; padding: 20px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .wl-group-header { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:6px 0 4px; border-bottom:1px solid var(--border); margin-top:10px; }
+  .wl-group-header:first-child { margin-top:0; }
   .wishlist-empty { text-align: center; padding: 80px 40px; color: var(--muted); }
   .wishlist-empty h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; }
   .wishlist-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border-color .15s; max-width: 760px; }
@@ -435,6 +437,11 @@
       </select>
       <select class="filter-select" id="wl-platform" onchange="renderWishlist()">
         <option value="">Todas as plataformas</option>
+      </select>
+      <select class="filter-select" id="wl-group" onchange="renderWishlist()">
+        <option value="">Sem agrupamento</option>
+        <option value="subgenre">Agrupar por subgênero</option>
+        <option value="platform">Agrupar por plataforma</option>
       </select>
       <span id="wl-count" class="toolbar-count"></span>
     </div>
@@ -1523,7 +1530,9 @@ function renderWishlist() {
   const countEl = document.getElementById('wl-count');
   if (countEl) countEl.textContent = `${visibleCount} jogo${visibleCount !== 1 ? 's' : ''}`;
 
-  body.innerHTML = games.map(g => {
+  const groupBy = document.getElementById('wl-group')?.value || '';
+
+  const renderItem = g => {
     if (g._missing) return `<div class="wishlist-item" style="opacity:.5">
       <div class="wishlist-item-info"><div class="wishlist-item-title">${esc(g.title)}</div><div class="wishlist-item-sub">Não encontrado no backlog atual</div></div>
       <div class="wishlist-item-actions"><button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})">Remover</button></div>
@@ -1531,7 +1540,7 @@ function renderWishlist() {
     const bgColor  = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
     const allCats  = [...(g.genres||[]), ...(g.subgenres||[])];
     const yearStr  = g.year > 0 ? String(g.year) : '';
-    const scoreStr = g.igdb_rating ? `🌐 ${Math.round(g.igdb_rating)}` : '';
+    const scoreStr = g.igdb_rating ? `★ ${Math.round(g.igdb_rating)}` : '';
     const sub      = [yearStr, scoreStr].filter(Boolean).join(' · ');
     return `<div class="wishlist-item">
       <div class="wishlist-item-icon" style="background:${bgColor}">${gameInitials(g.title)}</div>
@@ -1540,7 +1549,7 @@ function renderWishlist() {
         ${sub ? `<div class="wishlist-item-sub">${sub}</div>` : ''}
         <div class="wishlist-item-genres">
           ${allCats.slice(0,4).map(c=>`<span class="genre-chip">${esc(c)}</span>`).join('')}
-          ${(g.platforms||[]).slice(0,2).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('')}
+          ${(g.platforms||[]).slice(0,3).map(p=>`<span class="plat-badge" style="background:var(--text)">${esc(platShort(p))}</span>`).join('')}
         </div>
       </div>
       <div class="wishlist-item-actions">
@@ -1548,6 +1557,45 @@ function renderWishlist() {
         <button class="btn btn-secondary btn-sm" onclick="removeFromWishlist(${g.igdb_id})" style="padding:6px 10px">✕</button>
       </div>
     </div>`;
+  };
+
+  const SUBGENRE_ORDER = ['Soulslike','Metroidvania','Roguelike','Roguelite'];
+
+  function groupGames(list, by) {
+    if (!by) return { '': list };
+    const groups = {};
+    for (const g of list) {
+      if (g._missing) { (groups[''] = groups[''] || []).push(g); continue; }
+      let keys = [];
+      if (by === 'subgenre') {
+        const subs = (g.subgenres || []).filter(s => SUBGENRE_ORDER.includes(s));
+        keys = subs.length ? subs : ['Outros'];
+      } else if (by === 'platform') {
+        const plats = (g.platforms || []).filter(p => DEFAULT_PLATFORMS.includes(p));
+        keys = plats.length ? plats : (g.platforms||[]).slice(0,1).length ? g.platforms.slice(0,1) : ['Outros'];
+      }
+      // Game appears in EACH matching group (e.g. cross-platform or multi-subgenre)
+      for (const k of keys) (groups[k] = groups[k] || []).push(g);
+    }
+    return groups;
+  }
+
+  const groups = groupGames(games, groupBy);
+
+  // Sort group keys: subgenre by priority order, platform alphabetically, '' last
+  const sortedKeys = Object.keys(groups).sort((a, b) => {
+    if (!a) return 1; if (!b) return -1;
+    if (groupBy === 'subgenre') {
+      const ai = SUBGENRE_ORDER.indexOf(a), bi = SUBGENRE_ORDER.indexOf(b);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1; if (bi !== -1) return 1;
+    }
+    return a.localeCompare(b);
+  });
+
+  body.innerHTML = sortedKeys.map(key => {
+    const header = (groupBy && key) ? `<div class="wl-group-header">${esc(key)} <span style="font-weight:400;opacity:.6">(${groups[key].filter(g=>!g._missing).length})</span></div>` : '';
+    return header + groups[key].map(renderItem).join('');
   }).join('');
 }
 
