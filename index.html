@@ -2401,26 +2401,85 @@ async function mlLoadClusters() {
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let _mlCandidates    = []; // full scored list, re-filtered on filter change
-let _mlIdMap         = new Map();
-let _mlProfileVec    = null;
-let _mlExcludeIds    = [];
-let _mlTopClusters   = [];  // [{id, label, sim, top_games, ...}]
-let _mlActiveCluster = null; // null = all clusters
+let _mlCandidates      = []; // full scored list, re-filtered on filter change
+let _mlIdMap           = new Map();
+let _mlProfileVec      = null;
+let _mlExcludeIds      = [];
+let _mlTopClusters     = [];  // [{id, label, sim, top_games, ...}]
+let _mlActiveClusters  = new Set(); // multi-select cluster ids
+let _mlActiveSubgenres = new Set(); // multi-select subgenre names
 // Search/query mode
 let _mlQueryMode  = 'profile';  // 'profile' | 'similar_to' | 'tag'
 let _mlQueryGame  = null;        // {igdbId, title} in similar_to mode
 let _mlQueryTag   = '';          // keyword/tag in tag mode
 
-// ── Cluster pill click ────────────────────────────────────────────────────────
+// ── Run filtered recs (profile mode) — combines cluster + subgenre selections ──
+function mlRunFilteredRecs() {
+  const hasCluster = _mlActiveClusters.size > 0;
+  const hasSub     = _mlActiveSubgenres.size > 0;
+
+  if (!hasCluster && !hasSub) {
+    _mlCandidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, null, 80);
+  } else {
+    // Score all games that match: selected cluster(s) OR selected subgenre(s)
+    const exclude = new Set(_mlExcludeIds);
+    const C = 5, m = 75;
+    const scores = [];
+    for (let i = 0; i < ML.nGames; i++) {
+      const id = ML.igdbIdAt(i);
+      if (exclude.has(id)) continue;
+      // Cluster match
+      let clusterOk = false;
+      if (hasCluster && ML.assignments) {
+        const cid = ML.assignments.get(id);
+        if (cid !== undefined && _mlActiveClusters.has(cid)) clusterOk = true;
+      }
+      // Subgenre match
+      let subOk = false;
+      if (hasSub) {
+        const g = _mlIdMap.get(id);
+        if (g && (g.subgenres || []).some(s => _mlActiveSubgenres.has(s))) subOk = true;
+      }
+      if (!clusterOk && !subOk) continue;
+
+      const sim  = _mlProfileVec ? ML.dot(_mlProfileVec, ML.vectorAt(i)) : 0;
+      const g    = _mlIdMap.get(id);
+      const cnt  = g?.igdb_rating_count || 0;
+      const raw  = g?.igdb_rating || m;
+      const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
+      scores.push({ igdbId: id, sim, qual, hybrid: 0.65 * sim + 0.35 * qual });
+    }
+    scores.sort((a, b) => b.hybrid - a.hybrid);
+    _mlCandidates = scores.slice(0, 80);
+  }
+  mlRenderResults(_mlCandidates, true);
+}
+
+// ── Cluster pill click (multi-select toggle) ──────────────────────────────────
 function mlSelectCluster(id) {
-  _mlActiveCluster = (_mlActiveCluster === id) ? null : id;  // toggle
+  if (_mlActiveClusters.has(id)) _mlActiveClusters.delete(id);
+  else _mlActiveClusters.add(id);
   _mlQueryMode = 'profile';
   _mlQueryGame = null;
   _mlQueryTag  = '';
-  const clusterFilter = (_mlActiveCluster !== null) ? new Set([_mlActiveCluster]) : null;
-  _mlCandidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, clusterFilter, 80);
-  mlRenderResults(_mlCandidates, /* update controls */ true);
+  mlRunFilteredRecs();
+}
+
+// ── Subgenre pill click (multi-select toggle) ─────────────────────────────────
+function mlToggleSubgenre(sub) {
+  if (_mlActiveSubgenres.has(sub)) _mlActiveSubgenres.delete(sub);
+  else _mlActiveSubgenres.add(sub);
+  _mlQueryMode = 'profile';
+  _mlQueryGame = null;
+  _mlQueryTag  = '';
+  mlRunFilteredRecs();
+}
+
+// ── Clear all filters ─────────────────────────────────────────────────────────
+function mlClearFilters() {
+  _mlActiveClusters.clear();
+  _mlActiveSubgenres.clear();
+  mlRunFilteredRecs();
 }
 
 // ── User's rated games per cluster ────────────────────────────────────────────
@@ -2434,22 +2493,42 @@ function mlUserGamesInCluster(clusterId) {
 }
 
 // ── Controls HTML ─────────────────────────────────────────────────────────────
+const _PILL_STEAM_NOISE = new Set(['Singleplayer','Multiplayer','Action','Adventure',
+  '2D','3D','Indie','RPG','Shooter','Platformer','Puzzle','Fighting',
+  'Racing','Sports','Simulation','Strategy','Early Access','Free to Play']);
+
+const _SUBGENRES = ['Roguelike','Roguelite','Metroidvania','Soulslike'];
+
+function mlBuildSubgenrePills() {
+  if (_mlQueryMode !== 'profile') return '';
+  const pills = _SUBGENRES.map(sub => {
+    const active = _mlActiveSubgenres.has(sub);
+    return `<button class="cluster-pill ${active ? 'active' : ''}"
+      style="min-width:0;padding:6px 12px;flex-direction:row;align-items:center;gap:6px"
+      onclick="mlToggleSubgenre(${JSON.stringify(sub)})">
+      <span class="cluster-pill-label" style="font-size:12px">${esc(sub)}</span>
+    </button>`;
+  }).join('');
+  return `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">${pills}</div>`;
+}
+
 function mlBuildClusterPills() {
   if (!_mlTopClusters.length || _mlQueryMode !== 'profile') return '';
+
+  const hasAnyFilter = _mlActiveClusters.size > 0 || _mlActiveSubgenres.size > 0;
+  const clearBtn = hasAnyFilter
+    ? `· <a href="#" onclick="mlClearFilters();return false" style="color:var(--accent);font-weight:600">limpar filtros</a>`
+    : '';
+
   const pills = _mlTopClusters.map(c => {
     const pct    = Math.round(c.sim * 100);
-    const active = _mlActiveCluster === c.id;
-    // Show user's own top-rated games in this cluster — much more meaningful than catalog games
-    const myGames = mlUserGamesInCluster(c.id);
+    const active = _mlActiveClusters.has(c.id);
+    const myGames  = mlUserGamesInCluster(c.id);
     const examples = myGames.length
       ? myGames.join(', ')
       : c.top_games.slice(0, 2).map(g => g.title).join(', ');
     const exPrefix = myGames.length ? '' : 'ex: ';
-    // Steam tags: filter noise, prefer descriptive ones
-    const PILL_NOISE = new Set(['Singleplayer','Multiplayer','Action','Adventure',
-      '2D','3D','Indie','RPG','Shooter','Platformer','Puzzle','Fighting',
-      'Racing','Sports','Simulation','Strategy','Early Access','Free to Play']);
-    const steamTags = (c.steam_tags || []).filter(t => !PILL_NOISE.has(t)).slice(0, 3).join(' · ');
+    const steamTags = (c.steam_tags || []).filter(t => !_PILL_STEAM_NOISE.has(t)).slice(0, 3).join(' · ');
     return `
       <button class="cluster-pill ${active ? 'active' : ''}" onclick="mlSelectCluster(${c.id})">
         <span class="cluster-pill-label">${esc(c.label)}</span>
@@ -2461,8 +2540,12 @@ function mlBuildClusterPills() {
 
   return `
     <div id="ml-cluster-section" style="margin-bottom:20px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">
-        Seus grupos de gosto ${_mlActiveCluster !== null ? '· <a href="#" onclick="mlSelectCluster(null);return false" style="color:var(--accent);font-weight:600">ver todos</a>' : ''}
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">
+        Subgêneros ${clearBtn}
+      </div>
+      ${mlBuildSubgenrePills()}
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;margin-top:12px">
+        Seus grupos de gosto
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">${pills}</div>
     </div>`;
@@ -2610,8 +2693,7 @@ function mlClearSearch() {
   _mlQueryMode = 'profile';
   _mlQueryGame = null;
   _mlQueryTag  = '';
-  const clusterFilter = (_mlActiveCluster !== null) ? new Set([_mlActiveCluster]) : null;
-  mlRenderResults(ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, clusterFilter, 80));
+  mlRunFilteredRecs();
 }
 
 // ── Query mode banner ─────────────────────────────────────────────────────────
@@ -2765,8 +2847,9 @@ async function mlRunRecs() {
   if (!_mlProfileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
 
   // Discover user's taste clusters
-  _mlTopClusters   = ML.topClusters(_mlProfileVec, 6);
-  _mlActiveCluster = null;  // start with no filter
+  _mlTopClusters = ML.topClusters(_mlProfileVec, 6);
+  _mlActiveClusters.clear();
+  _mlActiveSubgenres.clear();
 
   const candidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, null, 80);
   mlRenderResults(candidates);
