@@ -2384,12 +2384,15 @@ function mlBuildClusterPills() {
     const pct     = Math.round(c.sim * 100);
     const active  = _mlActiveCluster === c.id;
     const examples = c.top_games.slice(0, 2).map(g => g.title).join(', ');
-    const subs    = c.top_subgenres?.slice(0, 2).join(' · ') || '';
+    // Steam tags give richer signal than subgenres (which repeat across all clusters)
+    const steamTags = (c.steam_tags || [])
+      .filter(t => !['Singleplayer','Multiplayer','Action','Adventure','2D','3D','Indie'].includes(t))
+      .slice(0, 3).join(' · ');
     return `
       <button class="cluster-pill ${active ? 'active' : ''}" onclick="mlSelectCluster(${c.id})">
         <span class="cluster-pill-label">${esc(c.label)}</span>
         <span class="cluster-pill-match">${pct}% match</span>
-        ${subs ? `<span class="cluster-pill-sub">${esc(subs)}</span>` : ''}
+        ${steamTags ? `<span class="cluster-pill-sub">${esc(steamTags)}</span>` : ''}
         <span class="cluster-pill-ex">${esc(examples)}</span>
       </button>`;
   }).join('');
