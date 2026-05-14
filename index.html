@@ -2337,7 +2337,9 @@ const ML = {
       const cnt  = g?.igdb_rating_count || 0;
       const raw  = g?.igdb_rating || m;
       const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
-      scores.push({ igdbId: id, sim, qual, hybrid: 0.65 * sim + 0.35 * qual });
+      // "Similar to X" mode: similarity dominates (92%), quality is only a tiebreaker.
+      // Profile mode uses 65/35 to surface good games — here we want actual likeness.
+      scores.push({ igdbId: id, sim, qual, hybrid: 0.92 * sim + 0.08 * qual });
     }
     scores.sort((a, b) => b.hybrid - a.hybrid);
     return scores.slice(0, n);
@@ -2849,7 +2851,7 @@ function mlRenderCards(results) {
             ${g.coop ? `<span class="genre-chip subgenre">🤝 Co-op</span>` : ''}
           </div>
           <div class="signal-bar">
-            <span class="signal-chip pos">🧠 ${pct}% similar</span>
+            <span class="signal-chip ${pct>=75?'pos':pct>=60?'':''}" style="${pct<60?'opacity:.55':''}">🧠 ${pct}% similar</span>
           </div>
         </div>
         <div class="rec-actions">
