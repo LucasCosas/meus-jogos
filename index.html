@@ -2782,7 +2782,11 @@ function mlRenderCards(results) {
         <div class="rec-icon" style="background:${color}">${gameInitials(g.title)}</div>
         <div class="rec-info">
           <h4>${esc(g.title)}</h4>
-          <div class="rec-plats">${esc(plats)}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+            ${g.year ? `<span style="font-size:12px;color:var(--muted)">${g.year}</span>` : ''}
+            ${g.igdb_rating ? `<span style="font-size:12px;font-weight:700;color:var(--accent)">★ ${Math.round(g.igdb_rating)}</span>` : ''}
+            ${plats ? `<span style="font-size:12px;color:var(--muted)">${esc(plats)}</span>` : ''}
+          </div>
           <div class="card-genres">
             ${(g.genres||[]).slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
             ${(g.subgenres||[]).map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
@@ -2790,7 +2794,6 @@ function mlRenderCards(results) {
           </div>
           <div class="signal-bar">
             <span class="signal-chip pos">🧠 ${pct}% similar</span>
-            ${g.igdb_rating ? `<span class="signal-chip">🎯 IGDB ${Math.round(g.igdb_rating)}</span>` : ''}
           </div>
         </div>
         <div class="rec-actions">
