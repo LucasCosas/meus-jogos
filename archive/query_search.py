@@ -23,9 +23,11 @@ Exemplos:
 import struct, json, os, difflib
 import numpy as np
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+BASE    = os.path.dirname(os.path.abspath(__file__))
+vectors = None  # set after load_embeddings()
 
 def load_embeddings():
+    global vectors
     path = os.path.join(BASE, '..', 'embeddings.bin')
     with open(path, 'rb') as f:
         n        = struct.unpack('<I', f.read(4))[0]
@@ -43,21 +45,58 @@ def year_weight(year, min_year):
     # Full weight from min_year+5 onwards, ramps up linearly before that
     return min(1.0, (year - min_year) / 5 + 0.3)
 
-def find_game(name, id_map, igdb_ids, title_to_idx):
-    """Fuzzy match game title → returns (igdb_id, idx, title) or None."""
+def find_game(name, id_map, igdb_ids, title_to_idx, user_games, meta, model):
+    """
+    Find a game by title and return its query vector.
+    Priority:
+      1. Backlog catalog (pre-computed vector, instant)
+      2. User's played games (encode on the fly from backlog_meta)
+    Returns (vector, title, exclude_igdb_id) or None.
+    """
     name_lower = name.lower()
-    titles = list(title_to_idx.keys())
-    matches = difflib.get_close_matches(name_lower, titles, n=3, cutoff=0.4)
+
+    # 1. Try backlog catalog first (exact/fuzzy)
+    matches = difflib.get_close_matches(name_lower, title_to_idx.keys(), n=1, cutoff=0.6)
     if not matches:
-        # fallback: substring match
-        matches = [t for t in titles if name_lower in t]
-    if not matches:
-        return None
-    best = matches[0]
-    idx  = title_to_idx[best]
-    igdb_id = int(igdb_ids[idx])
-    g = id_map[igdb_id]
-    return igdb_id, idx, g['title']
+        matches = [t for t in title_to_idx.keys() if name_lower in t]
+    if matches:
+        idx = title_to_idx[matches[0]]
+        igdb_id = int(igdb_ids[idx])
+        g = id_map[igdb_id]
+        return vectors[idx], g['title'], igdb_id
+
+    # 2. Try user's own games.json
+    user_matches = difflib.get_close_matches(name_lower, [g['title'].lower() for g in user_games], n=1, cutoff=0.6)
+    if not user_matches:
+        user_matches = [g['title'].lower() for g in user_games if name_lower in g['title'].lower()]
+    if user_matches:
+        ug = next(g for g in user_games if g['title'].lower() == user_matches[0])
+        igdb_id = ug.get('igdb_id')
+        m = meta.get(str(igdb_id), {}) if igdb_id else {}
+        text = build_text_from_parts(ug.get('genres') or [], m)
+        if not text.strip():
+            return None
+        print(f'  (encodando "{ug["title"]}" on the fly...)', flush=True)
+        vec = model.encode([text], normalize_embeddings=True)[0]
+        return vec, ug['title'], igdb_id
+
+    return None
+
+def build_text_from_parts(genres, meta):
+    parts = []
+    if genres:
+        parts.append('Genres: ' + ', '.join(genres))
+    if meta.get('themes'):
+        parts.append('Themes: ' + ', '.join(meta['themes']))
+    if meta.get('perspectives'):
+        parts.append('Perspective: ' + ', '.join(meta['perspectives']))
+    if meta.get('keywords'):
+        parts.append('Tags: ' + ', '.join(meta['keywords'][:40]))
+    if meta.get('summary'):
+        parts.append(meta['summary'])
+    if meta.get('storyline') and meta.get('storyline') != meta.get('summary'):
+        parts.append(meta['storyline'])
+    return '. '.join(parts)
 
 def show_results(candidates, id_map, label, top_k, min_igdb, min_year, coop_only, exclude_id=None):
     print(f'\n{label}')
@@ -115,12 +154,14 @@ def parse_line(line):
 
 def main():
     print("Carregando embeddings...", flush=True)
-    igdb_ids, vectors = load_embeddings()
+    igdb_ids, _ = load_embeddings()  # sets global `vectors`
 
-    backlog = json.load(open(os.path.join(BASE, '..', 'backlog.json')))
-    id_map  = {g['igdb_id']: g for g in backlog}
+    backlog     = json.load(open(os.path.join(BASE, '..', 'backlog.json')))
+    id_map      = {g['igdb_id']: g for g in backlog}
+    user_data   = json.load(open(os.path.join(BASE, '..', 'games.json')))
+    user_games  = user_data.get('games', user_data) if isinstance(user_data, dict) else user_data
+    meta        = json.load(open(os.path.join(BASE, '..', 'backlog_meta.json')))
 
-    # Build lowercase title → index map for fuzzy matching
     title_to_idx = {g['title'].lower(): i
                     for i, igdb_id in enumerate(igdb_ids)
                     for g in [id_map.get(int(igdb_id))] if g}
@@ -129,7 +170,7 @@ def main():
     from sentence_transformers import SentenceTransformer
     model = SentenceTransformer('all-MiniLM-L6-v2')
 
-    print(f"Pronto! {len(igdb_ids)} jogos indexados.")
+    print(f"Pronto! {len(igdb_ids)} jogos no catálogo + {len(user_games)} jogos do seu histórico.")
     print(__doc__)
 
     while True:
@@ -137,19 +178,17 @@ def main():
             raw = input("query/similar> ").strip()
             if not raw: continue
 
-            # Detect mode
             if raw.lower().startswith('similar>'):
                 line = raw[len('similar>'):].strip()
-                text, top_k, min_igdb, min_year, coop = parse_line(line)
-                result = find_game(text, id_map, igdb_ids, title_to_idx)
+                name, top_k, min_igdb, min_year, coop = parse_line(line)
+                result = find_game(name, id_map, igdb_ids, title_to_idx, user_games, meta, model)
                 if not result:
-                    print(f'  ❌ Jogo "{text}" não encontrado no catálogo.\n')
+                    print(f'  ❌ "{name}" não encontrado no catálogo nem no seu histórico.\n')
                     continue
-                igdb_id, idx, matched_title = result
-                print(f'  ✓ Usando vetor de: "{matched_title}"')
-                qvec = vectors[idx]
+                qvec, matched_title, exclude_id = result
+                print(f'  ✓ Referência: "{matched_title}"')
                 search_by_vec(qvec, vectors, igdb_ids, id_map, min_year, top_k, min_igdb, coop,
-                              label=f'🎮 Similar a "{matched_title}"', exclude_id=igdb_id)
+                              label=f'🎮 Similar a "{matched_title}"', exclude_id=exclude_id)
             else:
                 if raw.lower().startswith('query>'):
                     raw = raw[len('query>'):].strip()

@@ -24,11 +24,11 @@ BATCH     = 256
 
 def build_text(game, meta):
     """
-    Concatenates all available info into a single text for embedding.
-    Order: title first (most important anchor), then structured tags,
-    then free text summary (most verbose, last).
+    Concatenates semantic content into a single text for embedding.
+    Title is intentionally excluded — it's an identifier, not a descriptor.
+    Matching on title words ("Blue" in "Blue Prince") produces false positives.
     """
-    parts = [game['title']]
+    parts = []
 
     genres = game.get('genres') or []
     if genres:
@@ -69,13 +69,19 @@ def main():
     model = SentenceTransformer(MODEL)
     print(f'  Ready in {time.time()-t0:.1f}s')
 
-    # Build (igdb_id, text) pairs
+    # Build (igdb_id, text) pairs — skip games with no usable text
     games_data = []
+    skipped = 0
     for g in backlog:
         igdb_id = g['igdb_id']
         m = meta.get(str(igdb_id), {})
         text = build_text(g, m)
+        if not text.strip():
+            skipped += 1
+            continue
         games_data.append((igdb_id, text))
+    if skipped:
+        print(f'  Skipped {skipped} games with no text')
 
     # Sample output so you can see what goes in
     print(f'\nSample text for "{backlog[0]["title"]}":')
