@@ -315,6 +315,23 @@
   .cluster-pill-match { font-size:11px; font-weight:600; color:var(--accent); }
   .cluster-pill-sub   { font-size:11px; color:var(--muted); }
   .cluster-pill-ex    { font-size:11px; color:var(--muted); font-style:italic; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+  /* ─── ML Search ─────────────────────────────────────────── */
+  .ml-search-wrap { position:relative; margin-bottom:16px; }
+  .ml-search-input { width:100%; padding:10px 14px 10px 38px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface2); color:var(--text); font-size:14px; outline:none; box-sizing:border-box; transition:border-color .15s; }
+  .ml-search-input:focus { border-color:var(--accent); }
+  .ml-search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:15px; pointer-events:none; }
+  .ml-search-clear { position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; padding:2px 6px; border-radius:4px; }
+  .ml-search-clear:hover { color:var(--text); }
+  .ml-search-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; z-index:200; box-shadow:0 6px 24px rgba(0,0,0,.35); overflow:hidden; }
+  .ml-search-item { padding:9px 14px; cursor:pointer; font-size:13px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+  .ml-search-item:last-child { border-bottom:none; }
+  .ml-search-item:hover,.ml-search-item.focused { background:var(--accent-light); }
+  .ml-search-item-icon { font-size:15px; flex-shrink:0; }
+  .ml-search-item-title { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .ml-search-item-sub { font-size:11px; color:var(--muted); flex-shrink:0; }
+  .ml-query-banner { display:flex; align-items:center; gap:10px; padding:9px 14px; background:var(--accent-light); border:1.5px solid var(--accent); border-radius:10px; font-size:13px; margin-bottom:14px; }
+  .ml-query-banner strong { color:var(--text); }
+  .ml-query-clear { margin-left:auto; background:none; border:1px solid var(--accent); color:var(--accent); border-radius:6px; padding:2px 10px; font-size:12px; cursor:pointer; }
 
   /* ─── Scrollbar ───────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
@@ -2255,6 +2272,29 @@ const ML = {
       .slice(0, n);
   },
 
+  // Find embedding for a specific game and return similar games
+  similarTo(igdbId, idMap, n = 80) {
+    let queryVec = null;
+    for (let i = 0; i < this.nGames; i++) {
+      if (this.igdbIdAt(i) === igdbId) { queryVec = this.vectorAt(i); break; }
+    }
+    if (!queryVec) return [];
+    const C = 5, m = 75;
+    const scores = [];
+    for (let i = 0; i < this.nGames; i++) {
+      const id = this.igdbIdAt(i);
+      if (id === igdbId) continue;
+      const sim  = this.dot(queryVec, this.vectorAt(i));
+      const g    = idMap.get(id);
+      const cnt  = g?.igdb_rating_count || 0;
+      const raw  = g?.igdb_rating || m;
+      const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
+      scores.push({ igdbId: id, sim, qual, hybrid: 0.65 * sim + 0.35 * qual });
+    }
+    scores.sort((a, b) => b.hybrid - a.hybrid);
+    return scores.slice(0, n);
+  },
+
   // Top-N candidates scored by hybrid: 65% cosine sim + 35% IGDB quality
   // clusterFilter: Set<cluster_id> or null (no filter)
   // idMap: Map<igdb_id, backlog_game>
@@ -2361,54 +2401,238 @@ async function mlLoadClusters() {
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let _mlCandidates   = []; // full scored list, re-filtered on filter change
-let _mlIdMap        = new Map();
-let _mlProfileVec   = null;
-let _mlExcludeIds   = [];
-let _mlTopClusters  = [];  // [{id, label, sim, top_games, ...}]
+let _mlCandidates    = []; // full scored list, re-filtered on filter change
+let _mlIdMap         = new Map();
+let _mlProfileVec    = null;
+let _mlExcludeIds    = [];
+let _mlTopClusters   = [];  // [{id, label, sim, top_games, ...}]
 let _mlActiveCluster = null; // null = all clusters
+// Search/query mode
+let _mlQueryMode  = 'profile';  // 'profile' | 'similar_to' | 'tag'
+let _mlQueryGame  = null;        // {igdbId, title} in similar_to mode
+let _mlQueryTag   = '';          // keyword/tag in tag mode
 
 // ── Cluster pill click ────────────────────────────────────────────────────────
 function mlSelectCluster(id) {
   _mlActiveCluster = (_mlActiveCluster === id) ? null : id;  // toggle
-  // Re-run recommend with new cluster filter and re-render everything
+  _mlQueryMode = 'profile';
+  _mlQueryGame = null;
+  _mlQueryTag  = '';
   const clusterFilter = (_mlActiveCluster !== null) ? new Set([_mlActiveCluster]) : null;
   _mlCandidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, clusterFilter, 80);
   mlRenderResults(_mlCandidates, /* update controls */ true);
 }
 
+// ── User's rated games per cluster ────────────────────────────────────────────
+function mlUserGamesInCluster(clusterId) {
+  if (!ML.assignments) return [];
+  return loadGames()
+    .filter(g => g.rating >= 8 && g.igdb_id && ML.assignments.get(g.igdb_id) === clusterId)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, 3)
+    .map(g => g.title);
+}
+
 // ── Controls HTML ─────────────────────────────────────────────────────────────
 function mlBuildClusterPills() {
-  if (!_mlTopClusters.length) return '';
+  if (!_mlTopClusters.length || _mlQueryMode !== 'profile') return '';
   const pills = _mlTopClusters.map(c => {
-    const pct     = Math.round(c.sim * 100);
-    const active  = _mlActiveCluster === c.id;
-    const examples = c.top_games.slice(0, 2).map(g => g.title).join(', ');
-    // Steam tags give richer signal than subgenres (which repeat across all clusters)
-    const steamTags = (c.steam_tags || [])
-      .filter(t => !['Singleplayer','Multiplayer','Action','Adventure','2D','3D','Indie'].includes(t))
-      .slice(0, 3).join(' · ');
+    const pct    = Math.round(c.sim * 100);
+    const active = _mlActiveCluster === c.id;
+    // Show user's own top-rated games in this cluster — much more meaningful than catalog games
+    const myGames = mlUserGamesInCluster(c.id);
+    const examples = myGames.length
+      ? myGames.join(', ')
+      : c.top_games.slice(0, 2).map(g => g.title).join(', ');
+    const exPrefix = myGames.length ? '' : 'ex: ';
+    // Steam tags: filter noise, prefer descriptive ones
+    const PILL_NOISE = new Set(['Singleplayer','Multiplayer','Action','Adventure',
+      '2D','3D','Indie','RPG','Shooter','Platformer','Puzzle','Fighting',
+      'Racing','Sports','Simulation','Strategy','Early Access','Free to Play']);
+    const steamTags = (c.steam_tags || []).filter(t => !PILL_NOISE.has(t)).slice(0, 3).join(' · ');
     return `
       <button class="cluster-pill ${active ? 'active' : ''}" onclick="mlSelectCluster(${c.id})">
         <span class="cluster-pill-label">${esc(c.label)}</span>
         <span class="cluster-pill-match">${pct}% match</span>
         ${steamTags ? `<span class="cluster-pill-sub">${esc(steamTags)}</span>` : ''}
-        <span class="cluster-pill-ex">${esc(examples)}</span>
+        <span class="cluster-pill-ex">${esc(exPrefix + examples)}</span>
       </button>`;
   }).join('');
 
   return `
     <div id="ml-cluster-section" style="margin-bottom:20px">
       <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">
-        Seus clusters de gosto ${_mlActiveCluster !== null ? '· <a href="#" onclick="mlSelectCluster(null);return false" style="color:var(--accent);font-weight:600">ver todos</a>' : ''}
+        Seus grupos de gosto ${_mlActiveCluster !== null ? '· <a href="#" onclick="mlSelectCluster(null);return false" style="color:var(--accent);font-weight:600">ver todos</a>' : ''}
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">${pills}</div>
     </div>`;
 }
 
+// ── Search bar HTML ───────────────────────────────────────────────────────────
+function mlBuildSearchBar() {
+  return `
+    <div class="ml-search-wrap" id="ml-search-wrap">
+      <span class="ml-search-icon">🔍</span>
+      <input class="ml-search-input" id="ml-search-input" type="text"
+        placeholder="Similar a... (ex: Blue Prince) ou filtre por tag (roguelike, horror...)"
+        autocomplete="off"
+        oninput="mlOnSearchInput(this.value)"
+        onkeydown="mlSearchKeydown(event)"
+        onfocus="mlOnSearchInput(this.value)"
+        onblur="setTimeout(()=>document.getElementById('ml-search-dropdown')?.remove(), 200)"
+      >
+      <button class="ml-search-clear" id="ml-search-clear-btn"
+        style="display:none" onclick="mlClearSearch()" title="Limpar busca">✕</button>
+    </div>`;
+}
+
+// ── Search autocomplete logic ─────────────────────────────────────────────────
+let _mlSearchFocusIdx = -1;
+
+function mlOnSearchInput(val) {
+  val = val.trim();
+  document.getElementById('ml-search-clear-btn').style.display = val ? 'block' : 'none';
+  const dd = document.getElementById('ml-search-dropdown');
+  if (dd) dd.remove();
+  if (!val) return;
+
+  const q = val.toLowerCase();
+  // Match games by title
+  const gameMatches = _backlog
+    .filter(g => g.title.toLowerCase().includes(q))
+    .sort((a, b) => {
+      const aStart = a.title.toLowerCase().startsWith(q) ? 0 : 1;
+      const bStart = b.title.toLowerCase().startsWith(q) ? 0 : 1;
+      return aStart - bStart || (b.igdb_rating || 0) - (a.igdb_rating || 0);
+    })
+    .slice(0, 7);
+
+  const items = gameMatches.map((g, i) => {
+    const genres = (g.genres || []).slice(0, 2).join(', ');
+    return `<div class="ml-search-item" data-idx="${i}"
+      onmousedown="mlSelectSearchGame(${g.igdb_id}, ${JSON.stringify(g.title)})">
+      <span class="ml-search-item-icon">🎮</span>
+      <span class="ml-search-item-title">${esc(g.title)}</span>
+      <span class="ml-search-item-sub">${esc(genres)}</span>
+    </div>`;
+  });
+
+  // Always offer tag search
+  items.push(`<div class="ml-search-item" data-idx="${gameMatches.length}"
+    onmousedown="mlSearchByTag(${JSON.stringify(val)})">
+    <span class="ml-search-item-icon">🏷️</span>
+    <span class="ml-search-item-title">Filtrar por tag: <strong>${esc(val)}</strong></span>
+    <span class="ml-search-item-sub">Enter</span>
+  </div>`);
+
+  _mlSearchFocusIdx = -1;
+  const wrap = document.getElementById('ml-search-wrap');
+  if (!wrap) return;
+  const dropdown = document.createElement('div');
+  dropdown.id = 'ml-search-dropdown';
+  dropdown.className = 'ml-search-dropdown';
+  dropdown.innerHTML = items.join('');
+  wrap.appendChild(dropdown);
+}
+
+function mlSearchKeydown(e) {
+  const dd = document.getElementById('ml-search-dropdown');
+  if (!dd) {
+    if (e.key === 'Enter') mlSearchByTag(document.getElementById('ml-search-input').value.trim());
+    return;
+  }
+  const items = dd.querySelectorAll('.ml-search-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    _mlSearchFocusIdx = Math.min(_mlSearchFocusIdx + 1, items.length - 1);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _mlSearchFocusIdx = Math.max(_mlSearchFocusIdx - 1, -1);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (_mlSearchFocusIdx >= 0) items[_mlSearchFocusIdx]?.dispatchEvent(new MouseEvent('mousedown'));
+    else mlSearchByTag(document.getElementById('ml-search-input').value.trim());
+    return;
+  } else if (e.key === 'Escape') {
+    dd.remove(); return;
+  }
+  items.forEach((el, i) => el.classList.toggle('focused', i === _mlSearchFocusIdx));
+}
+
+function mlSelectSearchGame(igdbId, title) {
+  document.getElementById('ml-search-dropdown')?.remove();
+  document.getElementById('ml-search-input').value = title;
+  document.getElementById('ml-search-clear-btn').style.display = 'block';
+  _mlQueryMode = 'similar_to';
+  _mlQueryGame = { igdbId, title };
+  _mlQueryTag  = '';
+  const results = ML.similarTo(igdbId, _mlIdMap, 80);
+  mlRenderResults(results);
+}
+
+function mlSearchByTag(tag) {
+  if (!tag) return;
+  document.getElementById('ml-search-dropdown')?.remove();
+  document.getElementById('ml-search-input').value = tag;
+  document.getElementById('ml-search-clear-btn').style.display = 'block';
+  const q = tag.toLowerCase();
+  _mlQueryMode = 'tag';
+  _mlQueryTag  = tag;
+  _mlQueryGame = null;
+
+  // Score all backlog games that match the tag, rank by profile similarity (or rating)
+  const scores = [];
+  for (let i = 0; i < ML.nGames; i++) {
+    const id = ML.igdbIdAt(i);
+    const g  = _mlIdMap.get(id);
+    if (!g) continue;
+    // Check if the game matches the query in title, genres, subgenres
+    const haystack = [
+      g.title, ...(g.genres || []), ...(g.subgenres || []), ...(g.themes || [])
+    ].join(' ').toLowerCase();
+    if (!haystack.includes(q)) continue;
+    const sim   = _mlProfileVec ? ML.dot(_mlProfileVec, ML.vectorAt(i)) : 0;
+    const C = 5, m = 75, cnt = g.igdb_rating_count || 0, raw = g.igdb_rating || m;
+    const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
+    scores.push({ igdbId: id, sim, qual, hybrid: 0.6 * sim + 0.4 * qual });
+  }
+  scores.sort((a, b) => b.hybrid - a.hybrid);
+  mlRenderResults(scores.slice(0, 80));
+}
+
+function mlClearSearch() {
+  document.getElementById('ml-search-input').value = '';
+  document.getElementById('ml-search-clear-btn').style.display = 'none';
+  document.getElementById('ml-search-dropdown')?.remove();
+  _mlQueryMode = 'profile';
+  _mlQueryGame = null;
+  _mlQueryTag  = '';
+  const clusterFilter = (_mlActiveCluster !== null) ? new Set([_mlActiveCluster]) : null;
+  mlRenderResults(ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, clusterFilter, 80));
+}
+
+// ── Query mode banner ─────────────────────────────────────────────────────────
+function mlBuildQueryBanner() {
+  if (_mlQueryMode === 'similar_to' && _mlQueryGame) {
+    return `<div class="ml-query-banner">
+      🎯 <strong>Similar a: ${esc(_mlQueryGame.title)}</strong>
+      <button class="ml-query-clear" onclick="mlClearSearch()">✕ Limpar</button>
+    </div>`;
+  }
+  if (_mlQueryMode === 'tag' && _mlQueryTag) {
+    return `<div class="ml-query-banner">
+      🏷️ <strong>Tag: ${esc(_mlQueryTag)}</strong>
+      <button class="ml-query-clear" onclick="mlClearSearch()">✕ Limpar</button>
+    </div>`;
+  }
+  return '';
+}
+
 function mlBuildControls() {
   const allPlats = [...new Set(_backlog.flatMap(g => g.platforms || []))].filter(p => DEFAULT_PLATFORMS.includes(p)).sort();
   return `
+    ${mlBuildSearchBar()}
+    ${mlBuildQueryBanner()}
     ${mlBuildClusterPills()}
     <div class="recs-row" style="margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <select class="filter-select" id="ml-filter-platform" onchange="mlApplyFilters()">
@@ -2497,7 +2721,14 @@ function mlRenderCards(results) {
 // ── Render full results section ───────────────────────────────────────────────
 function mlRenderResults(candidates, controlsOnly = false) {
   if (!controlsOnly) _mlCandidates = candidates;
+  const prevQuery = document.getElementById('ml-search-input')?.value || '';
   document.getElementById('ml-results').innerHTML = mlBuildControls() + `<div class="recs-body" id="ml-cards-body"></div>`;
+  // Restore search input text after re-render
+  const inp = document.getElementById('ml-search-input');
+  if (inp && prevQuery) {
+    inp.value = prevQuery;
+    document.getElementById('ml-search-clear-btn').style.display = 'block';
+  }
   document.getElementById('ml-results').style.display = 'block';
   document.getElementById('ml-empty').style.display   = 'none';
   mlApplyFilters();
