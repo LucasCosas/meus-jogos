@@ -2333,7 +2333,7 @@ const ML = {
       if (this.igdbIdAt(i) === igdbId) { queryVec = this.vectorAt(i); break; }
     }
     if (!queryVec) return [];
-    const C = 5, m = 75;
+    const C = 100, m = 75;
     const scores = [];
     for (let i = 0; i < this.nGames; i++) {
       const id = this.igdbIdAt(i);
@@ -2355,7 +2355,7 @@ const ML = {
   // clusterFilter: Set<cluster_id> or null (no filter)
   // idMap: Map<igdb_id, backlog_game>
   recommend(profileVec, excludeIds, idMap, clusterFilter = null, n = 60) {
-    const C = 5, m = 75; // Bayesian prior for IGDB score
+    const C = 100, m = 75; // Bayesian prior for IGDB score
     const exclude = new Set(excludeIds);
     const scores  = [];
     for (let i = 0; i < this.nGames; i++) {
@@ -2481,7 +2481,7 @@ function mlRunFilteredRecs() {
   } else {
     // Score all games that match: selected cluster(s) OR selected subgenre(s)
     const exclude = new Set(_mlExcludeIds);
-    const C = 5, m = 75;
+    const C = 100, m = 75;
     const scores = [];
     for (let i = 0; i < ML.nGames; i++) {
       const id = ML.igdbIdAt(i);
@@ -2737,7 +2737,7 @@ function mlSearchByTag(tag) {
     ].join(' ').toLowerCase();
     if (!haystack.includes(q)) continue;
     const sim   = _mlProfileVec ? ML.dot(_mlProfileVec, ML.vectorAt(i)) : 0;
-    const C = 5, m = 75, cnt = g.igdb_rating_count || 0, raw = g.igdb_rating || m;
+    const C = 100, m = 75, cnt = g.igdb_rating_count || 0, raw = g.igdb_rating || m;
     const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
     scores.push({ igdbId: id, sim, qual, hybrid: 0.6 * sim + 0.4 * qual });
   }
