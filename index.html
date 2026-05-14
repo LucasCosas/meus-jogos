@@ -297,18 +297,17 @@
   .replay-recent { background: rgba(201,64,64,.12); color: var(--red); }
 
   /* ─── ML Pipeline ─────────────────────────────────────────── */
-  .ml-step { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
-  .ml-step-header { display: flex; align-items: flex-start; gap: 14px; }
-  .ml-step-badge { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-  .ml-step-badge.pending  { background: var(--surface2); color: var(--muted); }
-  .ml-step-badge.done     { background: rgba(42,157,92,.15); color: var(--green); }
-  .ml-step-badge.running  { background: rgba(240,107,42,.12); color: var(--accent); }
-  .ml-step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .ml-step-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .ml-step-desc code { background: var(--surface2); padding: 1px 5px; border-radius: 4px; font-size: 11px; }
-  .ml-step-status { margin-left: auto; font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 3px; flex-shrink: 0; }
-  .ml-step.done .ml-step-status   { color: var(--green); font-weight: 600; }
-  .ml-step.running .ml-step-status { color: var(--accent); font-weight: 600; }
+  .ml-pipeline { display: flex; gap: 8px; padding: 10px 28px; border-bottom: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; }
+  .ml-step { display: flex; align-items: center; gap: 7px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px 5px 7px; font-size: 12px; }
+  .ml-step.done    { border-color: rgba(42,157,92,.35); background: rgba(42,157,92,.07); }
+  .ml-step.running { border-color: rgba(240,107,42,.35); background: rgba(240,107,42,.07); }
+  .ml-step-badge { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; background: var(--border-dark); color: var(--muted); }
+  .ml-step.done    .ml-step-badge { background: rgba(42,157,92,.2);  color: var(--green); }
+  .ml-step.running .ml-step-badge { background: rgba(240,107,42,.2); color: var(--accent); }
+  .ml-step-title  { font-weight: 600; color: var(--text); }
+  .ml-step-status { color: var(--muted); margin-left: 4px; }
+  .ml-step.done    .ml-step-status { color: var(--green); }
+  .ml-step.running .ml-step-status { color: var(--accent); }
 
   /* ─── Scrollbar ───────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
@@ -441,64 +440,37 @@
 
   <!-- ML / Vector Recs -->
   <div id="page-ml" class="page">
-    <div class="page-header">
+    <div class="page-header" style="padding-bottom:12px">
       <div class="page-label">🧠 Experimental</div>
       <h1>Recomendações por Vetor</h1>
-      <p>Motor baseado em embeddings semânticos — mais preciso que pesos manuais.</p>
     </div>
 
-    <div id="ml-body" style="padding: 0 20px 40px">
-
-      <!-- Pipeline status -->
-      <div style="display:flex;flex-direction:column;gap:12px;max-width:600px;margin:0 auto 32px">
-
-        <div class="ml-step" id="ml-step-summaries">
-          <div class="ml-step-header">
-            <span class="ml-step-badge pending">1</span>
-            <div>
-              <div class="ml-step-title">Buscar descrições e tags via IGDB</div>
-              <div class="ml-step-desc">Campos: <code>summary</code>, <code>themes</code>, <code>keywords</code>, <code>player_perspectives</code> — para os 16k jogos do catálogo</div>
-            </div>
-            <span class="ml-step-status" id="ml-status-summaries">Pendente</span>
-          </div>
-        </div>
-
-        <div class="ml-step" id="ml-step-embeddings">
-          <div class="ml-step-header">
-            <span class="ml-step-badge pending">2</span>
-            <div>
-              <div class="ml-step-title">Gerar embeddings localmente</div>
-              <div class="ml-step-desc">Modelo <code>all-MiniLM-L6-v2</code> via sentence-transformers — 384 dims, ~3 min no M4, roda offline</div>
-            </div>
-            <span class="ml-step-status" id="ml-status-embeddings">Aguardando etapa 1</span>
-          </div>
-        </div>
-
-        <div class="ml-step" id="ml-step-engine">
-          <div class="ml-step-header">
-            <span class="ml-step-badge pending">3</span>
-            <div>
-              <div class="ml-step-title">Motor de cosine similarity no browser</div>
-              <div class="ml-step-desc">Carrega <code>embeddings.bin</code> (~25MB), computa vetor do perfil ponderado pelas suas notas, busca os mais próximos</div>
-            </div>
-            <span class="ml-step-status" id="ml-status-engine">Aguardando etapa 2</span>
-          </div>
-        </div>
-
+    <!-- Pipeline status bar -->
+    <div class="ml-pipeline">
+      <div class="ml-step" id="ml-step-summaries">
+        <span class="ml-step-badge">1</span>
+        <span class="ml-step-title">Metadata IGDB</span>
+        <span class="ml-step-status" id="ml-status-summaries">Pendente</span>
       </div>
+      <div class="ml-step" id="ml-step-embeddings">
+        <span class="ml-step-badge">2</span>
+        <span class="ml-step-title">Embeddings</span>
+        <span class="ml-step-status" id="ml-status-embeddings">Pendente</span>
+      </div>
+      <div class="ml-step" id="ml-step-engine">
+        <span class="ml-step-badge">3</span>
+        <span class="ml-step-title">Motor</span>
+        <span class="ml-step-status" id="ml-status-engine">Pendente</span>
+      </div>
+    </div>
 
-      <!-- Resultado virá aqui -->
+    <!-- Scrollable body -->
+    <div id="ml-body" style="flex:1;min-height:0;overflow-y:auto;padding:20px 28px 40px">
       <div id="ml-results" style="display:none"></div>
-
-      <!-- Empty state -->
-      <div id="ml-empty" style="text-align:center;padding:48px 0;color:var(--muted)">
-        <div style="font-size:48px;margin-bottom:16px">🧠</div>
-        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px">Pipeline ainda não rodado</div>
-        <div style="font-size:13px;line-height:1.6;max-width:360px;margin:0 auto">
-          Execute as etapas acima na ordem. Quando <code>embeddings.bin</code> estiver na pasta do projeto, o motor carrega automaticamente aqui.
-        </div>
+      <div id="ml-empty" style="text-align:center;padding:60px 0;color:var(--muted)">
+        <div style="font-size:40px;margin-bottom:12px">🧠</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">Carregando embeddings...</div>
       </div>
-
     </div>
   </div>
 
@@ -2278,7 +2250,7 @@ function _mlSetStep(stepId, cls, msg) {
   el.classList.remove('done', 'running');
   if (cls !== 'pending') el.classList.add(cls);
   const st = document.getElementById(stepId.replace('ml-step-', 'ml-status-'));
-  if (st) st.textContent = msg;
+  if (st) st.textContent = '· ' + msg;
 }
 
 // ── Load embeddings.bin ───────────────────────────────────────────────────────
