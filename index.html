@@ -2225,17 +2225,26 @@ const ML = {
     return vec;
   },
 
-  // Top-N most similar games (excludes already played)
-  recommend(profileVec, excludeIds, n = 30) {
+  // Top-N candidates scored by hybrid: 65% cosine sim + 35% IGDB quality
+  // idMap: Map<igdb_id, backlog_game>
+  recommend(profileVec, excludeIds, idMap, n = 60) {
+    const C = 5, m = 75; // Bayesian prior for IGDB score
     const exclude = new Set(excludeIds);
     const scores  = [];
     for (let i = 0; i < this.nGames; i++) {
       const igdbId = this.igdbIdAt(i);
       if (exclude.has(igdbId)) continue;
-      const sim = this.dot(profileVec, this.vectorAt(i));
-      scores.push({ igdbId, sim });
+      const sim  = this.dot(profileVec, this.vectorAt(i));
+      const g    = idMap.get(igdbId);
+      const cnt  = (g?.igdb_rating_count || 0);
+      const raw  = (g?.igdb_rating || m);
+      // Bayesian-smoothed IGDB score → [0,1]
+      const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
+      // Hybrid: penalizes high-sim but low-quality games (GTA with low ratings, obscure games)
+      const hybrid = 0.65 * sim + 0.35 * qual;
+      scores.push({ igdbId, sim, qual, hybrid });
     }
-    scores.sort((a, b) => b.sim - a.sim);
+    scores.sort((a, b) => b.hybrid - a.hybrid);
     return scores.slice(0, n);
   },
 };
@@ -2294,19 +2303,70 @@ async function mlLoadEmbeddings() {
   }
 }
 
-// ── Render results ────────────────────────────────────────────────────────────
-function mlRenderResults(results) {
-  const backlog = _backlog; // catalog loaded by main app
-  const idMap   = new Map(backlog.map(g => [g.igdb_id, g]));
-  const played  = new Set(loadGames().map(g => g.igdb_id).filter(Boolean));
+// ── State ─────────────────────────────────────────────────────────────────────
+let _mlCandidates = []; // full scored list, re-filtered on filter change
+let _mlIdMap      = new Map();
 
+// ── Controls HTML ─────────────────────────────────────────────────────────────
+function mlBuildControls() {
+  const allPlats = [...new Set(_backlog.flatMap(g => g.platforms || []))].filter(p => DEFAULT_PLATFORMS.includes(p)).sort();
+  return `
+    <div class="recs-row" style="margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <select class="filter-select" id="ml-filter-platform" onchange="mlApplyFilters()">
+        <option value="">Todas as plataformas</option>
+        ${allPlats.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+      </select>
+      <select class="filter-select" id="ml-filter-minrating" onchange="mlApplyFilters()">
+        <option value="0">Qualquer IGDB</option>
+        <option value="70">IGDB ≥ 70</option>
+        <option value="80">IGDB ≥ 80</option>
+        <option value="85">IGDB ≥ 85</option>
+        <option value="90">IGDB ≥ 90</option>
+      </select>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
+        <input type="checkbox" id="ml-filter-coop" onchange="mlApplyFilters()" style="accent-color:var(--accent)">
+        🤝 Só co-op
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer">
+        <input type="checkbox" id="ml-filter-excl-wl" checked onchange="mlApplyFilters()" style="accent-color:var(--accent)">
+        Excluir wishlist
+      </label>
+      <span id="ml-count" style="font-size:12px;color:var(--muted);margin-left:auto;align-self:center"></span>
+    </div>`;
+}
+
+// ── Apply filters to candidates ───────────────────────────────────────────────
+function mlApplyFilters() {
+  const platform  = document.getElementById('ml-filter-platform')?.value  || '';
+  const minRating = parseFloat(document.getElementById('ml-filter-minrating')?.value || '0');
+  const coopOnly  = document.getElementById('ml-filter-coop')?.checked    || false;
+  const exclWl    = document.getElementById('ml-filter-excl-wl')?.checked ?? true;
+  const wl        = loadWishlist();
+
+  const filtered = _mlCandidates.filter(r => {
+    const g = _mlIdMap.get(r.igdbId);
+    if (!g) return false;
+    if (exclWl && wl.includes(r.igdbId)) return false;
+    if (platform && !(g.platforms || []).includes(platform)) return false;
+    if (minRating && (g.igdb_rating || 0) < minRating) return false;
+    if (coopOnly && !g.coop) return false;
+    return true;
+  }).slice(0, 30);
+
+  document.getElementById('ml-count').textContent = `${filtered.length} jogos`;
+  mlRenderCards(filtered);
+}
+
+// ── Render cards ──────────────────────────────────────────────────────────────
+function mlRenderCards(results) {
   const cards = results.map((r, i) => {
-    const g = idMap.get(r.igdbId);
+    const g = _mlIdMap.get(r.igdbId);
     if (!g) return '';
     const pct   = Math.round(r.sim * 100);
     const color = CARD_COLORS[Math.abs(g.igdb_id || 0) % CARD_COLORS.length];
     const plats = (g.platforms || []).filter(p => DEFAULT_PLATFORMS.includes(p)).slice(0,3).join(' · ');
-    const score = g.igdb_rating ? `🎯 IGDB ${Math.round(g.igdb_rating)}` : '';
+    const wl    = loadWishlist();
+    const inWl  = wl.includes(g.igdb_id);
     return `
       <div class="rec-card">
         <div class="rec-rank">#${i+1}</div>
@@ -2321,41 +2381,41 @@ function mlRenderResults(results) {
           </div>
           <div class="signal-bar">
             <span class="signal-chip pos">🧠 ${pct}% similar</span>
-            ${score ? `<span class="signal-chip">${score}</span>` : ''}
+            ${g.igdb_rating ? `<span class="signal-chip">🎯 IGDB ${Math.round(g.igdb_rating)}</span>` : ''}
           </div>
         </div>
         <div class="rec-actions">
-          <button class="btn btn-secondary btn-sm" onclick="toggleWishlist(${g.igdb_id}, this)">+ Wishlist</button>
+          <button class="btn btn-secondary btn-sm" style="${inWl?'color:var(--accent);border-color:var(--accent)':''}"
+            onclick="toggleWishlist(${g.igdb_id}, this)">${inWl ? '💾 Na WL' : '+ Wishlist'}</button>
         </div>
       </div>`;
   }).join('');
 
-  document.getElementById('ml-results').innerHTML = `
-    <h3 style="font-family:'Fraunces',serif;font-size:18px;margin:0 0 16px;color:var(--text)">
-      Recomendações por Vetor
-    </h3>
-    <div class="recs-body">${cards || '<p style="color:var(--muted)">Nenhum resultado.</p>'}</div>`;
+  const body = document.getElementById('ml-cards-body');
+  if (body) body.innerHTML = cards || '<p style="color:var(--muted);text-align:center;padding:32px">Nenhum resultado com esses filtros.</p>';
+}
+
+// ── Render full results section ───────────────────────────────────────────────
+function mlRenderResults(candidates) {
+  _mlCandidates = candidates;
+  document.getElementById('ml-results').innerHTML = mlBuildControls() + `<div class="recs-body" id="ml-cards-body"></div>`;
   document.getElementById('ml-results').style.display = 'block';
   document.getElementById('ml-empty').style.display   = 'none';
-  mlStepDone('ml-step-engine', `✓ ${results.length} recomendações geradas`);
+  mlApplyFilters();
+  mlStepDone('ml-step-engine', `✓ ${candidates.length} candidatos`);
 }
 
 // ── Main entry point ──────────────────────────────────────────────────────────
 async function mlInit() {
-  // Step 1 always done (data already fetched)
   mlStepDone('ml-step-summaries', '✓ 15.993 jogos com metadata');
-
   if (ML.loaded) { mlRunRecs(); return; }
-
   const ok = await mlLoadEmbeddings();
   if (!ok) return;
-
   mlRunRecs();
 }
 
 async function mlRunRecs() {
   mlStepRunning('ml-step-engine', 'Calculando perfil...');
-  // Small delay so UI updates
   await new Promise(r => setTimeout(r, 30));
 
   const ratedGames = loadGames().filter(g => g.rating && g.igdb_id);
@@ -2364,12 +2424,14 @@ async function mlRunRecs() {
     return;
   }
 
+  _mlIdMap = new Map(_backlog.map(g => [g.igdb_id, g]));
+
   const profileVec = ML.buildProfileVector(ratedGames);
   if (!profileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
 
   const playedIds = ratedGames.map(g => g.igdb_id);
-  const results   = ML.recommend(profileVec, playedIds, 30);
-  mlRenderResults(results);
+  const candidates = ML.recommend(profileVec, playedIds, _mlIdMap, 60);
+  mlRenderResults(candidates);
 }
 </script>
 </body>
