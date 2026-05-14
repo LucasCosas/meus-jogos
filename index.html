@@ -308,6 +308,13 @@
   .ml-step-status { color: var(--muted); margin-left: 4px; }
   .ml-step.done    .ml-step-status { color: var(--green); }
   .ml-step.running .ml-step-status { color: var(--accent); }
+  .cluster-pill { display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:10px 14px; background:var(--surface2); border:1.5px solid var(--border); border-radius:12px; cursor:pointer; text-align:left; transition:all .15s; min-width:140px; max-width:220px; }
+  .cluster-pill:hover { border-color:var(--accent); background:var(--accent-light); }
+  .cluster-pill.active { border-color:var(--accent); background:var(--accent-light); }
+  .cluster-pill-label { font-size:13px; font-weight:700; color:var(--text); }
+  .cluster-pill-match { font-size:11px; font-weight:600; color:var(--accent); }
+  .cluster-pill-sub   { font-size:11px; color:var(--muted); }
+  .cluster-pill-ex    { font-size:11px; color:var(--muted); font-style:italic; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 
   /* ─── Scrollbar ───────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
@@ -457,8 +464,13 @@
         <span class="ml-step-title">Embeddings</span>
         <span class="ml-step-status" id="ml-status-embeddings">Pendente</span>
       </div>
-      <div class="ml-step" id="ml-step-engine">
+      <div class="ml-step" id="ml-step-clusters">
         <span class="ml-step-badge">3</span>
+        <span class="ml-step-title">Clusters</span>
+        <span class="ml-step-status" id="ml-status-clusters">Pendente</span>
+      </div>
+      <div class="ml-step" id="ml-step-engine">
+        <span class="ml-step-badge">4</span>
         <span class="ml-step-title">Motor</span>
         <span class="ml-step-status" id="ml-status-engine">Pendente</span>
       </div>
@@ -2186,6 +2198,11 @@ const ML = {
   loaded:     false,
   loading:    false,
 
+  // Cluster state
+  clusterData:    null,   // parsed clusters.json
+  assignments:    null,   // Map<igdb_id(int), cluster_id>
+  clustersLoaded: false,
+
   // Per-game stride: 1 id + 384 floats
   get STRIDE() { return 1 + this.DIMS; },
 
@@ -2225,22 +2242,41 @@ const ML = {
     return vec;
   },
 
+  // Find top N clusters ranked by cosine similarity with profileVec
+  topClusters(profileVec, n = 6) {
+    if (!this.clusterData) return [];
+    return this.clusterData.clusters
+      .map(c => {
+        const centroid = Float32Array.from(c.centroid);
+        const sim      = this.dot(profileVec, centroid);
+        return { ...c, sim };
+      })
+      .sort((a, b) => b.sim - a.sim)
+      .slice(0, n);
+  },
+
   // Top-N candidates scored by hybrid: 65% cosine sim + 35% IGDB quality
+  // clusterFilter: Set<cluster_id> or null (no filter)
   // idMap: Map<igdb_id, backlog_game>
-  recommend(profileVec, excludeIds, idMap, n = 60) {
+  recommend(profileVec, excludeIds, idMap, clusterFilter = null, n = 60) {
     const C = 5, m = 75; // Bayesian prior for IGDB score
     const exclude = new Set(excludeIds);
     const scores  = [];
     for (let i = 0; i < this.nGames; i++) {
       const igdbId = this.igdbIdAt(i);
       if (exclude.has(igdbId)) continue;
+      // Cluster filter: skip games outside selected clusters
+      if (clusterFilter !== null && this.assignments) {
+        const cid = this.assignments.get(igdbId);
+        if (cid === undefined || !clusterFilter.has(cid)) continue;
+      }
       const sim  = this.dot(profileVec, this.vectorAt(i));
       const g    = idMap.get(igdbId);
       const cnt  = (g?.igdb_rating_count || 0);
       const raw  = (g?.igdb_rating || m);
       // Bayesian-smoothed IGDB score → [0,1]
       const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
-      // Hybrid: penalizes high-sim but low-quality games (GTA with low ratings, obscure games)
+      // Hybrid: penalizes high-sim but low-quality games
       const hybrid = 0.65 * sim + 0.35 * qual;
       scores.push({ igdbId, sim, qual, hybrid });
     }
@@ -2303,14 +2339,74 @@ async function mlLoadEmbeddings() {
   }
 }
 
+// ── Load clusters.json ────────────────────────────────────────────────────────
+async function mlLoadClusters() {
+  if (ML.clustersLoaded) return true;
+  mlStepRunning('ml-step-clusters', 'Carregando clusters...');
+  try {
+    const resp = await fetch('clusters.json');
+    if (!resp.ok) { mlStepPending('ml-step-clusters', 'Não encontrado'); return false; }
+    const data = await resp.json();
+    ML.clusterData   = data;
+    ML.assignments   = new Map(
+      Object.entries(data.assignments).map(([id, cid]) => [parseInt(id), cid])
+    );
+    ML.clustersLoaded = true;
+    mlStepDone('ml-step-clusters', `✓ ${data.n_clusters} grupos`);
+    return true;
+  } catch(e) {
+    mlStepPending('ml-step-clusters', 'Erro: ' + e.message);
+    return false;
+  }
+}
+
 // ── State ─────────────────────────────────────────────────────────────────────
-let _mlCandidates = []; // full scored list, re-filtered on filter change
-let _mlIdMap      = new Map();
+let _mlCandidates   = []; // full scored list, re-filtered on filter change
+let _mlIdMap        = new Map();
+let _mlProfileVec   = null;
+let _mlExcludeIds   = [];
+let _mlTopClusters  = [];  // [{id, label, sim, top_games, ...}]
+let _mlActiveCluster = null; // null = all clusters
+
+// ── Cluster pill click ────────────────────────────────────────────────────────
+function mlSelectCluster(id) {
+  _mlActiveCluster = (_mlActiveCluster === id) ? null : id;  // toggle
+  // Re-run recommend with new cluster filter and re-render everything
+  const clusterFilter = (_mlActiveCluster !== null) ? new Set([_mlActiveCluster]) : null;
+  _mlCandidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, clusterFilter, 80);
+  mlRenderResults(_mlCandidates, /* update controls */ true);
+}
 
 // ── Controls HTML ─────────────────────────────────────────────────────────────
+function mlBuildClusterPills() {
+  if (!_mlTopClusters.length) return '';
+  const pills = _mlTopClusters.map(c => {
+    const pct     = Math.round(c.sim * 100);
+    const active  = _mlActiveCluster === c.id;
+    const examples = c.top_games.slice(0, 2).map(g => g.title).join(', ');
+    const subs    = c.top_subgenres?.slice(0, 2).join(' · ') || '';
+    return `
+      <button class="cluster-pill ${active ? 'active' : ''}" onclick="mlSelectCluster(${c.id})">
+        <span class="cluster-pill-label">${esc(c.label)}</span>
+        <span class="cluster-pill-match">${pct}% match</span>
+        ${subs ? `<span class="cluster-pill-sub">${esc(subs)}</span>` : ''}
+        <span class="cluster-pill-ex">${esc(examples)}</span>
+      </button>`;
+  }).join('');
+
+  return `
+    <div id="ml-cluster-section" style="margin-bottom:20px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">
+        Seus clusters de gosto ${_mlActiveCluster !== null ? '· <a href="#" onclick="mlSelectCluster(null);return false" style="color:var(--accent);font-weight:600">ver todos</a>' : ''}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">${pills}</div>
+    </div>`;
+}
+
 function mlBuildControls() {
   const allPlats = [...new Set(_backlog.flatMap(g => g.platforms || []))].filter(p => DEFAULT_PLATFORMS.includes(p)).sort();
   return `
+    ${mlBuildClusterPills()}
     <div class="recs-row" style="margin-bottom:16px;flex-wrap:wrap;gap:8px">
       <select class="filter-select" id="ml-filter-platform" onchange="mlApplyFilters()">
         <option value="">Todas as plataformas</option>
@@ -2396,21 +2492,22 @@ function mlRenderCards(results) {
 }
 
 // ── Render full results section ───────────────────────────────────────────────
-function mlRenderResults(candidates) {
-  _mlCandidates = candidates;
+function mlRenderResults(candidates, controlsOnly = false) {
+  if (!controlsOnly) _mlCandidates = candidates;
   document.getElementById('ml-results').innerHTML = mlBuildControls() + `<div class="recs-body" id="ml-cards-body"></div>`;
   document.getElementById('ml-results').style.display = 'block';
   document.getElementById('ml-empty').style.display   = 'none';
   mlApplyFilters();
-  mlStepDone('ml-step-engine', `✓ ${candidates.length} candidatos`);
+  if (!controlsOnly) mlStepDone('ml-step-engine', `✓ ${candidates.length} candidatos`);
 }
 
 // ── Main entry point ──────────────────────────────────────────────────────────
 async function mlInit() {
-  mlStepDone('ml-step-summaries', '✓ 15.993 jogos com metadata');
-  if (ML.loaded) { mlRunRecs(); return; }
-  const ok = await mlLoadEmbeddings();
-  if (!ok) return;
+  mlStepDone('ml-step-summaries', '✓ 16.304 jogos com metadata');
+  if (ML.loaded && ML.clustersLoaded) { mlRunRecs(); return; }
+  // Load embeddings + clusters in parallel
+  const [embOk, clustOk] = await Promise.all([mlLoadEmbeddings(), mlLoadClusters()]);
+  if (!embOk) return;
   mlRunRecs();
 }
 
@@ -2424,13 +2521,17 @@ async function mlRunRecs() {
     return;
   }
 
-  _mlIdMap = new Map(_backlog.map(g => [g.igdb_id, g]));
+  _mlIdMap     = new Map(_backlog.map(g => [g.igdb_id, g]));
+  _mlExcludeIds = ratedGames.map(g => g.igdb_id);
 
-  const profileVec = ML.buildProfileVector(ratedGames);
-  if (!profileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
+  _mlProfileVec = ML.buildProfileVector(ratedGames);
+  if (!_mlProfileVec) { mlStepPending('ml-step-engine', 'Sem dados suficientes'); return; }
 
-  const playedIds = ratedGames.map(g => g.igdb_id);
-  const candidates = ML.recommend(profileVec, playedIds, _mlIdMap, 60);
+  // Discover user's taste clusters
+  _mlTopClusters   = ML.topClusters(_mlProfileVec, 6);
+  _mlActiveCluster = null;  // start with no filter
+
+  const candidates = ML.recommend(_mlProfileVec, _mlExcludeIds, _mlIdMap, null, 80);
   mlRenderResults(candidates);
 }
 </script>
