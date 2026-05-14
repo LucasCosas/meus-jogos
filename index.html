@@ -2509,8 +2509,10 @@ function mlOnSearchInput(val) {
 
   const items = gameMatches.map((g, i) => {
     const genres = (g.genres || []).slice(0, 2).join(', ');
+    // Use data-* attributes to safely pass values — avoids quote-escaping issues in onclick
     return `<div class="ml-search-item" data-idx="${i}"
-      onmousedown="mlSelectSearchGame(${g.igdb_id}, ${JSON.stringify(g.title)})">
+      data-igdbid="${g.igdb_id}" data-title="${esc(g.title)}"
+      onmousedown="mlSelectSearchGame(+this.dataset.igdbid, this.dataset.title)">
       <span class="ml-search-item-icon">🎮</span>
       <span class="ml-search-item-title">${esc(g.title)}</span>
       <span class="ml-search-item-sub">${esc(genres)}</span>
@@ -2519,7 +2521,8 @@ function mlOnSearchInput(val) {
 
   // Always offer tag search
   items.push(`<div class="ml-search-item" data-idx="${gameMatches.length}"
-    onmousedown="mlSearchByTag(${JSON.stringify(val)})">
+    data-tag="${esc(val)}"
+    onmousedown="mlSearchByTag(this.dataset.tag)">
     <span class="ml-search-item-icon">🏷️</span>
     <span class="ml-search-item-title">Filtrar por tag: <strong>${esc(val)}</strong></span>
     <span class="ml-search-item-sub">Enter</span>
