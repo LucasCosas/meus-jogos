@@ -960,7 +960,7 @@ function deleteGame(id) {
 // ─── Recommendations v2 ───────────────────────────────────────────────────────
 let _recsMode    = 'genre';
 let _recsRefGame = null;
-let _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3 };
+let _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3, coop_fit: 3 };
 let _recsBehavior = 'balanced'; // 'balanced' | 'hidden_gems' | 'top_rated'
 
 // ── Genre normalization ───────────────────────────────────────────────────────
@@ -985,7 +985,7 @@ const SUBGENRE_ALIASES = {
   'roguelike': 'Roguelike',
   'roguelite': 'Roguelite',
 };
-const BACKLOG_SUBGENRES = ['Soulslike', 'Metroidvania', 'Roguelite', 'Roguelike'];
+const BACKLOG_SUBGENRES = ['Soulslike', 'Metroidvania', 'Roguelite', 'Roguelike', 'Co-op'];
 
 function normalizeGenre(g)    { return GENRE_ALIASES[g.toLowerCase()]    || g; }
 function normalizeSubgenre(g) { return SUBGENRE_ALIASES[g.toLowerCase()] || null; }
@@ -1013,7 +1013,14 @@ function computeUserProfile() {
 
   const genreAffinity    = Object.fromEntries(Object.entries(gd).map(([k,v]) => [k, v.sum/v.count]));
   const subgenreAffinity = Object.fromEntries(Object.entries(sd).map(([k,v]) => [k, v.sum/v.count]));
-  return { genreAffinity, subgenreAffinity };
+
+  // Co-op affinity: from catalog games tagged with 'Co-op'
+  const coopGames = games.filter(g => (g.genres||[]).some(gn => gn.toLowerCase() === 'co-op'));
+  const coopAffinity = coopGames.length
+    ? coopGames.reduce((s, g) => s + (g.rating - 5) / 5, 0) / coopGames.length
+    : 0;
+
+  return { genreAffinity, subgenreAffinity, coopAffinity };
 }
 
 // ── Signal functions (all return [0, 1]) ─────────────────────────────────────
@@ -1029,6 +1036,12 @@ function subgenreFit(game, profile) {
   if (!subs.length) return 0.5;
   const affs = subs.map(s => profile.subgenreAffinity[s] !== undefined ? profile.subgenreAffinity[s] : 0);
   return (affs.reduce((s, v) => s + v, 0) / affs.length + 1) / 2;
+}
+
+function coopFit(game, profile) {
+  // Only meaningful for co-op games; non co-op games contribute 0 (neutral when weight=0 handles both)
+  if (!game.coop) return 0;
+  return (profile.coopAffinity + 1) / 2; // [-1,+1] → [0,1]
 }
 
 function igdbScore01(game) {
@@ -1062,11 +1075,12 @@ function scoreGame(game, profile, userPlatforms) {
   const is = igdbScore01(game);
   const cs = communityScore01(game);
   const pf = platformFit(game, userPlatforms);
+  const cf = coopFit(game, profile);
 
   const w = _recsWeights;
-  const total = w.genre_fit + w.subgenre_fit + w.igdb_score + w.community_score + w.platform_fit || 1;
-  const score = (gf * w.genre_fit + sf * w.subgenre_fit + is * w.igdb_score + cs * w.community_score + pf * w.platform_fit) / total;
-  return { score, signals: { gf, sf, is, cs, pf } };
+  const total = w.genre_fit + w.subgenre_fit + w.igdb_score + w.community_score + w.platform_fit + w.coop_fit || 1;
+  const score = (gf * w.genre_fit + sf * w.subgenre_fit + is * w.igdb_score + cs * w.community_score + pf * w.platform_fit + cf * w.coop_fit) / total;
+  return { score, signals: { gf, sf, is, cs, pf, cf } };
 }
 
 function jaccard(a, b) {
@@ -1099,6 +1113,14 @@ function buildSignalChips(game, signals, profile, extra) {
     const label = aff !== undefined ? `${esc(s)} ${(aff*5+5).toFixed(1)}/10` : esc(s);
     chips.push(`<span class="signal-chip ${cls}">⚔ ${label}</span>`);
   });
+
+  // Co-op chip
+  if (game.coop) {
+    const aff = profile.coopAffinity || 0;
+    const cls = aff > 0.1 ? 'pos' : aff < -0.1 ? 'neg' : '';
+    const label = aff !== 0 ? `Co-op ${(aff*5+5).toFixed(1)}/10` : 'Co-op';
+    chips.push(`<span class="signal-chip ${cls}">🤝 ${label}</span>`);
+  }
 
   // IGDB
   if (game.igdb_rating) {
@@ -1141,6 +1163,7 @@ function switchRecsMode(mode) {
   const wDefs = [
     { key: 'genre_fit',      label: '🎭 Gênero' },
     { key: 'subgenre_fit',   label: '⚔ Subgênero' },
+    { key: 'coop_fit',       label: '🤝 Co-op' },
     { key: 'igdb_score',     label: '🎯 IGDB' },
     { key: 'community_score',label: '👥 Comunidade' },
     { key: 'platform_fit',   label: '🎮 Plataforma' },
@@ -1160,8 +1183,8 @@ function switchRecsMode(mode) {
           </optgroup>
           <optgroup label="⚔ Subgêneros">
             ${BACKLOG_SUBGENRES.map(s => {
-              const aff = profile.subgenreAffinity?.[s];
-              const lbl = aff !== undefined ? `${esc(s)} (${(aff*5+5).toFixed(1)}/10)` : esc(s);
+              const aff = s === 'Co-op' ? profile.coopAffinity : profile.subgenreAffinity?.[s];
+              const lbl = aff !== undefined && aff !== 0 ? `${esc(s)} (${(aff*5+5).toFixed(1)}/10)` : esc(s);
               return `<option value="subgenre:${esc(s)}">${lbl}</option>`;
             }).join('')}
           </optgroup>
@@ -1225,7 +1248,7 @@ function setRecsBehavior(v) {
 }
 
 function resetRecsWeights() {
-  _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3 };
+  _recsWeights = { genre_fit: 6, subgenre_fit: 4, igdb_score: 5, community_score: 2, platform_fit: 3, coop_fit: 3 };
   switchRecsMode(_recsMode);
 }
 
@@ -1282,7 +1305,7 @@ function runRecs() {
     if (!val) return;
     const [type, name] = val.split(':');
     candidates = candidates.filter(g =>
-      type === 'genre' ? (g.genres || []).includes(name) : (g.subgenres || []).includes(name)
+      type === 'genre' ? (g.genres || []).includes(name) : (name === 'Co-op' ? g.coop === true : (g.subgenres || []).includes(name))
     );
     candidates.forEach(game => {
       const { score, signals } = scoreGame(game, profile, userPlatforms);
@@ -1333,6 +1356,7 @@ function runRecs() {
         <div class="card-genres">
           ${(g.genres||[]).slice(0,3).map(gn=>`<span class="genre-chip">${esc(gn)}</span>`).join('')}
           ${(g.subgenres||[]).map(s=>`<span class="genre-chip subgenre">★ ${esc(s)}</span>`).join('')}
+          ${g.coop ? `<span class="genre-chip subgenre">🤝 Co-op</span>` : ''}
         </div>
         <div class="signal-bar">${chips}</div>
       </div>
