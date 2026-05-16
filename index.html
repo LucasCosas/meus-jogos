@@ -2322,7 +2322,8 @@ const ML = {
       const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
       // "Similar to X" mode: similarity dominates (92%), quality is only a tiebreaker.
       // Profile mode uses 65/35 to surface good games — here we want actual likeness.
-      scores.push({ igdbId: id, sim, qual, hybrid: 0.92 * sim + 0.08 * qual });
+      const sw = _mlWeights.semantic / 100, iw = _mlWeights.igdb / 100;
+      scores.push({ igdbId: id, sim, qual, hybrid: sw * sim + iw * qual });
     }
     scores.sort((a, b) => b.hybrid - a.hybrid);
     return scores.slice(0, n);
@@ -2344,7 +2345,8 @@ const ML = {
       // Bayesian-smoothed IGDB score → [0,1]
       const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
       // Hybrid: penalizes high-sim but low-quality games
-      const hybrid = 0.65 * sim + 0.35 * qual;
+      const sw = _mlWeights.semantic / 100, iw = _mlWeights.igdb / 100;
+      const hybrid = sw * sim + iw * qual;
       scores.push({ igdbId, sim, qual, hybrid });
     }
     scores.sort((a, b) => b.hybrid - a.hybrid);
@@ -2417,6 +2419,7 @@ let _mlQueryMode  = 'profile';  // 'profile' | 'similar_to' | 'tag'
 let _mlQueryGame  = null;        // {igdbId, title} in similar_to mode
 // Persistent filter state — survives control re-renders
 let _mlFilters = { platform: '', minYear: 0, minRating: 0, coop: false, exclWl: true };
+let _mlWeights = { semantic: 65, igdb: 35 }; // perfil default; similar_to usa 92/8
 let _mlQueryTag   = '';          // keyword/tag in tag mode
 
 // ── Run filtered recs (profile mode) — subgenre filter ────────────────────────
@@ -2440,7 +2443,8 @@ function mlRunFilteredRecs() {
       const cnt  = g?.igdb_rating_count || 0;
       const raw  = g?.igdb_rating || m;
       const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
-      scores.push({ igdbId: id, sim, qual, hybrid: 0.65 * sim + 0.35 * qual });
+      const sw = _mlWeights.semantic / 100, iw = _mlWeights.igdb / 100;
+      scores.push({ igdbId: id, sim, qual, hybrid: sw * sim + iw * qual });
     }
     scores.sort((a, b) => b.hybrid - a.hybrid);
     _mlCandidates = scores.slice(0, 80);
@@ -2623,7 +2627,8 @@ function mlSearchByTag(tag) {
     const sim   = _mlProfileVec ? ML.dot(_mlProfileVec, ML.vectorAt(i)) : 0;
     const C = 100, m = 75, cnt = g.igdb_rating_count || 0, raw = g.igdb_rating || m;
     const qual = ((raw * cnt + m * C) / (cnt + C)) / 100;
-    scores.push({ igdbId: id, sim, qual, hybrid: 0.6 * sim + 0.4 * qual });
+    const sw = _mlWeights.semantic / 100, iw = _mlWeights.igdb / 100;
+    scores.push({ igdbId: id, sim, qual, hybrid: sw * sim + iw * qual });
   }
   scores.sort((a, b) => b.hybrid - a.hybrid);
   mlRenderResults(scores.slice(0, 80));
@@ -2684,10 +2689,36 @@ function mlBuildControls() {
         Excluir wishlist
       </label>
       <span id="ml-count" style="font-size:12px;color:var(--muted);margin-left:auto;align-self:center"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Pesos</span>
+      <span style="font-size:12px;color:var(--muted);white-space:nowrap">🎯 Similaridade <strong id="ml-w-semantic">${_mlWeights.semantic}%</strong></span>
+      <input type="range" min="0" max="100" step="5" value="${_mlWeights.semantic}"
+        style="flex:1;min-width:120px;max-width:220px;accent-color:var(--accent)"
+        oninput="mlSetWeights(+this.value)">
+      <span style="font-size:12px;color:var(--muted);white-space:nowrap">⭐ IGDB <strong id="ml-w-igdb">${_mlWeights.igdb}%</strong></span>
     </div>`;
 }
 
 // ── Apply filters to candidates ───────────────────────────────────────────────
+function mlSetWeights(semanticPct) {
+  _mlWeights.semantic = semanticPct;
+  _mlWeights.igdb     = 100 - semanticPct;
+  const semEl  = document.getElementById('ml-w-semantic');
+  const igdbEl = document.getElementById('ml-w-igdb');
+  if (semEl)  semEl.textContent  = semanticPct + '%';
+  if (igdbEl) igdbEl.textContent = _mlWeights.igdb + '%';
+  // Re-score and re-render with new weights
+  if (_mlQueryMode === 'similar_to' && _mlQueryGame) {
+    const results = ML.similarTo(_mlQueryGame.igdbId, _mlIdMap, 80);
+    mlRenderResults(results);
+  } else if (_mlQueryMode === 'tag' && _mlQueryTag) {
+    mlSearchByTag(_mlQueryTag);
+  } else {
+    mlRunFilteredRecs();
+  }
+}
+
 function mlApplyFilters() {
   // Read from DOM and persist — so re-renders can restore the values
   _mlFilters.platform  = document.getElementById('ml-filter-platform')?.value  ?? _mlFilters.platform;

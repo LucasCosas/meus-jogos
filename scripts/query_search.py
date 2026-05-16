@@ -34,10 +34,10 @@ def load_embeddings():
     with open(path, 'rb') as f:
         n        = struct.unpack('<I', f.read(4))[0]
         igdb_ids = np.zeros(n, dtype=np.int32)
-        vectors  = np.zeros((n, 384), dtype=np.float32)
+        vectors  = np.zeros((n, 1024), dtype=np.float32)
         for i in range(n):
             igdb_ids[i] = struct.unpack('<I', f.read(4))[0]
-            vectors[i]  = np.frombuffer(f.read(384 * 4), dtype=np.float32)
+            vectors[i]  = np.frombuffer(f.read(1024 * 4), dtype=np.float32)
     return igdb_ids, vectors
 
 def year_weight(year, min_year):
@@ -182,7 +182,7 @@ def main():
 
     print("Carregando modelo...", flush=True)
     from sentence_transformers import SentenceTransformer
-    model = SentenceTransformer('all-MiniLM-L6-v2')
+    model = SentenceTransformer('BAAI/bge-large-en-v1.5')
 
     print(f"Pronto! {len(igdb_ids)} jogos no catálogo + {len(user_games)} jogos do seu histórico.")
     print(__doc__)
