@@ -3,6 +3,10 @@
 Cluster all game embeddings into N groups using K-means (spherical, since vectors are L2-normalized).
 Saves cluster assignments + normalized centroids to clusters.json.
 
+NOTE: clusters.json is no longer used by the frontend UI (feature removed — clusters were
+effectively genre labels, not meaningful taste groups). This script is kept for research/
+debugging purposes only. See docs/ML.md §7.1 for the rationale.
+
 Usage: python3 scripts/cluster_games.py [--k 20]
 
 Label strategy:

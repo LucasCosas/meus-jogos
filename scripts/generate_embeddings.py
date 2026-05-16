@@ -12,7 +12,10 @@ Output: embeddings.bin
   [n_games: uint32]
   for each game: [igdb_id: uint32][vector: float32 × 384]
 
-Model: all-MiniLM-L6-v2 (80MB, 384 dims, runs on CPU/MPS)
+Model: all-MiniLM-L6-v2 (80MB, 384 dims, fast CPU/MPS)
+  Note: upgrade to BAAI/bge-large-en-v1.5 (1024 dims, better MTEB) when running
+  on CUDA (RTX 3050) or with enough time — loading the 1.3GB model on macOS mmap
+  is slow even with MPS. Script auto-detects MPS/CUDA/CPU.
 """
 import json, struct, os, time, sys
 import numpy as np
@@ -106,9 +109,17 @@ def main():
     print(f'  {len(meta)} IGDB metadata entries')
     print(f'  {n_steam} Steam tag sets  |  {n_wiki} Wikipedia summaries  |  {n_enriched} LLM descriptions')
 
-    print(f'\nLoading model {MODEL}...')
+    import torch
+    if torch.backends.mps.is_available():
+        device = 'mps'
+    elif torch.cuda.is_available():
+        device = 'cuda'
+    else:
+        device = 'cpu'
+
+    print(f'\nLoading model {MODEL} on {device}...')
     t0 = time.time()
-    model = SentenceTransformer(MODEL)
+    model = SentenceTransformer(MODEL, device=device)
     print(f'  Ready in {time.time()-t0:.1f}s')
 
     # Build (igdb_id, text) pairs — skip games with no usable text

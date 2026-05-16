@@ -333,6 +333,31 @@ Isso é o que Netflix, Spotify e Steam fazem. Com GPU e ~100+ usuários ativos, 
 
 ---
 
+### 🟢 REC-AUTO-001 — Auto-research de jogos
+**Prioridade:** P2  
+**Dependências:** REC-001
+
+#### Contexto
+Quando o usuário quer descobrir um jogo novo, hoje ele pesquisa manualmente. A ideia é um modo "auto-research": dado um jogo de referência (ou o perfil do usuário), o sistema busca automaticamente informações extras — reviews, listas de "se você gostou de X, tente Y", dados de metacritic/opencritic — e apresenta uma análise consolidada.
+
+#### O que queremos
+- Selecionar um jogo do backlog e acionar "pesquisar mais sobre este jogo"
+- O sistema busca reviews, comparações com outros jogos, contexto (sequência, série, estúdio)
+- Apresenta um resumo estruturado: pontos fortes, pontos fracos, para quem é ideal, jogos similares
+
+#### Decisões técnicas pendentes
+- **Fonte de dados:** OpenCritic API (mais aberta que Metacritic), HowLongToBeat, reviews do Steam
+- **LLM:** Claude API para sintetizar as fontes num relatório coeso
+- **Gatilho:** botão no card do jogo ou seção dedicada na aba de Recomendações
+
+#### Critérios de aceitação
+- [ ] Botão "Pesquisar" acessível em qualquer card do backlog/recomendações
+- [ ] Busca automática nas fontes configuradas
+- [ ] Relatório em linguagem natural: highlights, comparações, veredicto
+- [ ] Resultado salvo em cache para não repetir busca
+
+---
+
 ## Descartado / On hold
 
 | Iniciativa | Motivo |
