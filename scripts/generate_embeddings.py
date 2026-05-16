@@ -10,12 +10,11 @@ Data sources (in priority order):
 
 Output: embeddings.bin
   [n_games: uint32]
-  for each game: [igdb_id: uint32][vector: float32 × 384]
+  for each game: [igdb_id: uint32][vector: float32 × 1024]
 
-Model: all-MiniLM-L6-v2 (80MB, 384 dims, fast CPU/MPS)
-  Note: upgrade to BAAI/bge-large-en-v1.5 (1024 dims, better MTEB) when running
-  on CUDA (RTX 3050) or with enough time — loading the 1.3GB model on macOS mmap
-  is slow even with MPS. Script auto-detects MPS/CUDA/CPU.
+Model: BAAI/bge-large-en-v1.5 (1.3GB, 1024 dims, state-of-the-art MTEB ~63.5)
+  Recommended: run on Google Colab (free T4 GPU) — takes ~2 min vs hours on CPU.
+  Script auto-detects CUDA/MPS/CPU.
 """
 import json, struct, os, time, sys
 import numpy as np
@@ -30,7 +29,7 @@ STEAM     = os.path.join(DATA, 'steam_tags.json')
 WIKI      = os.path.join(DATA, 'wiki_summaries.json')
 ENRICHED  = os.path.join(DATA, 'enriched_descriptions.json')
 OUT       = os.path.join(ROOT, 'embeddings.bin')
-MODEL     = 'all-MiniLM-L6-v2'
+MODEL     = 'BAAI/bge-large-en-v1.5'
 BATCH     = 256
 
 def build_text(game, meta, steam_tags=None, wiki=None, enriched=None):
@@ -161,7 +160,7 @@ def main():
     print(f'  Done in {elapsed:.1f}s  shape={vectors.shape}  dtype={vectors.dtype}')
 
     # Write binary
-    # Format: [n: uint32] then per game [igdb_id: uint32][384 × float32]
+    # Format: [n: uint32] then per game [igdb_id: uint32][1024 × float32]
     n = len(igdb_ids)
     print(f'\nWriting {OUT}...')
     with open(OUT, 'wb') as f:
