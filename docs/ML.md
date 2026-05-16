@@ -38,8 +38,10 @@ Isso resolve o problema central de recomendação por _conteúdo_: não precisam
 
 | Modelo | Dims | Tamanho | MTEB avg | Uso |
 |--------|------|---------|----------|-----|
-| `all-MiniLM-L6-v2` | 384 | 80 MB | ~56.3 | anterior |
+| `all-MiniLM-L6-v2` | 384 | 80 MB | ~56.3 | descartado |
 | `BAAI/bge-large-en-v1.5` | 1024 | 1.3 GB | **63.5** | atual |
+
+> **Nota de infra:** bge-large é lento no CPU (macOS mmap torna o loading de 1.3GB muito lento mesmo com MPS). Solução: rodar no Google Colab (T4 GPU gratuita, ~2 min para 7k jogos). O script suporta encoding incremental — só encoda jogos novos e faz merge no `.bin` existente.
 
 **MTEB** (Massive Text Embedding Benchmark) é o benchmark padrão para modelos de embedding. A diferença de ~7 pontos é substancial — significa que bge-large captura nuances semânticas que MiniLM perde.
 
