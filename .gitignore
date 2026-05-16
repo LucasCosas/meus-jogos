@@ -5,3 +5,12 @@ __pycache__/
 backups/
 .claude/
 .env
+
+# Large data files — regenerate with scripts/
+data/backlog_meta.json
+data/steam_applist.json
+data/steam_tags.json
+data/wiki_summaries.json
+data/enriched_descriptions.json
+data/backlog_full.json
+embeddings.bin
